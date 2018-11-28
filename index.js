@@ -1,5 +1,5 @@
 var exec = require('child_process').exec;
-var oled = require('oled-ssd1306-i2c');
+var oled = require('oled-ssd1306-i2c'); // https://github.com/perjg/oled_ssd1306_i2c
 var font = require('oled-font-5x7');
 
 var oled_opts = {
@@ -16,6 +16,8 @@ const express = require('express');
 //const url = require('url');
 const app = express();
 const port = 8088;
+
+var myIp = "0.0.0.0";
 
 app.use(express.static('public'));
 app.get('/', function (req, res) {
@@ -56,6 +58,7 @@ app.listen(port, (err) => {
 });
 
 function startup() {
+  getIP();
   // dir = exec(`python /home/pi/Documents/justaphone/python/stats.py > /dev/null 2>&1`, function (err, stdout, stderr) {
   //   if (err) {
   //     console.log('error sending command: ', err);
@@ -64,8 +67,37 @@ function startup() {
   oled.turnOnDisplay();
   oled.clearDisplay();
   oled.setCursor(1, 1);
-  oled.writeString(font, 1, 'Cats and dogs are really cool animals, you know.', 1, true);
+  oled.writeString(font, 1, `IP: ${myIp}`, 1, true);
   oled.update();
+}
+
+function getIP() {
+  var os = require('os');
+  var ifaces = os.networkInterfaces();
+  
+  Object.keys(ifaces).forEach(function (ifname) {
+    if (ifname.indexOf("wlan")) {
+      var alias = 0;
+  
+      ifaces[ifname].forEach(function (iface) {
+        if ('IPv4' !== iface.family || iface.internal !== false) {
+          // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+          return;
+        }
+    
+        if (alias >= 1) {
+          // this single interface has multiple ipv4 addresses
+          console.log(ifname + ':' + alias, iface.address);
+          myIp = iface.address;
+        } else {
+          // this interface has only one ipv4 adress
+          console.log(ifname, iface.address);
+          myIp = iface.address;
+        }
+        ++alias;
+      });
+    }
+  });
 }
 
 startup();
