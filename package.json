@@ -1,0 +1,30 @@
+{
+  "name": "justaphone",
+  "version": "1.0.0",
+  "description": "A simple raspberry pi phone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iceman198/justaphone.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "phone",
+    "node",
+    "nodejs",
+    "python"
+  ],
+  "author": "Sean Dutton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iceman198/justaphone/issues"
+  },
+  "homepage": "https://github.com/iceman198/justaphone#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
