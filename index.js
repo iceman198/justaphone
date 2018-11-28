@@ -76,7 +76,7 @@ function getIP() {
   var ifaces = os.networkInterfaces();
   
   Object.keys(ifaces).forEach(function (ifname) {
-    //if (ifname.indexOf("wlan")) {
+    if (ifname.indexOf("wlan") > -1) {
       var alias = 0;
   
       ifaces[ifname].forEach(function (iface) {
@@ -96,7 +96,7 @@ function getIP() {
         }
         ++alias;
       });
-    //}
+    }
   });
 }
 
