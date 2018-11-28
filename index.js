@@ -17,7 +17,7 @@ const express = require('express');
 const app = express();
 const port = 8088;
 
-var myIp = "0.0.0.0";
+var myIp = "";
 
 app.use(express.static('public'));
 app.get('/', function (req, res) {
@@ -76,7 +76,7 @@ function getIP() {
   var ifaces = os.networkInterfaces();
   
   Object.keys(ifaces).forEach(function (ifname) {
-    if (ifname.indexOf("wlan")) {
+    //if (ifname.indexOf("wlan")) {
       var alias = 0;
   
       ifaces[ifname].forEach(function (iface) {
@@ -96,7 +96,7 @@ function getIP() {
         }
         ++alias;
       });
-    }
+    //}
   });
 }
 
