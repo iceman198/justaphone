@@ -33,16 +33,7 @@ app.get('/service/', (request, response) => {
     if (cmd == "shutdown") {
       console.log('sending command');
       response.sendStatus(`Shutdown initiated`);
-      dir = exec(`shutdown now`, function (err, stdout, stderr) {
-        if (err) {
-          console.log('error sending command: ', err);
-        }
-        console.log(stdout);
-      });
-
-      dir.on('exit', function (code) {
-        console.log('exit complete with code ', code);
-      });
+      shutdown();
     } else {
       response.sendStatus(`Command not recognized`);
     }
@@ -57,6 +48,20 @@ app.listen(port, (err) => {
   console.log(`server is listening on ${port}`)
 });
 
+function shutdown() {
+  writeOled(`Shutting down`);
+  dir = exec(`shutdown now`, function (err, stdout, stderr) {
+    if (err) {
+      console.log('error sending command: ', err);
+    }
+    console.log(stdout);
+  });
+
+  dir.on('exit', function (code) {
+    console.log('exit complete with code ', code);
+  });
+}
+
 function startup() {
   getIP();
   // dir = exec(`python /home/pi/Documents/justaphone/python/stats.py > /dev/null 2>&1`, function (err, stdout, stderr) {
@@ -65,10 +70,18 @@ function startup() {
   //   }
   // });
   oled.turnOnDisplay();
-  oled.clearDisplay();
+  writeOled(`IP: ${myIp}`);
+}
+
+function writeOled(text) {
+  clearDisplay();
   oled.setCursor(1, 1);
-  oled.writeString(font, 1, `IP: ${myIp}`, 1, true);
+  oled.writeString(font, 1, text, 1, true);
   oled.update();
+}
+
+function clearDisplay() {
+  oled.clearDisplay();
 }
 
 function getIP() {
