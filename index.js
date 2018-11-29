@@ -34,12 +34,21 @@ app.get('/service/', (request, response) => {
   console.log(`cmd is ${cmd}`);
   if (cmd) {
     if (cmd == "shutdown") {
-      console.log('sending command');
+      console.log('sending command: ' + cmd);
       response.sendStatus(`Shutdown initiated`);
       shutdown();
+    } else if (cmd == "cursorUp") {
+      console.log('sending command: ' + cmd);
+      response.sendStatus("cursorUp");
+      selectUp();
+    } else if (cmd == "cursorDown") {
+      console.log('sending command: ' + cmd);
+      response.sendStatus("cursorDown");
+      selectDown();
     } else {
       response.sendStatus(`Command not recognized`);
     }
+
   }
 });
 
