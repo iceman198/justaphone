@@ -4,7 +4,7 @@ var font = require('oled-font-5x7');
 
 var oled_opts = {
   width: 128, // screen width
-  height: 64, // screen height
+  height: 32, // screen height
   address: 0x3C, // Pass I2C address of screen if it is not the default of 0x3C
   device: '/dev/i2c-1', // Pass your i2c device here if it is not /dev/i2c-1
   microview: true, // set to true if you have a microview display
@@ -70,18 +70,17 @@ function startup() {
   //   }
   // });
   oled.turnOnDisplay();
-  writeOled(`-IP: ${myIp}`, ` next line`, ` next line`);
+  writeOled("-IP: " + myIp, " next line", " next line");
 }
 
 function writeOled(line1, line2, line3) {
   clearDisplay();
-  var text = `${line1}\n\r${line2}\n\r${line3}`;
   oled.setCursor(1, 1);
-  oled.writeString(font, 1.5, line1, 1, false);
+  oled.writeString(font, 1, line1, 1, false);
+  oled.setCursor(1, 8);
+  oled.writeString(font, 1, line2, 1, false);
   oled.setCursor(1, 16);
-  oled.writeString(font, 1.5, line2, 1, false);
-  oled.setCursor(1, 32);
-  oled.writeString(font, 1.5, line3, 1, false);
+  oled.writeString(font, 1, line3, 1, false);
   oled.update();
 }
 
