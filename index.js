@@ -62,7 +62,7 @@ app.listen(port, (err) => {
 
 function selectDown() {
   lineSelected++;
-  if (lineSelected >= lines.length) {
+  if (lineSelected > lines.length) {
     lineSelected = 1;
   }
   writeOled();
