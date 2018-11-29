@@ -70,13 +70,15 @@ function startup() {
   //   }
   // });
   oled.turnOnDisplay();
-  writeOled(`IP: ${myIp}`);
+  writeOled(`~IP: ${myIp}`, ` next line`, ` next line`);
 }
 
-function writeOled(text) {
+function writeOled(line1, line2, line3) {
   clearDisplay();
   oled.setCursor(1, 1);
-  oled.writeString(font, 1, text, 1, true);
+  oled.writeString(font, 1, line1, 1, false);
+  oled.writeString(font, 1, line2, 1, false);
+  oled.writeString(font, 1, line3, 1, false);
   oled.update();
 }
 
