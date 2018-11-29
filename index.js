@@ -90,14 +90,6 @@ function writeOled() {
     oled.writeString(font, 1, linetxt, 1, false);
   }  
 
-  oled.setCursor(1, 1);
-  oled.writeString(font, 1, line1, 1, false);
-  oled.setCursor(1, 8);
-  oled.writeString(font, 1, line2, 1, false);
-  oled.setCursor(1, 16);
-  oled.writeString(font, 1, line3, 1, false);
-  oled.setCursor(1, 24);
-  oled.writeString(font, 1, line4, 1, false);
   oled.update();
 }
 
