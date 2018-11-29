@@ -1,5 +1,5 @@
 var exec = require('child_process').exec;
-var oled = require('oled-ssd1306-i2c'); // https://github.com/perjg/oled_ssd1306_i2c
+var oled = require('oled-js-pi'); // https://github.com/juddflamm/oled-js-pi
 var font = require('oled-font-5x7');
 
 var oled_opts = {
