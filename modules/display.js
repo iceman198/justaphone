@@ -27,7 +27,7 @@ function writeOled() {
         var cursorInt = (i * 8);
         console.log("Set cursorInt to " + cursorInt);
         oled.setCursor(1, 1 + cursorInt);
-        var linetxt = lines[i].text;
+        var linetxt = lines[i].getMenutext;
         if (i + 1 == lineSelected) {
             linetxt = "-" + linetxt;
             console.log("Set linetxt to " + linetxt);
