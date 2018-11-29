@@ -19,6 +19,7 @@ function getMenu(name) {
     var fs = require("fs");
     var fileJson = fs.readFileSync('./modules/menus/' + name + '.json');
     lines = JSON.parse(fileJson);
+    console.log("lines = " + JSON.stringify(lines));
 }
 
 function writeOled() {
