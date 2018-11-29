@@ -70,7 +70,7 @@ function selectDown() {
 
 function selectUp() {
   lineSelected--;
-  if (lineSelected < 0) {
+  if (lineSelected <= 0) {
     lineSelected = lines.length;
   }
   writeOled();
