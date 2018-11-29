@@ -19,6 +19,9 @@ const port = 8088;
 
 var myIp = "";
 
+var lineSelected = 0;
+var lines = [ "", "", "", "" ];
+
 app.use(express.static('public'));
 app.get('/', function (req, res) {
   res.sendFile(__dirname + "/" + "index.html");
@@ -70,11 +73,23 @@ function startup() {
   //   }
   // });
   oled.turnOnDisplay();
-  writeOled("~IP: " + myIp, " next line", " next line", " line four");
+  lineSelected = 1;
+  lines = ["IP: " + myIp, "two line", "three line", "line four"];
 }
 
-function writeOled(line1, line2, line3, line4) {
+function writeOled() {
   clearDisplay();
+  for (i = 0; i < fruits.length; i++) {
+    oled.setCursor(1, 1 + (i*8));
+    var linetxt = lines[i];
+    if (i+1 == lineSelected) {
+      linetxt = "-" + linetxt;
+    } else {
+      linetxt = " " + linetxt;
+    }
+    oled.writeString(font, 1, linetxt, 1, false);
+  }  
+
   oled.setCursor(1, 1);
   oled.writeString(font, 1, line1, 1, false);
   oled.setCursor(1, 8);
