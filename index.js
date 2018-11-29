@@ -70,18 +70,18 @@ function startup() {
   //   }
   // });
   oled.turnOnDisplay();
-  writeOled(`bahIP: ${myIp}`, ` next line`, ` next line`);
+  writeOled(`~IP: ${myIp}`, ` next line`, ` next line`);
 }
 
 function writeOled(line1, line2, line3) {
   clearDisplay();
   var text = `${line1}\n\r${line2}\n\r${line3}`;
   oled.setCursor(1, 1);
-  oled.writeString(font, 1, line1, 1, false);
-  oled.setCursor(1, 8);
-  oled.writeString(font, 1, line2, 1, false);
+  oled.writeString(font, 2, line1, 1, false);
   oled.setCursor(1, 16);
-  oled.writeString(font, 1, line3, 1, false);
+  oled.writeString(font, 2, line2, 1, false);
+  oled.setCursor(1, 32);
+  oled.writeString(font, 2, line3, 1, false);
   oled.update();
 }
 
