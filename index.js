@@ -51,8 +51,26 @@ app.listen(port, (err) => {
   console.log(`server is listening on ${port}`)
 });
 
+function selectDown() {
+  lineSelected++;
+  if (lineSelected >= lines.length) {
+    lineSelected = 1;
+  }
+  writeOled();
+}
+
+function selectUp() {
+  lineSelected--;
+  if (lineSelected < 0) {
+    lineSelected = lines.length;
+  }
+  writeOled();
+}
+
 function shutdown() {
-  writeOled(`Shutting down`);
+  lineSelected = 0;
+  lines = ["Shutting down"];
+  writeOled();
   dir = exec(`shutdown now`, function (err, stdout, stderr) {
     if (err) {
       console.log('error sending command: ', err);
