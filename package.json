@@ -27,6 +27,6 @@
   "dependencies": {
     "express": "^4.16.4",
     "oled-font-5x7": "^1.0.3",
-    "oled-js-pi": "^1.0.5"
+    "oled-ssd1306-i2c": "^1.0.6"
   }
 }
