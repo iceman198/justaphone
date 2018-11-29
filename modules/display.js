@@ -18,7 +18,7 @@ var lines = ["", "", "", ""];
 function getMenu(name) {
     var fs = require("fs");
     var fileJson = fs.readFileSync('./modules/menus/' + name + '.json');
-    lines = JSON.parse(fileJson);
+    lines = JSON.parse(fileJson).lines;
     console.log("lines = " + JSON.stringify(lines));
 }
 
