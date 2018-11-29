@@ -70,7 +70,7 @@ function startup() {
   //   }
   // });
   oled.turnOnDisplay();
-  writeOled("~IP: " + myIp, " next line", " next line");
+  writeOled("-IP: " + myIp, " next line", " next line");
 }
 
 function writeOled(line1, line2, line3, line4) {
