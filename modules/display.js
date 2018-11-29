@@ -15,13 +15,19 @@ oled.turnOnDisplay();
 var lineSelected = 0;
 var lines = ["", "", "", ""];
 
+function getMenu(name) {
+    var fs = require("fs");
+    var fileJson = fs.readFileSync('./menus/' + name + '.json');
+    lines = JSON.parse(fileJson);
+}
+
 function writeOled() {
     oled.clearDisplay();
     for (i = 0; i < lines.length; i++) {
         var cursorInt = (i * 8);
         console.log("Set cursorInt to " + cursorInt);
         oled.setCursor(1, 1 + cursorInt);
-        var linetxt = lines[i];
+        var linetxt = lines[i].text;
         if (i + 1 == lineSelected) {
             linetxt = "-" + linetxt;
             console.log("Set linetxt to " + linetxt);
@@ -38,6 +44,11 @@ function writeOled() {
 exports.write = function(linenum, mylines) {
     lineSelected = linenum;
     lines = mylines;
+    writeOled();
+}
+
+exports.loadMenu = function(menuname) {
+    getMenu(menuname);
     writeOled();
 }
 

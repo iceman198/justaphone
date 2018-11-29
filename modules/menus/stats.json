@@ -1,0 +1,25 @@
+{
+    "lines": [
+        {
+            "name": "",
+            "text": "IP #IP#",
+            "type": ""
+        },
+        {
+            "name": "",
+            "text": "line two",
+            "type": "menu",
+            "command": "test.json"
+        },
+        {
+            "name": "",
+            "text": "line three",
+            "type": ""
+        },
+        {
+            "name": "",
+            "text": "line four",
+            "type": ""
+        }
+]
+}

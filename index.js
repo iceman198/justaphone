@@ -49,7 +49,7 @@ app.listen(port, (err) => {
 function shutdown() {
   lineSelected = 0;
   lines = ["Shutting down"];
-  writeOled();
+  display.write(1, lines);
   dir = exec(`shutdown now`, function (err, stdout, stderr) {
     if (err) {
       console.log('error sending command: ', err);
@@ -69,9 +69,10 @@ function startup() {
   //     console.log('error sending command: ', err);
   //   }
   // });
-  
-  lines = ["IP: " + myIp, "two line", "three line", "line four"];
-  display.write(1, lines);
+
+  display.loadMenu("stats");
+  //lines = ["IP: " + myIp, "two line", "three line", "line four"];
+  //display.write(1, lines);
 }
 
 function getIP() {
