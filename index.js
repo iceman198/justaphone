@@ -75,6 +75,7 @@ function startup() {
   oled.turnOnDisplay();
   lineSelected = 1;
   lines = ["IP: " + myIp, "two line", "three line", "line four"];
+  writeOled();
 }
 
 function writeOled() {
