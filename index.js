@@ -48,7 +48,7 @@ app.listen(port, (err) => {
 
 function shutdown() {
   lineSelected = 0;
-  lines = ["Shutting down"];
+  lines = [ {"text": "Shutting down"} ];
   display.write(1, lines);
   dir = exec(`shutdown now`, function (err, stdout, stderr) {
     if (err) {
