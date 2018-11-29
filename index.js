@@ -79,7 +79,7 @@ function startup() {
 
 function writeOled() {
   clearDisplay();
-  for (i = 0; i < fruits.length; i++) {
+  for (i = 0; i < lines.length; i++) {
     oled.setCursor(1, 1 + (i*8));
     var linetxt = lines[i];
     if (i+1 == lineSelected) {
