@@ -16,7 +16,7 @@ var lineSelected = 0;
 var lines = ["", "", "", ""];
 
 function writeOled() {
-    clearDisplay();
+    oled.clearDisplay();
     for (i = 0; i < lines.length; i++) {
         var cursorInt = (i * 8);
         console.log("Set cursorInt to " + cursorInt);
