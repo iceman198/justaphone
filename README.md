@@ -10,3 +10,4 @@ If I order just the chip, maybe the audio breakout could work with a WT588D chip
 See page 36 (section 3.6.2) of the SIM7000 hardware doc.
 
 ## SIM
+docs say to protect it with an "ESD". Will need to figure out how to wire that in.
