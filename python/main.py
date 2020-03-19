@@ -5,7 +5,7 @@ from flask import Flask, render_template
 import func;
 #import sim;
 
-func.print_test();
+#func.print_test();
 
 app = Flask(__name__);
 
