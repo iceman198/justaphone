@@ -15,6 +15,17 @@ Pretty sure I want to use "310 090" for AT&T
 ATI Get chip info
 AT+CPMUTEMP Read the temperature of the module
 AT+CBC Read the voltage value of the power supply
+AT+CPOF Power down the device
+
+### AT Commands - SIM
+Get Sim card #
+~ AT+CICCID
+
+### AT Commands - Network
+Get Network registration
+~ AT+CREG?
+Get Network info
+~ AT+CPSI?
 
 ### AT Commands - GPS
 Check if GPS is turned on
@@ -25,3 +36,13 @@ Get GPS location info (may take some time to aquire a signal)
 ~ AT+CGPSINFO
 Get GPS satelite info
 ~ AT+CGNSSINFO
+
+## APN info
+### SpeeTalk
+APN Setting:
+• APN: Mobilenet
+• APN username: (none)
+• APN password: (none)
+• IP Address: Dynamic
+• Data Roaming: Enabled
+Enable data roaming.
