@@ -21,11 +21,30 @@ AT+CPOF Power down the device
 Get Sim card #
 ~ AT+CICCID
 
+### AT Commands - Call
+~ ATD1207#######; - call that number (semi-colon is needed at end)
+~ AT+CHUP - hangup
+~ ATA - Answer incoming call | Chip will send 'RING' with an incoming call
+
 ### AT Commands - Network
 Get Network registration
+~ AT+CSQ - get signal strength
+| Code | Strength |
+| ---- | -------- |
+| 0 | -113dBm or less |
+| 1 | -111 dBm |
+| 2...30 | -109... -53 dBm |
+| 31 | -51 dBm or greater |
+| 99 | not known or not detectable |
+| 100 | -116 dBm or less |
+| 101 | -115 dBm |
+| 102...191 | -114... -26dBm |
+    
 ~ AT+CREG?
 Get Network info
 ~ AT+CPSI?
+    Example response: +CPSI: LTE,Online,310-260,0x52F4,13116161,39,EUTRAN-BAND2,750,3,3,-125,-1139,-758,10
+
 
 ### AT Commands - GPS
 Check if GPS is turned on
