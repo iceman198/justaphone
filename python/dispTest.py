@@ -16,3 +16,9 @@ font = ImageFont.load_default()  # load and set default font
 # Draw text
 draw.text(((displayWidth - font.getsize("Woolsey")[0]) / 2, 0), "Woolsey", font=font, fill=255)  # center text at top of screen
 draw.text(((displayWidth - font.getsize("Workshop")[0]) / 2, 53), "Workshop", font=font, fill=255)  # center text at bottom of screen
+
+# Display to screen
+display.image(image)  # set display buffer with image buffer
+display.display()  # write display buffer to physical display
+# Cleanup
+GPIO.cleanup()  # release all GPIO resources
