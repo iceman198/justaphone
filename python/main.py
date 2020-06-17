@@ -5,43 +5,46 @@
 import func;
 #import sim;
 
-import time
-import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
-import subprocess
+from PIL import Image, ImageDraw, ImageFont
+import RPi.GPIO as GPIO
 
-RST = 0
+display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_address=0x3C)
+# Setup
+display.begin()  # initialize graphics library for selected display module
+display.clear()  # clear display buffer
+display.display()  # write display buffer to physical display
+displayWidth = display.width  # get width of display
+displayHeight = display.height  # get height of display
 
-disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST)
-disp.begin()
-disp.clear()
-disp.display()
-
-width = disp.width
-height = disp.height
-
-image1 = Image.new('1', (width, height))
-
-draw = ImageDraw.Draw(image1)
-draw.rectangle((0,0,width,height), outline=0, fill=0)
-
-padding = -2
-top = padding
-
-bottom = height-padding
-x = 0
-font = ImageFont.load_default()
-
-disp.clear()
-disp.display()
-draw.text((x, top),       "OLED Interfacing " ,  font=font, fill=255)
-draw.text((x, top+8),     "Circuit Digest", font=font, fill=255)
-draw.text((x, top+16),    "For more Videos",  font=font, fill=255)
-draw.text((x, top+25),    "Visit at",  font=font, fill=255)
-draw.text((x, top+34),    "www.circuitdigest.com",  font=font, fill=255)
+# Draw text
+draw.text(((displayWidth - font.getsize("Woolsey")[0]) / 2, 0), "Woolsey", font=font, fill=255)  # center text at top of screen
+draw.text(((displayWidth - font.getsize("Workshop")[0]) / 2, 53), "Workshop", font=font, fill=255)  # center text at bottom of screen
 
 #func.print_test();
+
+app = Flask(__name__);
+
+@app.route('/')
+def index():
+    print('index triggered');
+    return render_template('index.html');
+
+@app.route('/service/makecall/<number>')
+def makecall(number):
+    print('starting phone call to ', number);
+    mybody = "Making phone call to %s" % number;
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    return resp_obj;
+
+@app.route('/nametest/<name>')
+def nametest(name):
+    print('name test triggered');
+    return render_template('name.html', name=name);
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0');
 
