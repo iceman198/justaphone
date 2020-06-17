@@ -49,12 +49,12 @@ def power_down(power_key):
 
 def make_call(phone_number):
 	try:
-		power_on(power_key)
+		#power_on(power_key)
 		send_at('ATD'+phone_number+';','OK',1)
-		time.sleep(20)
+		time.sleep(10)
 		ser.write('AT+CHUP\r\n'.encode())
 		print('Call disconnected')
-		power_down(power_key)
+		#power_down(power_key)
 	except :
 		if ser != None:
 			ser.close()
