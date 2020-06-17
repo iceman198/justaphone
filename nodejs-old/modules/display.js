@@ -1,4 +1,4 @@
-var oled = require('oled-ssd1306-i2c'); // https://github.com/perjg/oled_ssd1306_i2c
+var OLED = require('oled-ssd1306-i2c'); // https://github.com/perjg/oled_ssd1306_i2c
 var font = require('oled-font-5x7');
 
 var oled_opts = {
@@ -9,7 +9,7 @@ var oled_opts = {
     microview: true, // set to true if you have a microview display
 };
 
-var oled = new oled(oled_opts);
+var oled = new OLED(oled_opts);
 oled.turnOnDisplay();
 
 var lineSelected = 0;
