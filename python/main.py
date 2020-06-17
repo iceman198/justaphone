@@ -16,6 +16,9 @@ display.clear()  # clear display buffer
 display.display()  # write display buffer to physical display
 displayWidth = display.width  # get width of display
 displayHeight = display.height  # get height of display
+image = Image.new('1', (displayWidth, displayHeight))  # create graphics library image buffer
+draw = ImageDraw.Draw(image)  # create drawing object
+font = ImageFont.load_default()  # load and set default font
 
 # Draw text
 draw.text(((displayWidth - font.getsize("Woolsey")[0]) / 2, 0), "Woolsey", font=font, fill=255)  # center text at top of screen
