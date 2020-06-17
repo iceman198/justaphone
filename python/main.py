@@ -13,6 +13,8 @@ from PIL import ImageDraw
 from PIL import ImageFont
 import subprocess
 
+RST = 0
+
 disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST)
 disp.begin()
 disp.clear()
