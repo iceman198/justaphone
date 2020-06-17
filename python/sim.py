@@ -7,7 +7,7 @@ import time
 ser = serial.Serial('/dev/ttyS0',115200)
 ser.flushInput()
 
-phone_number = '10086'
+phone_number = '12076192651'
 power_key = 6
 rec_buff = ''
 

@@ -4,7 +4,7 @@ from flask import Flask, render_template
 
 import func;
 import disp;
-#import sim;
+import sim;
 
 #func.print_test();
 
@@ -20,6 +20,7 @@ def index():
 def makecall(number):
     print('starting phone call to ', number);
     mybody = "Making phone call to %s" % number;
+    sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
         'body': mybody
