@@ -12,11 +12,14 @@
 #define SIM_TX  1
 #define SIM_BAUD 115200
 
-//SoftwareSerial SimSerial(SIM_RX, SIM_TX);
+SoftwareSerial SimSerial(SIM_RX, SIM_TX);
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 #define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+bool useUsbSerial = false;
+
 
 const byte KP_ROWS = 4; //four rows
 const byte KP_COLS = 4; //three columns
@@ -37,14 +40,12 @@ Keypad keypad = Keypad(makeKeymap(keys), kpRowPins, kpColPins, KP_ROWS, KP_COLS)
 
 void setup()
 {
-  Serial.begin(9600);
+  if (useUsbSerial) { Serial.begin(9600); }
 
   //SimSerial.begin(115200);
 
-    // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
-    Serial.println(F("SSD1306 allocation failed"));
-    for(;;); // Don't proceed, loop forever
+    if (useUsbSerial) { Serial.println(F("SSD1306 allocation failed")); }
   }
 
   // Show initial display buffer contents on the screen --
@@ -70,17 +71,16 @@ void loop()
   char key = keypad.getKey();
 
   if (key != NO_KEY) {
-    //Serial.println(key);
     current_number = current_number + key;
     if (key == 'D') {
-      Serial.println("Delete Key Hit");
+      if (useUsbSerial) { Serial.println("Delete Key Hit"); }
       current_number = "";
       clearDisplay();
     }
     if (key == 'B') {
       getSimVoltage();
     }
-    Serial.println(current_number);
+    if (useUsbSerial) { Serial.println(current_number); }
     displayText(current_number);
   }
 
