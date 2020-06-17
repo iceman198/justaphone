@@ -3,6 +3,7 @@
 from flask import Flask, render_template
 
 import func;
+import disp;
 #import sim;
 
 #func.print_test();
@@ -12,6 +13,7 @@ app = Flask(__name__);
 @app.route('/')
 def index():
     print('index triggered');
+    disp.displayText("Index hit");
     return render_template('index.html');
 
 @app.route('/service/makecall/<number>')
