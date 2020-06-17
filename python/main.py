@@ -19,7 +19,8 @@ def index():
 @app.route('/service/makecall/<number>')
 def makecall(number):
     print('starting phone call to ', number);
-    mybody = "Making phone call to %s" % number;
+    mybody = "Making phone call to " + number;
+    disp.displayText("Calling " + number);
     sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
