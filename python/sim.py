@@ -29,7 +29,7 @@ def send_at(command,back,timeout):
 		print(rec_buff.decode())
 		return 1
 
-def power_on(power_key):
+def power_on():
 	print('SIM7600X is starting:')
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setwarnings(False)
@@ -42,7 +42,7 @@ def power_on(power_key):
 	ser.flushInput()
 	print('SIM7600X is ready')
 
-def power_down(power_key):
+def power_down():
 	print('SIM7600X is loging off:')
 	GPIO.output(power_key,GPIO.HIGH)
 	time.sleep(3)
@@ -52,12 +52,12 @@ def power_down(power_key):
 
 def make_call(phone_number):
 	try:
-		#power_on(power_key)
+		#power_on()
 		send_at('ATD'+phone_number+';','OK',1)
 		time.sleep(10)
 		ser.write('AT+CHUP\r\n'.encode())
 		print('Call disconnected')
-		#power_down(power_key)
+		#power_down()
 	except :
 		if ser != None:
 			ser.close()
