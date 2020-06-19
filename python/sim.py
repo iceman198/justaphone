@@ -4,8 +4,9 @@
 import serial
 import time
 
-ser = serial.Serial('/dev/cu.SLAB_USBtoUART',115200);
-#ser = serial.Serial('/dev/ttyS0',115200)
+#ser = serial.Serial('/dev/cu.SLAB_USBtoUART',115200);
+#ser = serial.Serial('/dev/ttyS0',115200);
+ser = serial.Serial('/dev/serial0',115200);
 ser.flushInput()
 
 phone_number = '12076192651'
