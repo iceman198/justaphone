@@ -30,20 +30,22 @@ def send_at(command,back,timeout):
 		return 1
 
 def power_on():
-	print('SIM7600X is starting:')
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setwarnings(False)
-	GPIO.setup(power_key,GPIO.OUT)
-	time.sleep(0.1)
-	GPIO.output(power_key,GPIO.HIGH)
-	time.sleep(2)
-	GPIO.output(power_key,GPIO.LOW)
-	time.sleep(20)
-	ser.flushInput()
-	print('SIM7600X is ready')
+	print('SIM7600X is starting:');
+	GPIO.setmode(GPIO.BCM);
+	GPIO.setwarnings(False);
+	GPIO.setup(power_key,GPIO.OUT);
+	time.sleep(0.1);
+	GPIO.output(power_key,GPIO.HIGH);
+	time.sleep(2);
+	GPIO.output(power_key,GPIO.LOW);
+	time.sleep(20);
+	ser.flushInput();
+	print('SIM7600X is ready');
 
 def power_down():
 	print('SIM7600X is loging off:')
+	GPIO.setmode(GPIO.BCM);
+	GPIO.setwarnings(False);
 	GPIO.output(power_key,GPIO.HIGH)
 	time.sleep(3)
 	GPIO.output(power_key,GPIO.LOW)
