@@ -8,4 +8,5 @@ import sim;
 
 #sim.ReadVoltage();
 
-sim.power_down();
+#sim.power_down();
+sim.power_on();
