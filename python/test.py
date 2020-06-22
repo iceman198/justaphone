@@ -6,7 +6,7 @@ import sim;
 #sim.ReceiveShortMessage("1");
 #sim.DeleteMessage("2");
 
-sim.ReadVoltage();
+#sim.ReadVoltage();
 
-#sim.power_down();
+sim.power_down();
 #sim.power_on();
