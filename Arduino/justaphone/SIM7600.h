@@ -50,11 +50,13 @@ public:
 
   // SIM query
   void PowerOn(int PowerKey = powerkey);
+  char PowerOff();
+  void HangUp();
 
-  void GetVoltage();
+  String GetVoltage();
 
   // Phone calls
-  void PhoneCall(const char* PhoneNumber);
+  void PhoneCall(const String PhoneNumber);
 
   // SMS sending and receiving message 
   bool SendingShortMessage(const char* PhoneNumber,const char* Message);
@@ -76,10 +78,10 @@ public:
 
   // Other functions.
   uint8_t sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout);
+  String sendATcommandResponse(const char* ATcommand, const char* expected_answer, unsigned int timeout);
   char sendATcommand2(const char* ATcommand, const char* expected_answer1, const char* expected_answer2, unsigned int timeout);
 };
 
 extern Sim7x00 sim7600;
 
 #endif
-

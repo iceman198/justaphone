@@ -38,7 +38,7 @@ Sim7x00::~Sim7x00(){
 void Sim7x00::PowerOn(int PowerKey = powerkey){
    uint8_t answer = 0;
 
-  Serial.begin(9600);
+  // Serial.begin(9600);
 
   // checks if the module is started
   answer = sendATcommand("AT", "OK", 2000);
@@ -64,6 +64,11 @@ void Sim7x00::PowerOn(int PowerKey = powerkey){
 
   while ((sendATcommand("AT+CREG?", "+CREG: 0,1", 500) || sendATcommand("AT+CREG?", "+CREG: 0,5", 500)) == 0)
     delay(500);
+}
+
+void Sim7x00::GetVoltage() {
+    uint8_t answer = 0;
+    answer = sendATcommand("AT+CBC", "OK", 2000);
 }
 
 /**************************Phone Calls**************************/
