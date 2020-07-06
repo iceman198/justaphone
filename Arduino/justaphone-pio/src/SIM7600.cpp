@@ -390,14 +390,17 @@ String Sim7x00::sendATcommandResponse(const char* ATcommand, const char* expecte
     if (Sim7600Serial.available() != 0) {
       // if there are data in the UART input buffer, reads it and checks for the asnwer
       response[x] = Sim7600Serial.read();
+      Serial.print(x);
+      Serial.print(" - ");
       Serial.print(response[x]);
       x++;
+      Serial.println("");
       // check if the desired answer  is in the response of the module
     }
     // Waits for the asnwer with time out
   } while ((answer == 0) && ((millis() - previous) < timeout));
 
-  Serial.println("sendATcommandResponse() ~ OUT");
+  Serial.println("sendATcommandResponse() ~ COMPLETE");
 
   return response;
 }

@@ -145,8 +145,9 @@ void turnOnSim() {
 }
 
 void getSimVoltage() {
-  String myvoltage = cleansString(sim7600.GetVoltage());
-  clearDisplay();
+  sim7600.GetVoltage();
+  //String myvoltage = cleansString(sim7600.GetVoltage());
+  //clearDisplay();
 }
 
 void setup()
@@ -175,6 +176,8 @@ void setup()
 
   current_stats = "Ready";
   clearDisplay();
+
+  turnOnSim();
 }
 
 void loop()
