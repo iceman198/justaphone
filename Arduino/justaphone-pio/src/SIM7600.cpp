@@ -68,11 +68,12 @@ void Sim7x00::PowerOn() {
 //    delay(500);
 }
 
-String Sim7x00::GetVoltage() {
-  String answer = "";
-  answer = sendATcommandResponse("AT+CBC", "OK", 2000);
-  //Serial.print("Answer: ");
-  //Serial.println(answer);
+char* Sim7x00::GetVoltage() {
+  Serial.println("GetVoltage() ~ Start");
+  char* answer = sendATcommandResponse("AT+CBC", "OK", 2000);
+  Serial.print("GetVoltage() ~ Answer: ");
+  Serial.println(answer);
+  Serial.println("GetVoltage() ~ END");
   return answer;
 }
 
@@ -367,24 +368,21 @@ bool Sim7x00::GPSPositioning() {
 }
 
 /**************************Other functions**************************/
-String Sim7x00::sendATcommandResponse(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
+char* Sim7x00::sendATcommandResponse(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
+  Serial.println("sendATcommandResponse() ~ START");
 
   uint8_t x = 0,  answer = 0;
-  char response[100];
+  char* response = (char*) malloc( 100 );
   unsigned long previous;
-
   memset(response, '\0', 100);    // Initialize the string
-
   delay(100);
 
   while ( Sim7600Serial.available() > 0) Sim7600Serial.read();   // Clean the input buffer
-
   Sim7600Serial.println(ATcommand);    // Send the AT command
-
-
   x = 0;
   previous = millis();
 
+  Serial.println("sendATcommandResponse() ~ Read start");
   // this loop waits for the answer
   do {
     if (Sim7600Serial.available() != 0) {

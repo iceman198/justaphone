@@ -52,18 +52,21 @@ String current_voltage = "0";
 
 //Keypad keypad = Keypad(makeKeymap(keys), kpRowPins, kpColPins, KP_ROWS, KP_COLS);
 
-String cleansString(String olddata) {
-  String newdata = "";
-  for (int i = 0; i < sizeof(olddata); ++i)
-  {
-    // Ignore carriage returns
-    if (olddata[i] != '\r' &&
-      olddata[i] != 0x0D &&
-      olddata[i] != '\n') {
-        newdata[i] << olddata[i];
-      }      
+char* cleanChar(char* olddata) {
+  char* newdata = (char*) malloc( 100 );
+  int n = 0;
+  for (int i = 0; olddata[i] != '\0'; i++) {
+    if (olddata[i] != '\n') {
+        newdata[n] = olddata[i];
+        Serial.print(n);
+        Serial.print(" - ");
+        Serial.print(newdata[n]);
+        Serial.println("");
+        n++;
+      }
   }
-  Serial.println("cleansString() ~ OUT");
+  Serial.print("cleanChar() ~ OUT: ");
+  Serial.println(newdata);
   return newdata;
 }
 
@@ -145,9 +148,22 @@ void turnOnSim() {
 }
 
 void getSimVoltage() {
-  sim7600.GetVoltage();
-  //String myvoltage = cleansString(sim7600.GetVoltage());
-  //clearDisplay();
+  char* myvoltage = cleanChar(sim7600.GetVoltage());
+  char* newvoltage = (char*) malloc(6);
+  for (int i = 0; myvoltage[i] != '\0'; i++) {
+    if (myvoltage[i] == ':') {
+      newvoltage[0] = myvoltage[i+2];
+      newvoltage[1] = myvoltage[i+3];
+      newvoltage[2] = myvoltage[i+4];
+      newvoltage[3] = myvoltage[i+5];
+      newvoltage[4] = myvoltage[i+6];
+      newvoltage[5] = myvoltage[i+7];
+    }
+  }
+  Serial.print("getSimVoltage() ~ newvoltage: ");
+  Serial.println(newvoltage);
+  current_stats = newvoltage;
+  clearDisplay();
 }
 
 void setup()

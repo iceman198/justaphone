@@ -53,7 +53,7 @@ public:
   char PowerOff();
   void HangUp();
 
-  String GetVoltage();
+  char* GetVoltage();
 
   // Phone calls
   void PhoneCall(const char* PhoneNumber);
@@ -78,7 +78,7 @@ public:
 
   // Other functions.
   uint8_t sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout);
-  String sendATcommandResponse(const char* ATcommand, const char* expected_answer, unsigned int timeout);
+  char* sendATcommandResponse(const char* ATcommand, const char* expected_answer, unsigned int timeout);
   char sendATcommand2(const char* ATcommand, const char* expected_answer1, const char* expected_answer2, unsigned int timeout);
 };
 
