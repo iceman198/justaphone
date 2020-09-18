@@ -186,6 +186,7 @@ void setup()
   display.display();
   delay(500);
 
+  pinMode(A0, INPUT_PULLUP);
   pinMode(D5, INPUT_PULLUP);
   pinMode(D3, INPUT_PULLUP);
   pinMode(D4, INPUT_PULLUP);
@@ -200,16 +201,28 @@ void loop()
 {
   bool keychange = false;
 
-  buttonY = digitalRead(D5);
+  buttonY = analogRead(A0);
+
+  current_stats = buttonY;
+  clearDisplay();
+  Serial.print("loop() ~ buttonY: ");
+  Serial.println(buttonY);
+
+  delay(1000);
+
+  //buttonY = digitalRead(D5);
   buttonB = digitalRead(D3);
   buttonG = digitalRead(D4);
-  if (buttonY == LOW) {
-    if (current_number != "Y") {
-      startPhoneCall("12076192651");
-      keychange = true;
-    }
-    current_number = "Y";
-  } else if (buttonB == LOW) {
+  
+  //if (buttonY == LOW) {
+  //  if (current_number != "Y") {
+  //    startPhoneCall("12076192651");
+  //    keychange = true;
+  //  }
+  //  current_number = "Y";
+  //} else 
+  
+  if (buttonB == LOW) {
     if (current_number != "B") {
       hangup();
       keychange = true;
