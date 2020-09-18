@@ -1,8 +1,6 @@
-#include "Keypad.h"
 //#include "Adafruit_FONA.h"
 #include <SPI.h>
 #include <Wire.h>
-//#include <SoftwareSerial.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "SIM7600.h"
@@ -17,40 +15,19 @@
 
 #define ARDUINO_BAUD 9600
 
-//SoftwareSerial SimSerial(13, 15);
-//SoftwareSerial SimSerial(SIM_RX, SIM_TX);
-//SoftwareSerial SIM7600SS = SoftwareSerial(SIM_RX, SIM_TX);
-//SoftwareSerial *SIM7600Serial = &SIM7600SS;
-
-//Adafruit_FONA SIM7600 = Adafruit_FONA(SIM_RST);
-
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET 40 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 char phone_number[] = "12076192651";
 
 const int defaultTextSize = 2;
-
-int buttonY = 0;
-int buttonB = 0;
-int buttonG = 0;
-const byte KP_ROWS = 4; //four rows
-const byte KP_COLS = 4; //three columns
-char keys[KP_ROWS][KP_COLS] = {
-    {'1', '2', '3', 'A'},
-    {'4', '5', '6', 'B'},
-    {'7', '8', '9', 'C'},
-    {'*', '0', '#', 'D'}};
+const int statmax = 10;
+const int displaymax = 10;
 
 String current_number = "";
 String current_stats = "";
 String current_voltage = "0";
-
-//byte kpRowPins[KP_ROWS] = {12, 11, 10, 9}; //connect to the row pinouts of the keypad
-//byte kpColPins[KP_COLS] = {8, 7, 6, 5};    //connect to the column pinouts of the keypad
-
-//Keypad keypad = Keypad(makeKeymap(keys), kpRowPins, kpColPins, KP_ROWS, KP_COLS);
 
 char* cleanChar(char* olddata) {
   char* newdata = (char*) malloc( 100 );
@@ -72,6 +49,13 @@ char* cleanChar(char* olddata) {
 
 void displayStats(String text)
 {
+
+  String newtext = "";
+
+  for(int i = 0; i < text.length() && i <= statmax; i++) {
+    newtext = newtext + text[i]; //get character at position i
+  }
+
   display.setTextSize(defaultTextSize); // Normal 1:1 pixel scale
   display.setTextColor(SSD1306_WHITE);  // Draw white text
   display.setCursor(0, 0);              // Start at top-left corner
@@ -79,6 +63,9 @@ void displayStats(String text)
 
   display.println(text);
   display.display();
+
+  Serial.print("displayStats() ~ ");
+  Serial.println(text);
 }
 
 void clearDisplay()
@@ -98,6 +85,9 @@ void displayText(String text)
   display.println(text);
   display.display();
   //delay(2000);
+
+  Serial.print("displayText() ~ ");
+  Serial.println(text);
 }
 
 void checkSimStatus()
@@ -186,11 +176,6 @@ void setup()
   display.display();
   delay(500);
 
-  pinMode(A0, INPUT_PULLUP);
-  pinMode(D5, INPUT_PULLUP);
-  pinMode(D3, INPUT_PULLUP);
-  pinMode(D4, INPUT_PULLUP);
-
   current_stats = "Ready";
   clearDisplay();
 
@@ -199,78 +184,36 @@ void setup()
 
 void loop()
 {
-  bool keychange = false;
+  String keypad; // for incoming serial data
 
-  buttonY = analogRead(A0);
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    keypad = Serial.readString();
 
-  current_stats = buttonY;
-  clearDisplay();
-  Serial.print("loop() ~ buttonY: ");
-  Serial.println(buttonY);
-
-  delay(1000);
-
-  //buttonY = digitalRead(D5);
-  buttonB = digitalRead(D3);
-  buttonG = digitalRead(D4);
-  
-  //if (buttonY == LOW) {
-  //  if (current_number != "Y") {
-  //    startPhoneCall("12076192651");
-  //    keychange = true;
-  //  }
-  //  current_number = "Y";
-  //} else 
-  
-  if (buttonB == LOW) {
-    if (current_number != "B") {
-      hangup();
-      keychange = true;
-    }
-    current_number = "B";
-  } else if (buttonG == LOW) {
-    if (current_number != "G") {
-      //turnOffSim();
-      getSimVoltage();
-      keychange = true;
-    }
-    current_number = "G";
-  } else {
-    current_number = "*";
+    // say what you got:
+    Serial.print("Numpad: ");
+    Serial.println(keypad);
+    current_number = current_number + keypad;
   }
 
-  //char key = keypad.getKey();
+  char* mybuff;
+  mybuff = sim7600.checkBuffer(500);
+  if (mybuff[0] != '\0') {
+    mybuff = cleanChar(mybuff);
+    Serial.print("SIM notification: ");
+    Serial.println(mybuff);
+  }
 
-  //if (key != NO_KEY) {
-    //current_number = current_number + key;
+  if (keypad == "A") {
+    startPhoneCall("12076192651");
+  }
 
-    //if (key == 'A') {
-    //  startPhoneCall("12076192651");
-    //  current_number = "";
-    //}
-    //if (key == 'B') {
-    //  current_number = "";
-    //  hangup();
-    //  getSimVoltage();
-    //}
-    //if (key == 'C') {
-    //  current_number = "";
-    //  turnOffSim();
-    //}
-    //if (key == 'D') {
-      //Serial.println("Delete Key Hit");
-    //  current_number = "";
-    //  clearDisplay();
-    //}
+  if (keypad == "B") {
+    hangup();
+  }
 
-    //delay(100);
-    //Serial.println(current_number);
-    
-  //}
-
-  //if (keychange) {
-  //  clearDisplay();
-  //  displayText(current_number);
-  //  delay(500);
-  //}
+  if (keypad == "C") {
+    //turnOffSim();
+    getSimVoltage();
+  }
 }
