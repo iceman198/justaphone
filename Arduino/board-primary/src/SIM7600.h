@@ -52,6 +52,7 @@ public:
   void PowerOn();
   char PowerOff();
   void HangUp();
+  char* checkBuffer(unsigned int timeout);
 
   char* GetVoltage();
 

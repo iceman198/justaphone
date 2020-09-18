@@ -70,7 +70,7 @@ void Sim7x00::PowerOn() {
 
 char* Sim7x00::GetVoltage() {
   Serial.println("GetVoltage() ~ Start");
-  char* answer = sendATcommandResponse("AT+CBC", "OK", 2000);
+  char* answer = sendATcommandResponse("AT+CBC", "OK", 1000);
   Serial.print("GetVoltage() ~ Answer: ");
   Serial.println(answer);
   Serial.println("GetVoltage() ~ END");
@@ -365,6 +365,33 @@ bool Sim7x00::GPSPositioning() {
   Serial.print("\n");
 
   return true;
+}
+
+char* Sim7x00::checkBuffer(unsigned int timeout) {
+  //Serial.println("checkBuffer() ~ START");
+
+  uint8_t x = 0,  answer = 0;
+  char* response = (char*) malloc( 100 );
+  unsigned long previous;
+  memset(response, '\0', 100);    // Initialize the string
+  delay(10);
+  previous = millis();
+  do {
+    if (Sim7600Serial.available() != 0) {
+      // if there are data in the UART input buffer, reads it and checks for the asnwer
+      response[x] = Sim7600Serial.read();
+      Serial.print(x);
+      Serial.print(" - ");
+      Serial.print(response[x]);
+      x++;
+      Serial.println("");
+      // check if the desired answer  is in the response of the module
+    }
+    // Waits for the asnwer with time out
+  } while ((millis() - previous) < timeout);
+
+  //Serial.println("checkBuffer() ~ COMPLETE");
+  return response;
 }
 
 /**************************Other functions**************************/
