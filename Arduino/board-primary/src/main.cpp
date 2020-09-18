@@ -29,6 +29,13 @@ String current_number = "";
 String current_stats = "";
 String current_voltage = "0";
 
+bool isNumeric(String str) {
+   for (int i = 0; i < str.length(); i++)
+      if (isdigit(str[i]) == false)
+         return false; //when one non numeric value is found, return false
+      return true;
+}
+
 char* cleanChar(char* olddata) {
   char* newdata = (char*) malloc( 100 );
   int n = 0;
@@ -193,7 +200,11 @@ void loop()
     // say what you got:
     Serial.print("Numpad: ");
     Serial.println(keypad);
-    current_number = current_number + keypad;
+    if (isNumeric(keypad)) {
+      current_number = current_number + keypad;
+      clearDisplay();
+      displayText(current_number);
+    }
   }
 
   char* mybuff;
@@ -205,11 +216,15 @@ void loop()
   }
 
   if (keypad == "A") {
-    startPhoneCall("12076192651");
+    //startPhoneCall("12076192651");
+    char* mynumber = strdup(current_number.c_str());
+    startPhoneCall(mynumber);
   }
 
   if (keypad == "B") {
     hangup();
+    current_number = "";
+    clearDisplay();
   }
 
   if (keypad == "C") {
