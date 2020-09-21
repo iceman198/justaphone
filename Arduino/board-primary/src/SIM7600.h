@@ -52,7 +52,8 @@ public:
   void PowerOn();
   char PowerOff();
   void HangUp();
-  char* checkBuffer(unsigned int timeout);
+  char* checkBuffer(unsigned int timeout, unsigned int maxsize);
+  String checkBufferString(unsigned int timeout);
 
   char* GetVoltage();
 

@@ -69,11 +69,11 @@ void Sim7x00::PowerOn() {
 }
 
 char* Sim7x00::GetVoltage() {
-  Serial.println("GetVoltage() ~ Start");
+  //Serial.println("GetVoltage() ~ Start");
   char* answer = sendATcommandResponse("AT+CBC", "OK", 1000);
-  Serial.print("GetVoltage() ~ Answer: ");
-  Serial.println(answer);
-  Serial.println("GetVoltage() ~ END");
+  //Serial.print("GetVoltage() ~ Answer: ");
+  //Serial.println(answer);
+  //Serial.println("GetVoltage() ~ END");
   return answer;
 }
 
@@ -367,27 +367,46 @@ bool Sim7x00::GPSPositioning() {
   return true;
 }
 
-char* Sim7x00::checkBuffer(unsigned int timeout) {
-  //Serial.println("checkBuffer() ~ START");
+String Sim7x00::checkBufferString(unsigned int timeout) {
+  //Serial.println("checkBufferString() ~ START");
 
-  uint8_t x = 0,  answer = 0;
-  char* response = (char*) malloc( 100 );
-  unsigned long previous;
-  memset(response, '\0', 100);    // Initialize the string
-  delay(10);
+  String response;
+  unsigned int previous;
   previous = millis();
   do {
     if (Sim7600Serial.available() != 0) {
-      // if there are data in the UART input buffer, reads it and checks for the asnwer
-      response[x] = Sim7600Serial.read();
-      Serial.print(x);
-      Serial.print(" - ");
-      Serial.print(response[x]);
-      x++;
-      Serial.println("");
-      // check if the desired answer  is in the response of the module
+      response += Sim7600Serial.readString();
+      Serial.print("checkBufferString() ~ ");
+      Serial.println(response);
     }
-    // Waits for the asnwer with time out
+  } while ((millis() - previous) < timeout);
+
+  //Serial.println("checkBufferString() ~ COMPLETE");
+  return response;
+}
+
+char* Sim7x00::checkBuffer(unsigned int timeout, unsigned int maxsize) {
+  //Serial.println("checkBuffer() ~ START");
+
+  unsigned int x = 0;
+  char* response = (char*) malloc( maxsize );
+  //char* response[maxsize];
+  unsigned int previous;
+  //memset(response, '\0', 100);    // Initialize the string
+  delay(10);
+  previous = millis();
+  do {
+    if (x > maxsize) {
+      break;
+    }
+    if (Sim7600Serial.available() != 0) {
+      response[x] = Sim7600Serial.read();
+      //Serial.print(x);
+      //Serial.print(" - ");
+      //Serial.print(response[x]);
+      x++;
+      //Serial.println("");
+    }
   } while ((millis() - previous) < timeout);
 
   //Serial.println("checkBuffer() ~ COMPLETE");
@@ -396,7 +415,7 @@ char* Sim7x00::checkBuffer(unsigned int timeout) {
 
 /**************************Other functions**************************/
 char* Sim7x00::sendATcommandResponse(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
-  Serial.println("sendATcommandResponse() ~ START");
+  //Serial.println("sendATcommandResponse() ~ START");
 
   uint8_t x = 0,  answer = 0;
   char* response = (char*) malloc( 100 );
@@ -409,23 +428,23 @@ char* Sim7x00::sendATcommandResponse(const char* ATcommand, const char* expected
   x = 0;
   previous = millis();
 
-  Serial.println("sendATcommandResponse() ~ Read start");
+  //Serial.println("sendATcommandResponse() ~ Read start");
   // this loop waits for the answer
   do {
     if (Sim7600Serial.available() != 0) {
       // if there are data in the UART input buffer, reads it and checks for the asnwer
       response[x] = Sim7600Serial.read();
-      Serial.print(x);
-      Serial.print(" - ");
-      Serial.print(response[x]);
+      //Serial.print(x);
+      //Serial.print(" - ");
+      //Serial.print(response[x]);
       x++;
-      Serial.println("");
+      //Serial.println("");
       // check if the desired answer  is in the response of the module
     }
     // Waits for the asnwer with time out
   } while ((answer == 0) && ((millis() - previous) < timeout));
 
-  Serial.println("sendATcommandResponse() ~ COMPLETE");
+  //Serial.println("sendATcommandResponse() ~ COMPLETE");
 
   return response;
 }

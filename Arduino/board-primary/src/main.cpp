@@ -21,13 +21,17 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 char phone_number[] = "12076192651";
 
-const int defaultTextSize = 2;
-const int statmax = 10;
-const int displaymax = 10;
+bool simReady = false;
 
-String current_number = "";
-String current_stats = "";
-String current_voltage = "0";
+const int textSize = 2;
+const int statsSize = 1;
+const int statMax = 10;
+const int displayMax = 10;
+
+String currentNumber = "";
+String currentStats = "";
+String currentText = "";
+String currentVoltage = "0";
 
 bool isNumeric(String str) {
    for (int i = 0; i < str.length(); i++)
@@ -36,70 +40,76 @@ bool isNumeric(String str) {
       return true;
 }
 
-char* cleanChar(char* olddata) {
-  char* newdata = (char*) malloc( 100 );
-  int n = 0;
+String charToString(char* olddata) {
+  String newdata = "";
   for (int i = 0; olddata[i] != '\0'; i++) {
-    if (olddata[i] != '\n') {
-        newdata[n] = olddata[i];
-        Serial.print(n);
-        Serial.print(" - ");
-        Serial.print(newdata[n]);
-        Serial.println("");
-        n++;
-      }
+    newdata += olddata[i];
   }
-  Serial.print("cleanChar() ~ OUT: ");
-  Serial.println(newdata);
   return newdata;
 }
 
-void displayStats(String text)
-{
+char* cleanChar(char* olddata) {
+  //Serial.print("cleanChar() ~ IN: ");
+  //Serial.println(olddata);
+  char* newdata = (char*) malloc( 100 );
+  int n = 0;
+  for (int i = 0; olddata[i] != '\0'; i++) {
+    if (olddata[i] != '\n' && olddata[i] != '\r') {
+        newdata[n] = olddata[i];
+        //Serial.print(n);
+        //Serial.print(" - ");
+        //Serial.print(newdata[n]);
+        //Serial.println("");
+        n++;
+      }
+  }
+  //Serial.print("cleanChar() ~ OUT: ");
+  //Serial.println(newdata);
+  return newdata;
+}
 
+void displayStats()
+{
   String newtext = "";
 
-  for(int i = 0; i < text.length() && i <= statmax; i++) {
-    newtext = newtext + text[i]; //get character at position i
-  }
-
-  display.setTextSize(defaultTextSize); // Normal 1:1 pixel scale
+  display.setTextSize(statsSize); // Normal 1:1 pixel scale
   display.setTextColor(SSD1306_WHITE);  // Draw white text
   display.setCursor(0, 0);              // Start at top-left corner
   display.cp437(true);                  // Use full 256 char 'Code Page 437' font
-
-  display.println(text);
+  display.println(currentStats);
   display.display();
 
-  Serial.print("displayStats() ~ ");
-  Serial.println(text);
+  //Serial.print("displayStats() ~ ");
+  //Serial.println(currentStats);
+}
+
+void displayText()
+{
+  display.setTextSize(textSize); // Normal 1:1 pixel scale
+  display.setTextColor(SSD1306_WHITE);  // Draw white text
+  display.setCursor(0, 20);             // Start at top-left corner
+  display.cp437(true);                  // Use full 256 char 'Code Page 437' font
+
+  display.println(currentText);
+  display.display();
+  //delay(2000);
+
+  //Serial.print("displayText() ~ ");
+  //Serial.println(currentText);
 }
 
 void clearDisplay()
 {
   display.clearDisplay();
-  //current_stats = current_voltage;
-  displayStats(current_stats);
-}
-
-void displayText(String text)
-{
-  display.setTextSize(defaultTextSize); // Normal 1:1 pixel scale
-  display.setTextColor(SSD1306_WHITE);  // Draw white text
-  display.setCursor(0, 20);             // Start at top-left corner
-  display.cp437(true);                  // Use full 256 char 'Code Page 437' font
-
-  display.println(text);
   display.display();
-  //delay(2000);
-
-  Serial.print("displayText() ~ ");
-  Serial.println(text);
+  //current_stats = current_voltage;
+  displayStats();
+  displayText();
 }
 
 void checkSimStatus()
 {
-  current_stats = "checking";
+  currentStats = "checking";
   clearDisplay();
 
   uint8_t answer = 0;
@@ -113,35 +123,35 @@ void checkSimStatus()
   }
 
   if (answer == 1) {
-    current_stats = "SIM GOOD!";
+    currentStats = "SIM GOOD!";
   } else {
-    current_stats = "NO SIM";
+    currentStats = "NO SIM";
   }
   clearDisplay();
 }
 
 void startPhoneCall(char* number) {
   sim7600.PhoneCall(number);
+  currentText = "Calling";
   clearDisplay();
-  displayText("Calling");
 }
 
 void hangup() {
   sim7600.HangUp();
+  currentText = "Hangup";
   clearDisplay();
-  displayText("Hangup");
 }
 
 void turnOffSim() {
   sim7600.PowerOff();
+  currentStats = "SIM OFF";
   clearDisplay();
-  displayText("SIM OFF");
 }
 
 void turnOnSim() {
   sim7600.PowerOn();
+  currentStats = "SIM INIT";
   clearDisplay();
-  displayText("Serial Ready");
 }
 
 void getSimVoltage() {
@@ -157,9 +167,9 @@ void getSimVoltage() {
       newvoltage[5] = myvoltage[i+7];
     }
   }
-  Serial.print("getSimVoltage() ~ newvoltage: ");
-  Serial.println(newvoltage);
-  current_stats = newvoltage;
+  //Serial.print("getSimVoltage() ~ newvoltage: ");
+  //Serial.println(newvoltage);
+  currentStats = newvoltage;
   clearDisplay();
 }
 
@@ -170,20 +180,8 @@ void setup()
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
     //Serial.println(F("SSD1306 allocation failed"));
   }
-
-  display.display();
   delay(500); // Pause for 2 seconds
-
-  // Clear the buffer
-  display.clearDisplay();
-
-  // Draw a single pixel in white
-  display.drawPixel(10, 10, SSD1306_WHITE);
-
-  display.display();
-  delay(500);
-
-  current_stats = "Ready";
+  currentStats = "Initializing";
   clearDisplay();
 
   turnOnSim();
@@ -191,6 +189,7 @@ void setup()
 
 void loop()
 {
+  //Serial.println("loop() ~ START");
   String keypad; // for incoming serial data
 
   if (Serial.available() > 0) {
@@ -201,29 +200,53 @@ void loop()
     Serial.print("Numpad: ");
     Serial.println(keypad);
     if (isNumeric(keypad)) {
-      current_number = current_number + keypad;
+      currentNumber += keypad;
+      currentText = currentNumber;
       clearDisplay();
-      displayText(current_number);
+      displayText();
     }
   }
 
-  char* mybuff;
-  mybuff = sim7600.checkBuffer(500);
+  char* mybuff = sim7600.checkBuffer(500, 10);
+
+  //String mybuff = sim7600.checkBufferString(100);
+
   if (mybuff[0] != '\0') {
+  //if (mybuff.length() > 0) {
+    //mybuff = cleanString(mybuff);
     mybuff = cleanChar(mybuff);
+    //char* buffchar = cleanChar(strdup(mybuff.c_str()));
     Serial.print("SIM notification: ");
     Serial.println(mybuff);
+    String mystring = charToString(mybuff);
+    
+    if (mystring.indexOf("PB DONE") != -1) {
+      simReady = true;
+      currentStats = "Ready";
+      clearDisplay();
+    }
+    
+    if (mystring.indexOf("RING") != -1) {
+      clearDisplay();
+      currentText = "RING";
+      displayText();
+    } 
+    if (mystring.indexOf("MISSED") != -1) {
+      clearDisplay();
+      currentText = "MISSED CALL";
+      displayText();
+    }
   }
 
   if (keypad == "A") {
     //startPhoneCall("12076192651");
-    char* mynumber = strdup(current_number.c_str());
+    char* mynumber = strdup(currentNumber.c_str());
     startPhoneCall(mynumber);
   }
 
   if (keypad == "B") {
     hangup();
-    current_number = "";
+    currentNumber = "";
     clearDisplay();
   }
 
@@ -231,4 +254,10 @@ void loop()
     //turnOffSim();
     getSimVoltage();
   }
+
+  if (simReady) {
+    getSimVoltage();
+  }
+
+  //Serial.println("loop() ~ STOP");
 }
