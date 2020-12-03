@@ -11,7 +11,7 @@ char keys[KP_ROWS][KP_COLS] = {
 };
 
 byte kpRowPins[KP_ROWS] = {12, 11, 10, 9, 8}; //rows top to bottom
-byte kpColPins[KP_COLS] = {7, 6, 5, 4, 3}; //columns right to left
+byte kpColPins[KP_COLS] = {6, 5, 4, 3, 2}; //columns right to left (when looking at it from the back)
 
 Keypad keypad = Keypad(makeKeymap(keys), kpRowPins, kpColPins, KP_ROWS, KP_COLS);
 
