@@ -193,6 +193,7 @@ void setup()
 void loop()
 {
   //Serial.println("loop() ~ START");
+  Serial.setTimeout(100);
   String keypad; // for incoming serial data
 
   if (Serial.available() > 0) {
