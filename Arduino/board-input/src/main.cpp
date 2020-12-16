@@ -3,11 +3,11 @@
 const byte KP_ROWS = 5; //four rows
 const byte KP_COLS = 5; //three columns
 char keys[KP_ROWS][KP_COLS] = {
-  {'1', '2', '3', '4', '5'},
-  {'6', '7', '8', '9', 'A'},
-  {'B', 'C', 'D', 'E', 'F'},
-  {'G', 'H', 'I', 'J', 'K'},
-  {'L', 'M', 'N', 'O', 'P'}
+  {'C', 'N', '<', '>', 'H'},
+  {'Q', '1', '2', '3', 'P'},
+  {'A', '4', '5', '6', 'L'},
+  {'Z', '7', '8', '9', 'D'},
+  {'B', '*', '0', '#', 'E'}
 };
 
 byte kpRowPins[KP_ROWS] = {12, 11, 10, 9, 8}; //rows top to bottom
