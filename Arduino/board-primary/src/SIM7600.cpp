@@ -41,6 +41,7 @@ void Sim7x00::PowerOn() {
 //  uint8_t answer = 0;
 
   Sim7600Serial.begin(9600);
+  Sim7600Serial.setTimeout(200);
 
   // checks if the module is started
 //  answer = sendATcommand("AT", "OK", 2000);
@@ -106,6 +107,10 @@ void Sim7x00::PhoneCall(const char* PhoneNumber) {
 void Sim7x00::HangUp() {
   sendATcommand("AT+CHUP", "OK", 2000);
   //delay(1000);
+}
+
+void Sim7x00::Answer() {
+  sendATcommand("ATA", "OK", 2000);
 }
 
 /**************************SMS sending and receiving message **************************/

@@ -23,11 +23,12 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 char phone_number[] = "12076192651";
 
 bool simReady = false;
+bool isRinging = false;
 
-const int textSize = 2;
+const int textSize = 1;
 const int statsSize = 1;
 const int statMax = 10;
-const int displayMax = 10;
+const int displayMax = 24;
 
 String currentNumber = "";
 String currentStats = "";
@@ -143,6 +144,12 @@ void hangup() {
   clearDisplay();
 }
 
+void answer() {
+  sim7600.Answer();
+  currentText = "Talking";
+  clearDisplay();
+}
+
 void turnOffSim() {
   sim7600.PowerOff();
   currentStats = "SIM OFF";
@@ -233,31 +240,39 @@ void loop()
     if (mystring.indexOf("RING") != -1) {
       clearDisplay();
       currentText = "RING";
+      isRinging = true;
       displayText();
     } 
+
     if (mystring.indexOf("MISSED") != -1) {
       clearDisplay();
-      currentText = "MISSED CALL";
+      currentText = mystring;
+      isRinging = false;
       displayText();
     }
   }
 
-  if (keypad == "A") {
+  if (keypad == "C") {
     //startPhoneCall("12076192651");
     char* mynumber = strdup(currentNumber.c_str());
     startPhoneCall(mynumber);
   }
 
-  if (keypad == "B") {
+  if (keypad == "<") {
+    answer();
+    currentNumber = "";
+  }
+
+  if (keypad == "H") {
     hangup();
     currentNumber = "";
     clearDisplay();
   }
 
-  if (keypad == "C") {
+  //if (keypad == "C") {
     //turnOffSim();
-    getSimVoltage();
-  }
+    //getSimVoltage();
+  //}
 
   if (simReady) {
     getSimVoltage();

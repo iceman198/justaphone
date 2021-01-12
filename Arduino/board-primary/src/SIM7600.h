@@ -52,6 +52,7 @@ public:
   void PowerOn();
   char PowerOff();
   void HangUp();
+  void Answer();
   char* checkBuffer(unsigned int timeout, unsigned int maxsize);
   String checkBufferString(unsigned int timeout);
 
