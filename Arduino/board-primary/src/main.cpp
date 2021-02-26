@@ -3,7 +3,7 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <Adafruit_PCD8544.h>  // include adafruit PCD8544 (Nokia 5110) library
 #include "SIM7600.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -18,7 +18,9 @@
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 #define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+//Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+// Nokia 5110 LCD module connections (CLK, DIN, D/C, CS, RST)
+Adafruit_PCD8544 display = Adafruit_PCD8544(D4, D3, D2, D1, D0);
 
 char phone_number[] = "12076192651";
 
@@ -75,10 +77,12 @@ void displayStats()
   String newtext = "";
 
   display.setTextSize(statsSize); // Normal 1:1 pixel scale
-  display.setTextColor(SSD1306_WHITE);  // Draw white text
+  //display.setTextColor(SSD1306_WHITE);  // Draw white text
+  display.setTextColor(BLACK);
   display.setCursor(0, 0);              // Start at top-left corner
-  display.cp437(true);                  // Use full 256 char 'Code Page 437' font
+  //display.cp437(true);                  // Use full 256 char 'Code Page 437' font
   display.println(currentStats);
+  //display.write(currentStats);
   display.display();
 
   //Serial.print("displayStats() ~ ");
@@ -88,11 +92,12 @@ void displayStats()
 void displayText()
 {
   display.setTextSize(textSize); // Normal 1:1 pixel scale
-  display.setTextColor(SSD1306_WHITE);  // Draw white text
+  display.setTextColor(BLACK);  // Draw white text
   display.setCursor(0, 20);             // Start at top-left corner
-  display.cp437(true);                  // Use full 256 char 'Code Page 437' font
+  //display.cp437(true);                  // Use full 256 char 'Code Page 437' font
 
   display.println(currentText);
+  //display.write(currentText);
   display.display();
   //delay(2000);
 
@@ -102,6 +107,7 @@ void displayText()
 
 void clearDisplay()
 {
+  display.setContrast(60);
   display.clearDisplay();
   display.display();
   //current_stats = current_voltage;
@@ -187,11 +193,12 @@ void setup()
 
   WiFi.mode(WIFI_OFF);
 
-  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+  //if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
     //Serial.println(F("SSD1306 allocation failed"));
-  }
+  //}
   delay(500); // Pause for 2 seconds
   currentStats = "Initializing";
+  display.begin();
   clearDisplay();
 
   turnOnSim();
