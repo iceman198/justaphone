@@ -1,17 +1,16 @@
 #include "Keypad.h"
 
-const byte KP_ROWS = 5; //four rows
-const byte KP_COLS = 5; //three columns
+const byte KP_ROWS = 4; //four rows
+const byte KP_COLS = 4; //three columns
 char keys[KP_ROWS][KP_COLS] = {
-  {'C', 'N', '<', '>', 'H'},
-  {'Q', '1', '2', '3', 'P'},
-  {'A', '4', '5', '6', 'L'},
-  {'Z', '7', '8', '9', 'D'},
-  {'B', '*', '0', '#', 'E'}
+  {'H', '3', '2', '1'},
+  {'S', '6', '5', '4'},
+  {'O', '6', '8', '7'},
+  {'C', '#', '0', '*'}
 };
 
-byte kpRowPins[KP_ROWS] = {12, 11, 10, 9, 8}; //rows top to bottom
-byte kpColPins[KP_COLS] = {6, 5, 4, 3, 2}; //columns right to left (when looking at it from the back)
+byte kpRowPins[KP_ROWS] = {12, 11, 10, 9}; //rows top to bottom
+byte kpColPins[KP_COLS] = {7, 6, 5, 4}; //columns right to left (when looking at it from the back)
 
 Keypad keypad = Keypad(makeKeymap(keys), kpRowPins, kpColPins, KP_ROWS, KP_COLS);
 
