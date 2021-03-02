@@ -3,26 +3,18 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
+//#include <Adafruit_SSD1306.h> // for OLED display
 #include <Adafruit_PCD8544.h>  // include adafruit PCD8544 (Nokia 5110) library
 #include "SIM7600.h"
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
-
-#define SIM_RX 2
-#define SIM_TX 3
-#define SIM_RST 40 // Dummy
-#define SIM_BAUD 9600
-
 #define ARDUINO_BAUD 9600
 
-// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-//Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-// Nokia 5110 LCD module connections (CLK, DIN, D/C, CS, RST)
-Adafruit_PCD8544 display = Adafruit_PCD8544(D4, D3, D2, D1, D0);
+//#define SCREEN_WIDTH 128 // OLED display
+//#define SCREEN_HEIGHT 64 // OLED display
+//#define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+//Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); // OLED display
 
-char phone_number[] = "12076192651";
+Adafruit_PCD8544 display = Adafruit_PCD8544(D4, D3, D2, D1, D0); // Nokia 5110 display
 
 bool simReady = false;
 bool isRinging = false;
@@ -31,6 +23,7 @@ const int textSize = 1;
 const int statsSize = 1;
 const int statMax = 10;
 const int displayMax = 24;
+const int displayContrast = 60;
 
 String currentNumber = "";
 String currentStats = "";
@@ -77,12 +70,8 @@ void displayStats()
   String newtext = "";
 
   display.setTextSize(statsSize); // Normal 1:1 pixel scale
-  //display.setTextColor(SSD1306_WHITE);  // Draw white text
-  display.setTextColor(BLACK);
   display.setCursor(0, 0);              // Start at top-left corner
-  //display.cp437(true);                  // Use full 256 char 'Code Page 437' font
   display.println(currentStats);
-  //display.write(currentStats);
   display.display();
 
   //Serial.print("displayStats() ~ ");
@@ -92,12 +81,9 @@ void displayStats()
 void displayText()
 {
   display.setTextSize(textSize); // Normal 1:1 pixel scale
-  display.setTextColor(BLACK);  // Draw white text
   display.setCursor(0, 20);             // Start at top-left corner
-  //display.cp437(true);                  // Use full 256 char 'Code Page 437' font
 
   display.println(currentText);
-  //display.write(currentText);
   display.display();
   //delay(2000);
 
@@ -107,12 +93,31 @@ void displayText()
 
 void clearDisplay()
 {
-  display.setContrast(60);
   display.clearDisplay();
   display.display();
   //current_stats = current_voltage;
   displayStats();
   displayText();
+}
+
+bool prepDisplay() {
+
+  /* OLED start
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64 // for OLED screen
+    Serial.println(F("SSD1306 allocation failed"));
+  }
+  display.setTextColor(SSD1306_WHITE);  // Draw white text
+  display.cp437(true);                  // Use full 256 char 'Code Page 437' font
+  */ /* OLED finish */
+
+  /* Nokia start */
+  display.begin(); // for Nokia screen
+  display.setTextColor(BLACK);
+  display.setContrast(displayContrast);
+  /* Nokia finish */
+  
+  currentStats = "Initializing";
+  clearDisplay();
 }
 
 void checkSimStatus()
@@ -163,6 +168,7 @@ void turnOffSim() {
 }
 
 void turnOnSim() {
+  Serial.print("turnOnSim() ~ Starting SIM");
   sim7600.PowerOn();
   currentStats = "SIM INIT";
   clearDisplay();
@@ -181,8 +187,8 @@ void getSimVoltage() {
       newvoltage[5] = myvoltage[i+7];
     }
   }
-  //Serial.print("getSimVoltage() ~ newvoltage: ");
-  //Serial.println(newvoltage);
+  Serial.print("getSimVoltage() ~ newvoltage: ");
+  Serial.println(newvoltage);
   currentStats = newvoltage;
   clearDisplay();
 }
@@ -190,16 +196,13 @@ void getSimVoltage() {
 void setup()
 {
   Serial.begin(ARDUINO_BAUD);
+  Serial.setTimeout(100);
 
   WiFi.mode(WIFI_OFF);
 
-  //if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
-    //Serial.println(F("SSD1306 allocation failed"));
-  //}
-  delay(500); // Pause for 2 seconds
-  currentStats = "Initializing";
-  display.begin();
-  clearDisplay();
+  delay(500);
+  prepDisplay();
+  delay(500);
 
   turnOnSim();
 }
@@ -207,7 +210,6 @@ void setup()
 void loop()
 {
   //Serial.println("loop() ~ START");
-  Serial.setTimeout(100);
   String keypad; // for incoming serial data
 
   if (Serial.available() > 0) {
@@ -265,7 +267,7 @@ void loop()
     startPhoneCall(mynumber);
   }
 
-  if (keypad == "<") {
+  if (keypad == "O") {
     answer();
     currentNumber = "";
   }
