@@ -71,7 +71,7 @@ void Sim7x00::PowerOn() {
 
 char* Sim7x00::GetVoltage() {
   //Serial.println("GetVoltage() ~ Start");
-  char* answer = sendATcommandResponse("AT+CBC", "OK", 1000);
+  char* answer = sendATcommandResponse("AT+CBC", "OK", 500);
   //Serial.print("GetVoltage() ~ Answer: ");
   //Serial.println(answer);
   //Serial.println("GetVoltage() ~ END");
@@ -80,7 +80,7 @@ char* Sim7x00::GetVoltage() {
 
 char Sim7x00::PowerOff() {
   uint8_t answer = 0;
-  answer = sendATcommand("AT+CPOF", "OK", 2000);
+  answer = sendATcommand("AT+CPOF", "OK", 500);
   return answer;
 }
 
@@ -93,7 +93,7 @@ void Sim7x00::PhoneCall(const char* PhoneNumber) {
   //  scanf("%s", PhoneNumber);
 
   sprintf(aux_str, "ATD%s;", PhoneNumber);
-  sendATcommand(aux_str, "OK", 2000);
+  sendATcommand(aux_str, "OK", 500);
 
   // press the button for hang the call
   //while (digitalRead(button) == 1);
@@ -105,12 +105,12 @@ void Sim7x00::PhoneCall(const char* PhoneNumber) {
 }
 
 void Sim7x00::HangUp() {
-  sendATcommand("AT+CHUP", "OK", 2000);
+  sendATcommand("AT+CHUP", "OK", 500);
   //delay(1000);
 }
 
 void Sim7x00::Answer() {
-  sendATcommand("ATA", "OK", 2000);
+  sendATcommand("ATA", "OK", 500);
 }
 
 /**************************SMS sending and receiving message **************************/
