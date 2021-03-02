@@ -1,6 +1,8 @@
 ## General info
 https://www.waveshare.com/wiki/SIM7600G-H_4G_HAT
 
+## Ideas on how to do a menu
+https://www.electronicshub.org/arduino-nokia-5110-menu/
 ## Network registration info
 https://m2msupport.net/m2msupport/network-registration/
 
