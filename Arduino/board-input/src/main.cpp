@@ -5,7 +5,7 @@ const byte KP_COLS = 4; //three columns
 char keys[KP_ROWS][KP_COLS] = {
   {'H', '3', '2', '1'},
   {'S', '6', '5', '4'},
-  {'O', '6', '8', '7'},
+  {'O', '9', '8', '7'},
   {'C', '#', '0', '*'}
 };
 
