@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import sys
 import os
+import time
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
@@ -43,7 +44,9 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 def myloop():
-    disp.updateDisp("mystats", "mytext");
+    while True:
+        disp.updateDisp("mystats", "mytext");
+        time.sleep(1);
 
 if __name__ == '__main__':
     #disp.displayText("Running");
