@@ -229,7 +229,7 @@ class EPD:
                         x = imwidth - x
                         buf[int(x / 8) + y * linewidth] &= ~(0x80 >> (x % 8))
         elif(imwidth == self.height and imheight == self.width):
-            logging.debug("Horizontal")
+            #logging.debug("Horizontal")
             for y in range(imheight):
                 for x in range(imwidth):
                     newx = y
