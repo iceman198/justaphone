@@ -49,10 +49,11 @@ def nametest(name):
 def myloop():
     global doLoop;
     global isRunning;
+    print('isRunning = ' + isRunning);
     if not isRunning:
         isRunning = True;
+        i = 0;
         while doLoop:
-            i = 0;
             print('looping...' + str(i));
             i = i + 1;
             #disp.updateDisp("mystats", "mytext");
