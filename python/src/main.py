@@ -50,7 +50,7 @@ def myloop():
     global doLoop;
     global isRunning;
     print('isRunning = ' + str(isRunning));
-    if not isRunning:
+    if isRunning == False:
         isRunning = True;
         i = 0;
         while doLoop:
@@ -59,9 +59,9 @@ def myloop():
             #disp.updateDisp("mystats", "mytext");
             time.sleep(1);
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #disp.displayText("Running");
-    print('Flask Running...');
-    p = Process(target=myloop);
-    p.start();
-    app.run(debug=True, host='0.0.0.0');
+#    print('Flask Running...');
+#    p = Process(target=myloop);
+#    p.start();
+#    app.run(debug=True, host='0.0.0.0');
