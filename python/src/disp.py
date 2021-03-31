@@ -32,7 +32,7 @@ def initDisplay():
     epd.displayPartBaseImage(epd.getbuffer(time_image));
     epd.init(epd.PART_UPDATE);
 
-def updateDisp(mytime, mystats, mytext):
+def updateDisp(mystats, mytext):
     try:
         global epd, font15, font24, time_image, time_draw;
 

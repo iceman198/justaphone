@@ -20,14 +20,14 @@ app = Flask(__name__);
 @app.route('/')
 def index():
     print('index triggered');
-    disp.displayText("Index hit");
+    #disp.displayText("Index hit");
     return render_template('index.html');
 
 @app.route('/service/makecall/<number>')
 def makecall(number):
     print('starting phone call to ', number);
     mybody = 'Making phone call to ', number;
-    disp.displayText("Calling " + number);
+    #disp.displayText("Calling " + number);
     sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
@@ -41,7 +41,7 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 if __name__ == '__main__':
-    #disp.initDisplay();
+    disp.initDisplay();
     #disp.displayText("Running");
     print('Flask Running...');
     app.run(debug=True, host='0.0.0.0');
