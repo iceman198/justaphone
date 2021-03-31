@@ -15,12 +15,11 @@ import traceback;
 
 logging.basicConfig(level=logging.DEBUG);
 
-global epd;
-global font15;
-global font24;
+epd, font15, font24 = None, None, None;
 
 def initDisplay():
     logging.info("disp.initDisplay() ~ init and Clear");
+    global epd, font15, font24;
     epd = epd2in13_V2.EPD();
     epd.init(epd.FULL_UPDATE);
     epd.Clear(0xFF);
@@ -29,6 +28,8 @@ def initDisplay():
 
 def displayText(text):
     try:
+        global epd, font15, font24;
+
         time_image = Image.new('1', (epd.height, epd.width), 255);
         time_draw = ImageDraw.Draw(time_image);
         
@@ -55,7 +56,7 @@ def displayText(text):
     except IOError as e:
         logging.info("disp.displayText() ~ " & e);
         
-    except KeyboardInterrupt:    
+    except KeyboardInterrupt:
         logging.info("disp.displayText() ~ KeyboardInterrupt: ctrl + c:");
         epd2in13_V2.epdconfig.module_exit();
         exit();
