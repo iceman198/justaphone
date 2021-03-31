@@ -16,6 +16,7 @@ import disp;
 import sim;
 
 doLoop = True;
+isRunning = False;
 
 #func.print_test();
 disp.initDisplay();
@@ -47,12 +48,15 @@ def nametest(name):
 
 def myloop():
     global doLoop;
-    while doLoop:
-        i = 0;
-        print('looping...' + str(i));
-        i = i + 1;
-        #disp.updateDisp("mystats", "mytext");
-        time.sleep(1);
+    global isRunning;
+    if not isRunning:
+        isRunning = true;
+        while doLoop:
+            i = 0;
+            print('looping...' + str(i));
+            i = i + 1;
+            #disp.updateDisp("mystats", "mytext");
+            time.sleep(1);
 
 if __name__ == '__main__':
     #disp.displayText("Running");
