@@ -16,7 +16,10 @@ import traceback;
 logging.basicConfig(level=logging.DEBUG)
 def displayText(text):
     try:
-        epd = epd2in13_V2.EPD()
+        epd = epd2in13_V2.EPD();
+        font15 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
+        font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+
         logging.info("init and Clear")
         epd.init(epd.FULL_UPDATE)
         epd.Clear(0xFF)
