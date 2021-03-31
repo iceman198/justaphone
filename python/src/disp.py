@@ -39,7 +39,7 @@ def updateDisp(mystats, mytext):
         time_draw.rectangle((180, 0, 220, 105), fill = 255);
         time_draw.text((180, 0), time.strftime('%H:%M:%S'), font = font15, fill = 0);
         epd.displayPartial(epd.getbuffer(time_image));
-        logging.info("disp.updateDisp() ~ Goto Sleep...");
+        #logging.info("disp.updateDisp() ~ Goto Sleep...");
         #epd.sleep();
             
     except IOError as e:

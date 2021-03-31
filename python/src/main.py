@@ -49,12 +49,12 @@ def nametest(name):
 def myloop():
     global doLoop;
     global isRunning;
-    print('isRunning = ' + str(isRunning));
+    #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
         i = 0;
         while doLoop:
-            print('looping...' + str(i));
+            #print('looping...' + str(i));
             i = i + 1;
             disp.updateDisp("mystats", "mytext");
             time.sleep(1);
