@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.DEBUG);
 epd, font15, font24 = None, None, None;
 
 def initDisplay():
-    logging.info("init and Clear");
+    logging.info("disp.initDisplay() ~ init and Clear");
     epd = epd2in13_V2.EPD();
     epd.init(epd.FULL_UPDATE);
     epd.Clear(0xFF);
@@ -43,17 +43,17 @@ def displayText(text):
             if(num == 20):
                 break;
         # epd.Clear(0xFF);
-        logging.info("Clear...");
+        logging.info("disp.displayText() ~ Clear...");
         epd.init(epd.FULL_UPDATE);
         epd.Clear(0xFF);
         
-        logging.info("Goto Sleep...");
+        logging.info("disp.displayText() ~ Goto Sleep...");
         epd.sleep();
             
     except IOError as e:
-        logging.info(e);
+        logging.info("disp.displayText() ~ " & e);
         
     except KeyboardInterrupt:    
-        logging.info("ctrl + c:");
+        logging.info("disp.displayText() ~ KeyboardInterrupt: ctrl + c:");
         epd2in13_V2.epdconfig.module_exit();
         exit();
