@@ -56,7 +56,7 @@ def myloop():
         while doLoop:
             print('looping...' + str(i));
             i = i + 1;
-            #disp.updateDisp("mystats", "mytext");
+            disp.updateDisp("mystats", "mytext");
             time.sleep(1);
 
 if __name__ == '__main__':
