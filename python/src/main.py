@@ -49,7 +49,7 @@ def myloop():
     global doLoop;
     while doLoop:
         i = 0;
-        print('looping...' + i);
+        print('looping...' + str(i));
         i = i + 1;
         #disp.updateDisp("mystats", "mytext");
         time.sleep(1);
