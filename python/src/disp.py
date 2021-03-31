@@ -15,6 +15,8 @@ import traceback;
 
 logging.basicConfig(level=logging.DEBUG);
 
+epd, font15, font24 = None;
+
 def initDisplay():
     logging.info("init and Clear");
     epd = epd2in13_V2.EPD();

@@ -7,12 +7,12 @@ import time
 #ser = serial.Serial('/dev/cu.SLAB_USBtoUART',115200);
 #ser = serial.Serial('/dev/ttyS0',115200);
 ser = serial.Serial('/dev/serial0',9600);
-ser.flushInput()
+ser.flushInput();
 
-phone_number = '12076192651'
-text_message = 'this is a test'
-power_key = 6
-rec_buff = ''
+phone_number = '12076192651';
+text_message = 'this is a test';
+power_key = 6;
+rec_buff = '';
 
 def send_at(command,back,timeout):
 	rec_buff = '';
