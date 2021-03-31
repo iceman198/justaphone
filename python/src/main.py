@@ -16,7 +16,6 @@ import sim;
 
 #func.print_test();
 disp.initDisplay();
-myloop();
 
 app = Flask(__name__);
 
@@ -50,4 +49,5 @@ if __name__ == '__main__':
 
 def myloop():
     disp.updateDisp("mystats", "mytext");
-    Timer(1, myloop).start();
+
+Timer(1, myloop).start();
