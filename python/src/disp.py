@@ -40,7 +40,7 @@ def displayText(text):
         num = 0;
         while (True):
             time_draw.rectangle((120, 80, 220, 105), fill = 255);
-            time_draw.text((120, 80), time.strftime('%H:%M:%S'), font = font24, fill = 0);
+            time_draw.text((0, 80), time.strftime('%H:%M:%S'), font = font24, fill = 0);
             epd.displayPartial(epd.getbuffer(time_image));
             num = num + 1;
             if(num == 20):
