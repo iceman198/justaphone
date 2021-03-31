@@ -15,6 +15,8 @@ import func;
 import disp;
 import sim;
 
+doLoop = True;
+
 #func.print_test();
 disp.initDisplay();
 
@@ -23,8 +25,6 @@ app = Flask(__name__);
 @app.route('/')
 def index():
     print('index triggered');
-    p = Process(target=myloop);
-    p.start();
     #disp.displayText("Index hit");
     return render_template('index.html');
 
@@ -46,8 +46,11 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 def myloop():
-    while True:
-        print('looping...');
+    global doLoop;
+    while doLoop:
+        i = 0;
+        print('looping...' + i);
+        i = i + 1;
         #disp.updateDisp("mystats", "mytext");
         time.sleep(1);
 
