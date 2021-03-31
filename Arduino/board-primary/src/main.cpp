@@ -114,6 +114,7 @@ bool prepDisplay() {
   display.begin(); // for Nokia screen
   display.setTextColor(BLACK);
   display.setContrast(displayContrast);
+  display.setRotation(2);
   /* Nokia finish */
   
   currentStats = "Initializing";
