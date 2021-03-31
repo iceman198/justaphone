@@ -58,13 +58,14 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 def myloop():
-    global doLoop, isRunning, currentStats, currentLine1, currentLine2;
+    global doLoop, isRunning;
     #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
         i = 0;
         while doLoop:
             #print('looping...' + str(i));
+            global currentStats, currentLine1, currentLine2
             i = i + 1;
             disp.updateDisp(currentStats, currentLine1, currentLine2);
             time.sleep(1);
