@@ -49,7 +49,7 @@ def nametest(name):
 def myloop():
     global doLoop;
     global isRunning;
-    print('isRunning = ' + isRunning);
+    print('isRunning = ' + str(isRunning));
     if not isRunning:
         isRunning = True;
         i = 0;
