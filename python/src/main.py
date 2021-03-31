@@ -7,7 +7,8 @@ libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__)
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
-from flask import Flask, render_template
+from flask import Flask, render_template;
+from threading import Timer;
 
 import func;
 import disp;
@@ -15,6 +16,7 @@ import sim;
 
 #func.print_test();
 disp.initDisplay();
+Timer(1, myloop).start();
 
 app = Flask(__name__);
 
@@ -46,3 +48,5 @@ if __name__ == '__main__':
     print('Flask Running...');
     app.run(debug=True, host='0.0.0.0');
 
+def myloop():
+    disp.updateDisp("mystats", "mytext");
