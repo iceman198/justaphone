@@ -39,7 +39,6 @@ def updateDisp(mystats, mytext):
         time_draw.rectangle((0, 0, 220, 105), fill = 255);
         time_draw.text((0, 0), time.strftime('%H:%M:%S'), font = font15, fill = 0);
         epd.displayPartial(epd.getbuffer(time_image));
-        num = num + 1;
         logging.info("disp.updateDisp() ~ Goto Sleep...");
         epd.sleep();
             
