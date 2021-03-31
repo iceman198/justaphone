@@ -57,4 +57,6 @@ def myloop():
 if __name__ == '__main__':
     #disp.displayText("Running");
     print('Flask Running...');
+    p = Process(target=myloop);
+    p.start();
     app.run(debug=True, host='0.0.0.0');
