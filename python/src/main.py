@@ -47,7 +47,8 @@ def nametest(name):
 
 def myloop():
     while True:
-        disp.updateDisp("mystats", "mytext");
+        print('looping...');
+        #disp.updateDisp("mystats", "mytext");
         time.sleep(1);
 
 if __name__ == '__main__':
