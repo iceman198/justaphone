@@ -14,6 +14,7 @@ import disp;
 import sim;
 
 #func.print_test();
+disp.initDisplay();
 
 app = Flask(__name__);
 
@@ -41,7 +42,6 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 if __name__ == '__main__':
-    disp.initDisplay();
     #disp.displayText("Running");
     print('Flask Running...');
     app.run(debug=True, host='0.0.0.0');
