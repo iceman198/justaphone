@@ -17,6 +17,9 @@ import sim;
 
 doLoop = True;
 isRunning = False;
+currentStats = "";
+currentLine1 = "";
+currentLine2 = "";
 
 #func.print_test();
 disp.initDisplay();
@@ -25,16 +28,22 @@ app = Flask(__name__);
 
 @app.route('/')
 def index():
+    global currentLine1;
+    currentLine1 = "Index Triggered";
     print('index triggered');
     #disp.displayText("Index hit");
     return render_template('index.html');
 
 @app.route('/service/makecall/<number>')
 def makecall(number):
+    global currentLine1, currentLine2;
+    currentLine1 = "Making call: ";
+    currentLine2 = number;
     print('starting phone call to ', number);
     mybody = 'Making phone call to ', number;
+
     #disp.displayText("Calling " + number);
-    sim.make_call(number);
+    #sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
         'body': mybody
@@ -43,12 +52,13 @@ def makecall(number):
 
 @app.route('/nametest/<name>')
 def nametest(name):
+    global currentLine2;
     print('name test triggered');
+    currentLine2 = name;
     return render_template('name.html', name=name);
 
 def myloop():
-    global doLoop;
-    global isRunning;
+    global doLoop, isRunning, currentStats, currentLine1, currentLine2;
     #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
@@ -56,7 +66,7 @@ def myloop():
         while doLoop:
             #print('looping...' + str(i));
             i = i + 1;
-            disp.updateDisp("mystats", "looping..." + str(i));
+            disp.updateDisp(currentStats, currentLine1, currentLine2);
             time.sleep(1);
 
 if __name__ == '__main__':
