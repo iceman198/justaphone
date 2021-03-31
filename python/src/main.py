@@ -80,6 +80,7 @@ if __name__ == '__main__':
 
 def keyboardInterruptHandler(signal, frame):
     print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
+    disp.cleanup();
     exit(0);
 
 signal.signal(signal.SIGINT, keyboardInterruptHandler)

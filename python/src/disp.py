@@ -46,11 +46,7 @@ def updateDisp(mystats, textLine1, textLine2):
             
     except IOError as e:
         logging.info("disp.updateDisp() ~ " & e);
-        
-    except KeyboardInterrupt:
-        logging.info("disp.updateDisp() ~ KeyboardInterrupt: ctrl + c:");
-        epd2in13_V2.epdconfig.module_exit();
-        exit();
+
 
 def cleanup():
     epd.Clear(0xFF);
