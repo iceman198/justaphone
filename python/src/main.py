@@ -17,6 +17,8 @@ import sim;
 
 app = Flask(__name__);
 
+disp.initDisplay();
+
 @app.route('/')
 def index():
     print('index triggered');
