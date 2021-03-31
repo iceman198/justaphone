@@ -23,6 +23,8 @@ app = Flask(__name__);
 @app.route('/')
 def index():
     print('index triggered');
+    p = Process(target=myloop);
+    p.start();
     #disp.displayText("Index hit");
     return render_template('index.html');
 
@@ -50,8 +52,5 @@ def myloop():
 
 if __name__ == '__main__':
     #disp.displayText("Running");
-    p = Process(target=myloop);
-    p.start();
-
     print('Flask Running...');
     app.run(debug=True, host='0.0.0.0');
