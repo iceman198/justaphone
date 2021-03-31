@@ -50,7 +50,7 @@ def myloop():
     global doLoop;
     global isRunning;
     if not isRunning:
-        isRunning = true;
+        isRunning = True;
         while doLoop:
             i = 0;
             print('looping...' + str(i));
