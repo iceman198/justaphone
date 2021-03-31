@@ -15,48 +15,38 @@ import traceback;
 
 logging.basicConfig(level=logging.DEBUG);
 
-epd, font15, font24 = None, None, None;
+epd, font15, font24, time_image, time_draw = None, None, None, None, None;
 
 def initDisplay():
     logging.info("disp.initDisplay() ~ init and Clear");
-    global epd, font15, font24;
+    global epd, font15, font24, time_image, time_draw;
     epd = epd2in13_V2.EPD();
     epd.init(epd.FULL_UPDATE);
     epd.Clear(0xFF);
+
     font15 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15);
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24);
+    time_image = Image.new('1', (epd.height, epd.width), 255);
+    time_draw = ImageDraw.Draw(time_image);
+    
+    epd.displayPartBaseImage(epd.getbuffer(time_image));
+    epd.init(epd.PART_UPDATE);
 
-def displayText(text):
+def updateDisp(mytime, mystats, mytext):
     try:
-        global epd, font15, font24;
+        global epd, font15, font24, time_image, time_draw;
 
-        time_image = Image.new('1', (epd.height, epd.width), 255);
-        time_draw = ImageDraw.Draw(time_image);
-        
-        epd.init(epd.FULL_UPDATE);
-        epd.displayPartBaseImage(epd.getbuffer(time_image));
-        
-        epd.init(epd.PART_UPDATE);
-        num = 0;
-        while (True):
-            time_draw.rectangle((0, 0, 220, 105), fill = 255);
-            time_draw.text((0, 0), time.strftime('%H:%M:%S'), font = font15, fill = 0);
-            epd.displayPartial(epd.getbuffer(time_image));
-            num = num + 1;
-            if(num == 20):
-                break;
-        # epd.Clear(0xFF);
-        logging.info("disp.displayText() ~ Clear...");
-        epd.init(epd.FULL_UPDATE);
-        epd.Clear(0xFF);
-        
-        logging.info("disp.displayText() ~ Goto Sleep...");
+        time_draw.rectangle((0, 0, 220, 105), fill = 255);
+        time_draw.text((0, 0), time.strftime('%H:%M:%S'), font = font15, fill = 0);
+        epd.displayPartial(epd.getbuffer(time_image));
+        num = num + 1;
+        logging.info("disp.updateDisp() ~ Goto Sleep...");
         epd.sleep();
             
     except IOError as e:
-        logging.info("disp.displayText() ~ " & e);
+        logging.info("disp.updateDisp() ~ " & e);
         
     except KeyboardInterrupt:
-        logging.info("disp.displayText() ~ KeyboardInterrupt: ctrl + c:");
+        logging.info("disp.updateDisp() ~ KeyboardInterrupt: ctrl + c:");
         epd2in13_V2.epdconfig.module_exit();
         exit();
