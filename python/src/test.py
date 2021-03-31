@@ -7,10 +7,9 @@ libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__)
 if os.path.exists(libdir):
     sys.path.append(libdir);
 
-#import sim;
-
-
 print os.sys.path;
+
+#import sim;
 
 #sim.SendShortMessage("12076192651","this is a test");
 #sim.ReceiveShortMessage("1");
