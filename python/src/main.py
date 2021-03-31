@@ -8,7 +8,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from flask import Flask, render_template;
-from threading import Timer;
+from multiprocessing import Process;
 
 import func;
 import disp;
@@ -42,12 +42,13 @@ def nametest(name):
     print('name test triggered');
     return render_template('name.html', name=name);
 
-if __name__ == '__main__':
-    #disp.displayText("Running");
-    print('Flask Running...');
-    app.run(debug=True, host='0.0.0.0');
-
 def myloop():
     disp.updateDisp("mystats", "mytext");
 
-Timer(1, myloop).start();
+if __name__ == '__main__':
+    #disp.displayText("Running");
+    p = Process(target=myloop);
+    p.start();
+
+    print('Flask Running...');
+    app.run(debug=True, host='0.0.0.0');
