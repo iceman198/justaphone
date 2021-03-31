@@ -15,7 +15,7 @@ import traceback;
 
 logging.basicConfig(level=logging.DEBUG);
 
-epd, font15, font24 = None, None, None;
+global epd, font15, font24 = None, None, None;
 
 def initDisplay():
     logging.info("disp.initDisplay() ~ init and Clear");
