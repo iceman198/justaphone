@@ -1,7 +1,8 @@
 #!/usr/bin/python
-import sys
-import os
-import time
+import sys;
+import os;
+import time;
+import signal;
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
@@ -76,3 +77,9 @@ if __name__ == '__main__':
     p = Process(target=myloop);
     p.start();
     app.run(debug=False, host='0.0.0.0');
+
+def keyboardInterruptHandler(signal, frame):
+    print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
+    exit(0);
+
+signal.signal(signal.SIGINT, keyboardInterruptHandler)

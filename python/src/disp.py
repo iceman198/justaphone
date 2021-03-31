@@ -51,3 +51,8 @@ def updateDisp(mystats, textLine1, textLine2):
         logging.info("disp.updateDisp() ~ KeyboardInterrupt: ctrl + c:");
         epd2in13_V2.epdconfig.module_exit();
         exit();
+
+def cleanup():
+    epd.Clear(0xFF);
+    logging.info("disp.cleanup() ~ Goto Sleep...");
+    epd.sleep();
