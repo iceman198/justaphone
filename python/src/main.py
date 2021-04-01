@@ -47,7 +47,7 @@ def makecall(number):
     #sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
-        'body': mybody
+        'body': str(mybody)
         }
     return resp_obj;
 
