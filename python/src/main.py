@@ -74,8 +74,6 @@ def myloop():
 if __name__ == '__main__':
     #disp.display_text("Running");
     print('Flask Running...');
-    thread1 = Thread(target=myloop);
-    thread1.join();
     app.run(debug=False, host='0.0.0.0');
 
 def keyboard_interrupt_handler(signal, frame):
@@ -83,4 +81,6 @@ def keyboard_interrupt_handler(signal, frame):
     disp.cleanup();
     exit(0);
 
+thread1 = Thread(target=myloop);
+thread1.join();
 signal.signal(signal.SIGINT, keyboard_interrupt_handler);
