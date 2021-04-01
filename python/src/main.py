@@ -54,20 +54,21 @@ def makecall(number):
 
 @app.route('/nametest/<name>')
 def nametest(name):
-    global currentLine2;
+    global currentLine1, currentLine2;
     print('name test triggered');
+    currentLine1 = "";
     currentLine2 = name;
     return render_template('name.html', name=name);
 
 def myloop():
     global doLoop, isRunning;
     global currentStats, currentLine1, currentLine2
-    print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
+    #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
         i = 0;
         while doLoop:
-            print('looping...' + str(i));
+            #print('looping...' + str(i));
             i = i + 1;
             disp.update_disp(currentStats, currentLine1, currentLine2);
             time.sleep(1);
