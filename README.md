@@ -3,7 +3,9 @@ Simple Raspberry Pi Phone
 
 # Notes
 Should go with either the SIM7100a or the SIM7600a.  I'm not able to find one that comes already
-soldered to a breakout.  I can find just the chip on Ebay or AliExpress.  
+soldered to a breakout.  I can find just the chip on Ebay or AliExpress.
+
+You will need to enable SPI and hardware serial (pip install pyserial).
 
 ## Audio
 If I order just the chip, maybe the audio breakout could work with a WT588D chip...?
@@ -14,3 +16,4 @@ docs say to protect it with an "ESD". Will need to figure out how to wire that i
 
 ## Python
 Waveshare 2.13v2 dipslay: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT_(B)
+Install python flask

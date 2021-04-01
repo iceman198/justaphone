@@ -67,12 +67,14 @@ def myloop():
     if isRunning == False:
         isRunning = True;
         i = 0;
+        start_time = time.time()
         while doLoop:
             try:
                 #print('looping...' + str(i));
                 i = i + 1;
-                disp.update_disp(currentStats, currentLine1, currentLine2);
-                time.sleep(1);
+                if (time.time() - start_time > 1):
+                    start_time = time.time();
+                    disp.update_disp(currentStats, currentLine1, currentLine2);
             except KeyboardInterrupt:
                 print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
                 disp.cleanup();
