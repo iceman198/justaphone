@@ -63,6 +63,7 @@ def nametest(name):
 def myloop():
     global doLoop, isRunning;
     global currentStats, currentLine1, currentLine2
+    signal.signal(signal.SIGINT, keyboard_interrupt_handler);
     #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
@@ -83,8 +84,6 @@ def start_flask():
     app.run(debug=False, host='0.0.0.0');
 
 if __name__ == '__main__':
-    #disp.display_text("Running");
-    signal.signal(signal.SIGINT, keyboard_interrupt_handler);
     thread1 = Thread(target=myloop);
     thread2 = Thread(target=start_flask);
     thread1.start();
