@@ -73,7 +73,7 @@ def myloop():
                 i = i + 1;
                 disp.update_disp(currentStats, currentLine1, currentLine2);
                 time.sleep(1);
-            except KeyboardInterrupt:    
+            except KeyboardInterrupt:
                 print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
                 disp.cleanup();
                 exit(0);
