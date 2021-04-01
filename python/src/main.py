@@ -24,6 +24,7 @@ currentLine2 = "";
 
 #func.print_test();
 disp.init_display();
+signal.signal(signal.SIGINT, keyboard_interrupt_handler);
 
 app = Flask(__name__);
 
@@ -63,7 +64,6 @@ def nametest(name):
 def myloop():
     global doLoop, isRunning;
     global currentStats, currentLine1, currentLine2
-    signal.signal(signal.SIGINT, keyboard_interrupt_handler);
     #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
