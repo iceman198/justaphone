@@ -22,8 +22,6 @@ currentStats = "";
 currentLine1 = "";
 currentLine2 = "";
 
-def keyboard_interrupt_handler(signal, frame):
-
 #func.print_test();
 disp.init_display();
 
