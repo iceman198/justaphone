@@ -82,5 +82,6 @@ def keyboard_interrupt_handler(signal, frame):
     exit(0);
 
 thread1 = Thread(target=myloop);
+thread1.start();
 thread1.join();
 signal.signal(signal.SIGINT, keyboard_interrupt_handler);
