@@ -10,7 +10,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from flask import Flask, render_template;
-from multiprocessing import Process;
+from threading import Thread;
 
 import func;
 import disp;
@@ -60,14 +60,13 @@ def nametest(name):
 
 def myloop():
     global doLoop, isRunning;
+    global currentStats, currentLine1, currentLine2
     #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
         i = 0;
-        signal.signal(signal.SIGINT, keyboard_interrupt_handler);        
         while doLoop:
             #print('looping...' + str(i));
-            global currentStats, currentLine1, currentLine2
             i = i + 1;
             disp.update_disp(currentStats, currentLine1, currentLine2);
             time.sleep(1);
@@ -75,8 +74,8 @@ def myloop():
 if __name__ == '__main__':
     #disp.display_text("Running");
     print('Flask Running...');
-    p = Process(target=myloop);
-    p.start();
+    thread1 = Thread(target=myloop);
+    thread1.join();
     app.run(debug=False, host='0.0.0.0');
 
 def keyboard_interrupt_handler(signal, frame):
