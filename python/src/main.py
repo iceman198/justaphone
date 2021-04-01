@@ -64,6 +64,7 @@ def myloop():
     if isRunning == False:
         isRunning = True;
         i = 0;
+        signal.signal(signal.SIGINT, keyboard_interrupt_handler);        
         while doLoop:
             #print('looping...' + str(i));
             global currentStats, currentLine1, currentLine2
@@ -83,4 +84,4 @@ def keyboard_interrupt_handler(signal, frame):
     disp.cleanup();
     exit(0);
 
-signal.signal(signal.SIGINT, keyboard_interrupt_handler)
+signal.signal(signal.SIGINT, keyboard_interrupt_handler);
