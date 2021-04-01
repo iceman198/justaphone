@@ -9,7 +9,7 @@ libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__)
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
-from flask import Flask, render_template;
+from flask import Flask, jsonify, render_template;
 from threading import Thread;
 
 import func;
