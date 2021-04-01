@@ -61,23 +61,23 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 def myloop():
-    try:
-        global doLoop, isRunning;
-        global currentStats, currentLine1, currentLine2
-        #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
-        if isRunning == False:
-            isRunning = True;
-            i = 0;
-            while doLoop:
+    global doLoop, isRunning;
+    global currentStats, currentLine1, currentLine2
+    #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
+    if isRunning == False:
+        isRunning = True;
+        i = 0;
+        while doLoop:
+            try:
                 #print('looping...' + str(i));
                 i = i + 1;
                 disp.update_disp(currentStats, currentLine1, currentLine2);
                 time.sleep(1);
-    except KeyboardInterrupt:    
-        print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
-        disp.cleanup();
-        exit(0);
-        #epd2in13_V2.epdconfig.module_exit()
+            except KeyboardInterrupt:    
+                print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
+                disp.cleanup();
+                exit(0);
+                #epd2in13_V2.epdconfig.module_exit()
 
 def start_flask():
     print('Flask Running...');
