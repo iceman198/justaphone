@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG);
 
 epd, font15, font24, time_image, time_draw = None, None, None, None, None;
 
-def initDisplay():
+def init_display():
     logging.info("disp.initDisplay() ~ init and Clear");
     global epd, font15, font24, time_image, time_draw;
     epd = epd2in13_V2.EPD();
@@ -32,7 +32,7 @@ def initDisplay():
     epd.displayPartBaseImage(epd.getbuffer(time_image));
     epd.init(epd.PART_UPDATE);
 
-def updateDisp(mystats, textLine1, textLine2):
+def update_disp(mystats, textLine1, textLine2):
     try:
         global epd, font15, font24, time_image, time_draw;
 

@@ -70,7 +70,7 @@ def make_call(phone_number):
 		ser.close();
 		GPIO.cleanup();
 
-def SendShortMessage(phone_number,text_message):
+def send_short_message(phone_number,text_message):
 	print("Setting SMS mode...");
 	send_at("AT+CMGF=1","OK",1);
 	print("Sending Short Message");
@@ -86,7 +86,7 @@ def SendShortMessage(phone_number,text_message):
 	else:
 		print('error%d'%answer);
 
-def ReceiveShortMessage(msgId):
+def receive_short_message(msgId):
 	rec_buff = '';
 	print('Setting SMS mode...');
 	send_at('AT+CMGF=1','OK',1);
@@ -102,7 +102,7 @@ def ReceiveShortMessage(msgId):
 		return False;
 	return True;
 
-def DeleteMessage(msgId):
+def delete_message(msgId):
 	print('Deleting message');
 	answer = send_at('AT+CMGD='+msgId,'OK',5);
 	if 1 == answer:
@@ -110,6 +110,6 @@ def DeleteMessage(msgId):
 	else:
 		print('error%d'%answer);
 
-def ReadVoltage():
+def read_voltage():
 	print('Reading voltage');
 	send_at('AT+CBC','',2);

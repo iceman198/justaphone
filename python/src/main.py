@@ -23,7 +23,7 @@ currentLine1 = "";
 currentLine2 = "";
 
 #func.print_test();
-disp.initDisplay();
+disp.init_display();
 
 app = Flask(__name__);
 
@@ -32,7 +32,7 @@ def index():
     global currentLine1;
     currentLine1 = "Index Triggered";
     print('index triggered');
-    #disp.displayText("Index hit");
+    #disp.display_text("Index hit");
     return render_template('index.html');
 
 @app.route('/service/makecall/<number>')
@@ -43,7 +43,7 @@ def makecall(number):
     print('starting phone call to ', number);
     mybody = 'Making phone call to ', number;
 
-    #disp.displayText("Calling " + number);
+    #disp.display_text("Calling " + number);
     #sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
@@ -68,19 +68,19 @@ def myloop():
             #print('looping...' + str(i));
             global currentStats, currentLine1, currentLine2
             i = i + 1;
-            disp.updateDisp(currentStats, currentLine1, currentLine2);
+            disp.update_disp(currentStats, currentLine1, currentLine2);
             time.sleep(1);
 
 if __name__ == '__main__':
-    #disp.displayText("Running");
+    #disp.display_text("Running");
     print('Flask Running...');
     p = Process(target=myloop);
     p.start();
     app.run(debug=False, host='0.0.0.0');
 
-def keyboardInterruptHandler(signal, frame):
+def keyboard_interrupt_handler(signal, frame):
     print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
     disp.cleanup();
     exit(0);
 
-signal.signal(signal.SIGINT, keyboardInterruptHandler)
+signal.signal(signal.SIGINT, keyboard_interrupt_handler)
