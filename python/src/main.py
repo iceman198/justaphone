@@ -71,17 +71,21 @@ def myloop():
             disp.update_disp(currentStats, currentLine1, currentLine2);
             time.sleep(1);
 
-if __name__ == '__main__':
-    #disp.display_text("Running");
-    print('Flask Running...');
-    thread1 = Thread(target=myloop);
-    thread1.start();
-    thread1.join();
-    app.run(debug=False, host='0.0.0.0');
-
 def keyboard_interrupt_handler(signal, frame):
     print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
     disp.cleanup();
     exit(0);
 
-signal.signal(signal.SIGINT, keyboard_interrupt_handler);
+def start_flask():
+    print('Flask Running...');
+    app.run(debug=False, host='0.0.0.0');
+
+if __name__ == '__main__':
+    #disp.display_text("Running");
+    signal.signal(signal.SIGINT, keyboard_interrupt_handler);
+    thread1 = Thread(target=myloop);
+    thread2 = Thread(target=start_flask);
+    thread1.start();
+    thread2.start();
+    thread1.join();
+    thread2.join();
