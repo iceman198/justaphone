@@ -22,6 +22,11 @@ currentStats = "";
 currentLine1 = "";
 currentLine2 = "";
 
+def keyboard_interrupt_handler(signal, frame):
+    print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
+    disp.cleanup();
+    exit(0);
+
 #func.print_test();
 disp.init_display();
 signal.signal(signal.SIGINT, keyboard_interrupt_handler);
@@ -73,11 +78,6 @@ def myloop():
             i = i + 1;
             disp.update_disp(currentStats, currentLine1, currentLine2);
             time.sleep(1);
-
-def keyboard_interrupt_handler(signal, frame):
-    print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
-    disp.cleanup();
-    exit(0);
 
 def start_flask():
     print('Flask Running...');
