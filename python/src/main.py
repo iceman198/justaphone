@@ -41,15 +41,16 @@ def makecall(number):
     currentLine1 = "Making call: ";
     currentLine2 = number;
     print('starting phone call to ', number);
-    mybody = 'Making phone call to ' + number;
+    mybody = 'Making phone call to ', number;
 
     #disp.display_text("Calling " + number);
     #sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
-        'body': str(mybody)
+        'body': mybody
         }
-    return resp_obj;
+    #return resp_obj;
+    return jsonify(resp_obj);
 
 @app.route('/nametest/<name>')
 def nametest(name):
