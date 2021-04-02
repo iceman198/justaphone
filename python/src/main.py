@@ -35,8 +35,25 @@ def index():
     #disp.display_text("Index hit");
     return render_template('index.html');
 
+@app.route('/service/turnonsim/<')
+def turn_on_sim():
+    global currentLine1, currentLine2;
+    currentLine1 = "turning on sim";
+    currentLine2 = "";
+    print(currentLine1 + currentLine2);
+    mybody = currentLine1 + currentLine2;
+
+    #disp.display_text("Calling " + number);
+    sim.power_on();
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    #return resp_obj;
+    return jsonify(resp_obj);
+
 @app.route('/service/makecall/<number>')
-def makecall(number):
+def make_call(number):
     global currentLine1, currentLine2;
     currentLine1 = "Making call: ";
     currentLine2 = number;

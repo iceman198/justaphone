@@ -11,7 +11,7 @@ ser.flushInput();
 
 phone_number = '12076192651';
 text_message = 'this is a test';
-power_key = 6;
+power_key = 4;
 rec_buff = '';
 
 def send_at(command,back,timeout):
@@ -30,7 +30,6 @@ def send_at(command,back,timeout):
 		return 1;
 
 def power_on():
-	print('SIM7600X is starting:');
 	GPIO.setmode(GPIO.BCM);
 	GPIO.setwarnings(False);
 	GPIO.setup(power_key,GPIO.OUT);
@@ -38,9 +37,9 @@ def power_on():
 	GPIO.output(power_key,GPIO.HIGH);
 	time.sleep(2);
 	GPIO.output(power_key,GPIO.LOW);
-	time.sleep(20);
+	#time.sleep(20);
+	time.sleep(2);
 	ser.flushInput();
-	print('SIM7600X is ready');
 
 def power_down():
 	print('SIM7600X is loging off:');
