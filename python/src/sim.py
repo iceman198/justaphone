@@ -41,7 +41,7 @@ def power_on():
 	time.sleep(2);
 	ser.flushInput();
 
-def power_down():
+def power_off():
 	try:
 		send_at('AT+CPOF','OK',1);
 	except :
