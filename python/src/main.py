@@ -37,9 +37,11 @@ def check_for_input():
 	if serInput.inWaiting():
 		time.sleep(0.01 );
 		rec_buff = serInput.read(serInput.inWaiting());
+    if (len(rec_buff.decode()) > 0):
+        print("something");
 
-    if len(rec_buff) <= 1:
-	    print('check_for_input() ~ rec_buff: ' + rec_buff.decode());
+	print('check_for_input() ~ rec_buff: ' + rec_buff.decode());
+	return rec_buff.decode();
 
 @app.route('/')
 def index():
