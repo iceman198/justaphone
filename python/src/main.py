@@ -3,18 +3,19 @@ import sys;
 import os;
 import time;
 import signal;
+import serial;
+
+from flask import Flask, jsonify, render_template;
+from threading import Thread;
+
+import disp;
+import sim;
+import func;
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
-
-from flask import Flask, jsonify, render_template;
-from threading import Thread;
-
-import func;
-import disp;
-import sim;
 
 doLoop = True;
 isRunning = False;
@@ -25,8 +26,20 @@ simgood = False;
 
 #func.print_test();
 disp.init_display();
+serInput = serial.Serial('/dev/ttyUSB0',9600);
+serInput.flushInput();
 
 app = Flask(__name__);
+
+def check_for_input():
+	rec_buff = '';
+	time.sleep(0.25);
+	if serInput.inWaiting():
+		time.sleep(0.01 );
+		rec_buff = serInput.read(serInput.inWaiting());
+
+	print('check_for_input() ~ rec_buff: ' + rec_buff.decode());
+	return rec_buff.decode();
 
 @app.route('/')
 def index():
@@ -104,7 +117,7 @@ def myloop():
     if isRunning == False:
         isRunning = True;
         i = 0;
-        start_time = time.time()
+        start_time = time.time();
         while doLoop:
             try:
                 #print('looping...' + str(i));
@@ -115,6 +128,8 @@ def myloop():
                 
                 if (simgood):
                     sim.check_voltage();
+
+                check_for_input();
 
             except KeyboardInterrupt:
                 print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
