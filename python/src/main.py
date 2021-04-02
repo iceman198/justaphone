@@ -101,12 +101,14 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 def check_for_input():
+    global currentLine1, currentLine2;
     rec_buff = '';
     time.sleep(0.25);
     if serInput.inWaiting():
         time.sleep(0.01 );
         rec_buff = serInput.read(serInput.inWaiting());
         print('check_for_input() ~ rec_buff: ' + rec_buff.decode());
+        currentLine2 = currentLine2 + rec_buff.decode();
     return rec_buff.decode();
 
 def myloop():
