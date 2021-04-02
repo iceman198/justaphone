@@ -35,7 +35,7 @@ def index():
     #disp.display_text("Index hit");
     return render_template('index.html');
 
-@app.route('/service/turnonsim/<')
+@app.route('/service/turnonsim/')
 def turn_on_sim():
     global currentLine1, currentLine2;
     currentLine1 = "turning on sim";
