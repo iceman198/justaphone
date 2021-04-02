@@ -14,6 +14,16 @@ text_message = 'this is a test';
 power_key = 4;
 rec_buff = '';
 
+def check_for_msg():
+	rec_buff = '';
+	time.sleep(0.25);
+	if ser.inWaiting():
+		time.sleep(0.01 );
+		rec_buff = ser.read(ser.inWaiting());
+
+	print('sim.check_for_msg() ~ rec_buff: ' + rec_buff.decode());
+	return rec_buff.decode();
+
 def send_at(command,back,timeout):
 	rec_buff = '';
 	ser.write((command+'\r\n').encode());
@@ -24,10 +34,10 @@ def send_at(command,back,timeout):
 	if back not in rec_buff.decode():
 		print(command + ' ERROR');
 		print(command + ' back:\t' + rec_buff.decode());
-		return 0;
+		return 'ERROR';
 	else:
 		print(rec_buff.decode());
-		return 1;
+		return rec_buff.decode();
 
 def power_on():
 	GPIO.setmode(GPIO.BCM);
@@ -47,11 +57,16 @@ def power_off():
 	except :
 		if ser != None:
 			ser.close();
-			GPIO.cleanup();
 
 	if ser != None:
 		ser.close();
-		GPIO.cleanup();
+
+def check_voltage():
+	try:
+		resp = send_at('AT+CBC','OK',0.5);
+		print('sim.check_voltage() ~ resp: ' + resp);
+	except:
+		print('sim.check_voltage() ~ error getting voltage');
 
 def make_call(phone_number):
 	try:

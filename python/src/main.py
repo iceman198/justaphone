@@ -21,6 +21,7 @@ isRunning = False;
 currentStats = "";
 currentLine1 = "";
 currentLine2 = "";
+simgood = False;
 
 #func.print_test();
 disp.init_display();
@@ -37,7 +38,7 @@ def index():
 
 @app.route('/service/turnonsim/')
 def turn_on_sim():
-    global currentLine1, currentLine2;
+    global currentLine1, currentLine2, simgood;
     currentLine1 = "turning on sim";
     currentLine2 = "";
     print(currentLine1 + currentLine2);
@@ -50,6 +51,7 @@ def turn_on_sim():
         'body': mybody
         }
     #return resp_obj;
+    simgood = True;
     return jsonify(resp_obj);
 
 @app.route('/service/turnoffsim/')
@@ -95,7 +97,7 @@ def nametest(name):
     return render_template('name.html', name=name);
 
 def myloop():
-    global doLoop, isRunning;
+    global doLoop, isRunning, simgood;
     global currentStats, currentLine1, currentLine2
     #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
@@ -109,6 +111,10 @@ def myloop():
                 if (time.time() - start_time > 1):
                     start_time = time.time();
                     disp.update_disp(currentStats, currentLine1, currentLine2);
+                
+                if (simgood):
+                    sim.check_voltage();
+                    
             except KeyboardInterrupt:
                 print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
                 disp.cleanup();
