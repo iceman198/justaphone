@@ -56,7 +56,8 @@ def turn_on_sim():
 
 @app.route('/service/turnoffsim/')
 def turn_off_sim():
-    global currentLine1, currentLine2;
+    global currentLine1, currentLine2, simgood;
+    simgood = False;
     currentLine1 = "turning off sim";
     currentLine2 = "";
     print(currentLine1 + currentLine2);
@@ -114,7 +115,7 @@ def myloop():
                 
                 if (simgood):
                     sim.check_voltage();
-                    
+
             except KeyboardInterrupt:
                 print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
                 disp.cleanup();
