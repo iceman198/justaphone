@@ -55,6 +55,7 @@ def power_off():
 	try:
 		send_at('AT+CPOF','OK',1);
 	except :
+		print('sim.power_off() ~ error turning off sim');
 		if ser != None:
 			ser.close();
 
