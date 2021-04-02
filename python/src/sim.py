@@ -42,15 +42,16 @@ def power_on():
 	ser.flushInput();
 
 def power_down():
-	print('SIM7600X is loging off:');
-	GPIO.setmode(GPIO.BCM);
-	GPIO.setwarnings(False);
-	GPIO.setup(power_key,GPIO.OUT);
-	GPIO.output(power_key,GPIO.HIGH);
-	time.sleep(3);
-	GPIO.output(power_key,GPIO.LOW);
-	time.sleep(18);
-	print('Good bye');
+	try:
+		send_at('AT+CPOF','OK',1);
+	except :
+		if ser != None:
+			ser.close();
+			GPIO.cleanup();
+
+	if ser != None:
+		ser.close();
+		GPIO.cleanup();
 
 def make_call(phone_number):
 	try:

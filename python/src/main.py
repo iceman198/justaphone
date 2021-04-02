@@ -52,6 +52,23 @@ def turn_on_sim():
     #return resp_obj;
     return jsonify(resp_obj);
 
+@app.route('/service/turnoffsim/')
+def turn_off_sim():
+    global currentLine1, currentLine2;
+    currentLine1 = "turning off sim";
+    currentLine2 = "";
+    print(currentLine1 + currentLine2);
+    mybody = currentLine1 + currentLine2;
+
+    #disp.display_text("Calling " + number);
+    sim.power_off();
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    #return resp_obj;
+    return jsonify(resp_obj);
+
 @app.route('/service/makecall/<number>')
 def make_call(number):
     global currentLine1, currentLine2;
