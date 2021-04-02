@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import sys
 import RPi.GPIO as GPIO
 import serial
 import time
@@ -55,19 +56,14 @@ def power_off():
 	try:
 		send_at('AT+CPOF','OK',1);
 	except :
-		print('sim.power_off() ~ error turning off sim');
-		if ser != None:
-			ser.close();
-
-	if ser != None:
-		ser.close();
+		print('sim.power_off() ~ error: ', sys.exc_info()[0]);
 
 def check_voltage():
 	try:
 		resp = send_at('AT+CBC','OK',0.5);
 		print('sim.check_voltage() ~ resp: ' + resp);
 	except:
-		print('sim.check_voltage() ~ error getting voltage');
+		print('sim.check_voltage() ~ error: ', sys.exc_info()[0]);
 
 def make_call(phone_number):
 	try:
@@ -78,13 +74,7 @@ def make_call(phone_number):
 		print('Call disconnected');
 		#power_down();
 	except :
-		if ser != None:
-			ser.close();
-			GPIO.cleanup();
-
-	if ser != None:
-		ser.close();
-		GPIO.cleanup();
+		print('sim.make_call() ~ error: ', sys.exc_info()[0]);
 
 def send_short_message(phone_number,text_message):
 	print("Setting SMS mode...");
