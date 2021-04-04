@@ -41,7 +41,7 @@ def index():
 
 @app.route('/service/turnonsim/')
 def turn_on_sim():
-    global currentLine1, currentLine2, simgood;
+    global currentLine1, currentLine2;
     currentLine1 = "turning on sim";
     currentLine2 = "";
     print(currentLine1 + currentLine2);
@@ -54,7 +54,6 @@ def turn_on_sim():
         'body': mybody
         }
     #return resp_obj;
-    simgood = True;
     return jsonify(resp_obj);
 
 @app.route('/service/turnoffsim/')
@@ -105,11 +104,28 @@ def check_for_input():
     rec_buff = '';
     time.sleep(0.25);
     if serInput.inWaiting():
-        time.sleep(0.01 );
+        time.sleep(0.01);
         rec_buff = serInput.read(serInput.inWaiting());
         print('check_for_input() ~ rec_buff: ' + rec_buff.decode());
         currentLine2 = currentLine2 + rec_buff.decode();
     return rec_buff.decode();
+
+def check_sim_notification():
+    global currentLine1, currentLine2, simgood;
+    msg = sim.check_for_message();
+    if (len(msg) > 0):
+        if "PB DONE" in msg:
+            simgood = True;
+            currentLine1 = "turning on sim";
+            currentLine2 = "";
+            
+        if "RING" in msg:
+            currentLine1 = "INCOMING CALL:";
+            currentLine2 = "";
+
+        if "MISSED" in msg:
+            currentLine1 = "MISSED CALL: ";
+            currentLine2 = msg;
 
 def myloop():
     global doLoop, isRunning, simgood;

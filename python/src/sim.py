@@ -67,12 +67,7 @@ def check_voltage():
 
 def make_call(phone_number):
 	try:
-		#power_on();
 		send_at('ATD'+phone_number+';','OK',1);
-		time.sleep(10);
-		ser.write('AT+CHUP\r\n'.encode());
-		print('Call disconnected');
-		#power_down();
 	except :
 		print('sim.make_call() ~ error: ', sys.exc_info()[0]);
 
@@ -116,6 +111,14 @@ def delete_message(msgId):
 	else:
 		print('error%d'%answer);
 
-def read_voltage():
-	print('Reading voltage');
-	send_at('AT+CBC','',2);
+def hangup():
+	try:
+		ser.write('AT+CHUP\r\n'.encode());
+	except :
+		print('sim.hangup() ~ error: ', sys.exc_info()[0]);
+
+def answer_call():
+	try:
+		send_at('ATA','OK',0.5);
+	except :
+		print('sim.answer_call() ~ error: ', sys.exc_info()[0]);
