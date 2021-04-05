@@ -1,9 +1,7 @@
+import time;
+
 def print_test():
     print('This is a test');
 
-def findLen(str):
-    counter = 0    
-    for i in str:
-        counter += 1
-    return counter
-  
+def log(file, service, text):
+    print(file, '.', time.strftime('%a, %d %b %Y %H:%M:%S GMT', time.localtime()), '() ~ ', text);

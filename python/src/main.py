@@ -32,20 +32,20 @@ serInput.flushInput();
 app = Flask(__name__);
 
 def check_for_input():
-    print('check_for_input() ~ start');
+    func.log('main.py', 'check_for_input', 'start');
     global currentLine1, currentLine2;
     rec_buff = '';
     time.sleep(0.25);
     if serInput.inWaiting():
         time.sleep(0.01);
         rec_buff = serInput.read(serInput.inWaiting());
-        print('check_for_input() ~ rec_buff: ' + rec_buff.decode());
+        func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
         currentLine2 = currentLine2 + rec_buff.decode();
-    print('check_for_input() ~ end');
+    func.log('main.py', 'check_for_input', 'end');
     return rec_buff.decode();
 
 def check_sim_notification():
-    print('check_sim_notification() ~ start');
+    func.log('main.py', 'check_sim_notification', 'start');
     global currentLine1, currentLine2, simgood;
     msg = sim.check_for_message();
     if (len(msg) > 0):
@@ -61,7 +61,7 @@ def check_sim_notification():
         if "MISSED" in msg:
             currentLine1 = "MISSED CALL: ";
             currentLine2 = msg;
-    print('check_sim_notification() ~ end');
+    func.log('main.py', 'check_sim_notification', 'end');
 
 def turn_on_sim():
     global currentLine1, currentLine2;
@@ -80,7 +80,6 @@ def turn_off_sim():
 def index():
     global currentLine1;
     currentLine1 = "Index Triggered";
-    print('index triggered');
     #disp.display_text("Index hit");
     return render_template('index.html');
 
@@ -99,7 +98,6 @@ def make_call(number):
     global currentLine1, currentLine2;
     currentLine1 = "Making call: ";
     currentLine2 = number;
-    print('starting phone call to ' + str(number));
     mybody = 'Making phone call to ' + str(number);
 
     #disp.display_text("Calling " + number);
@@ -114,7 +112,6 @@ def make_call(number):
 @app.route('/nametest/<name>')
 def nametest(name):
     global currentLine1, currentLine2;
-    print('name test triggered');
     currentLine1 = "";
     currentLine2 = name;
     return render_template('name.html', name=name);
@@ -129,7 +126,7 @@ def myloop():
         start_time = time.time();
         while doLoop:
             try:
-                print('looping...' + str(time.time()));
+                func.log('main.py', 'myloop', 'looping...');
                 if (time.time() - start_time > 1):
                     start_time = time.time();
                     disp.update_disp(currentStats, currentLine1, currentLine2);
@@ -141,13 +138,13 @@ def myloop():
                 check_for_input();
 
             except KeyboardInterrupt:
-                print("KeyboardInterrupt (ID: {}) has been caught. Cleaning up...".format(signal));
+                func.log('main.py', 'myloop', 'KeyboardInterrupt (ID: {}) has been caught. Cleaning up...'.format(signal));
                 disp.cleanup();
                 exit(0);
                 #epd2in13_V2.epdconfig.module_exit()
 
 def start_flask():
-    print('Flask Running...');
+    func.log('main.py', 'start_flask', 'Flask running');
     app.run(debug=False, host='0.0.0.0');
 
 if __name__ == '__main__':
