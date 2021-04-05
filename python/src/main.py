@@ -151,9 +151,14 @@ def start_flask():
     app.run(debug=False, host='0.0.0.0');
 
 if __name__ == '__main__':
-    thread1 = Thread(target=myloop);
-    thread2 = Thread(target=start_flask);
-    thread1.start();
-    thread2.start();
-    thread1.join();
-    thread2.join();
+    try
+        thread1 = Thread(target=myloop);
+        thread2 = Thread(target=start_flask);
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+    except :
+        func.log('main.py', '__main__', 'Exception (ID: {}) has been caught. Cleaning up...'.format(signal));
+        disp.cleanup();
+        exit(0);
