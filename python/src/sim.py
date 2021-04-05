@@ -30,7 +30,7 @@ def send_at(command,back,timeout):
 	ser.write((command+'\r\n').encode());
 	time.sleep(timeout);
 	if ser.inWaiting():
-		time.sleep(0.01 );
+		time.sleep(0.01);
 		rec_buff = ser.read(ser.inWaiting());
 	if back not in rec_buff.decode():
 		print(command + ' ERROR');
