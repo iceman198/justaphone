@@ -31,74 +31,6 @@ serInput.flushInput();
 
 app = Flask(__name__);
 
-@app.route('/')
-def index():
-    global currentLine1;
-    currentLine1 = "Index Triggered";
-    print('index triggered');
-    #disp.display_text("Index hit");
-    return render_template('index.html');
-
-@app.route('/service/turnonsim/')
-def turn_on_sim():
-    global currentLine1, currentLine2;
-    currentLine1 = "turning on sim";
-    currentLine2 = "";
-    print(currentLine1 + currentLine2);
-    mybody = currentLine1 + currentLine2;
-
-    #disp.display_text("Calling " + number);
-    sim.power_on();
-    resp_obj = {
-        'status': "SUCCESS",
-        'body': mybody
-        }
-    #return resp_obj;
-    return jsonify(resp_obj);
-
-@app.route('/service/turnoffsim/')
-def turn_off_sim():
-    global currentLine1, currentLine2, simgood;
-    simgood = False;
-    currentLine1 = "turning off sim";
-    currentLine2 = "";
-    print(currentLine1 + currentLine2);
-    mybody = currentLine1 + currentLine2;
-
-    #disp.display_text("Calling " + number);
-    sim.power_off();
-    resp_obj = {
-        'status': "SUCCESS",
-        'body': mybody
-        }
-    #return resp_obj;
-    return jsonify(resp_obj);
-
-@app.route('/service/makecall/<number>')
-def make_call(number):
-    global currentLine1, currentLine2;
-    currentLine1 = "Making call: ";
-    currentLine2 = number;
-    print('starting phone call to ' + str(number));
-    mybody = 'Making phone call to ' + str(number);
-
-    #disp.display_text("Calling " + number);
-    #sim.make_call(number);
-    resp_obj = {
-        'status': "SUCCESS",
-        'body': mybody
-        }
-    #return resp_obj;
-    return jsonify(resp_obj);
-
-@app.route('/nametest/<name>')
-def nametest(name):
-    global currentLine1, currentLine2;
-    print('name test triggered');
-    currentLine1 = "";
-    currentLine2 = name;
-    return render_template('name.html', name=name);
-
 def check_for_input():
     global currentLine1, currentLine2;
     rec_buff = '';
@@ -126,6 +58,62 @@ def check_sim_notification():
         if "MISSED" in msg:
             currentLine1 = "MISSED CALL: ";
             currentLine2 = msg;
+
+def turn_on_sim():
+    global currentLine1, currentLine2;
+    currentLine1 = "turning on sim";
+    currentLine2 = "";
+    sim.power_on();
+
+def turn_off_sim():
+    global currentLine1, currentLine2, simgood;
+    simgood = False;
+    currentLine1 = "turning off sim";
+    currentLine2 = "";
+    sim.power_off();
+
+@app.route('/')
+def index():
+    global currentLine1;
+    currentLine1 = "Index Triggered";
+    print('index triggered');
+    #disp.display_text("Index hit");
+    return render_template('index.html');
+
+
+@app.route('/service/jsontest/')
+def json_test():
+    mybody = "This is my json test";
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    return jsonify(resp_obj);
+
+@app.route('/service/makecall/<number>')
+def make_call(number):
+    global currentLine1, currentLine2;
+    currentLine1 = "Making call: ";
+    currentLine2 = number;
+    print('starting phone call to ' + str(number));
+    mybody = 'Making phone call to ' + str(number);
+
+    #disp.display_text("Calling " + number);
+    #sim.make_call(number);
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    #return resp_obj;
+    return jsonify(resp_obj);
+
+@app.route('/nametest/<name>')
+def nametest(name):
+    global currentLine1, currentLine2;
+    print('name test triggered');
+    currentLine1 = "";
+    currentLine2 = name;
+    return render_template('name.html', name=name);
 
 def myloop():
     global doLoop, isRunning, simgood;
