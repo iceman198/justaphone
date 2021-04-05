@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
-import sys
-import RPi.GPIO as GPIO
-import serial
-import time
+import sys;
+import RPi.GPIO as GPIO;
+import serial;
+import time;
+import func;
 
 #ser = serial.Serial('/dev/cu.SLAB_USBtoUART',115200);
 #ser = serial.Serial('/dev/ttyS0',115200);
@@ -22,7 +23,7 @@ def check_for_msg():
 		time.sleep(0.01 );
 		rec_buff = ser.read(ser.inWaiting());
 
-	print('sim.check_for_msg() ~ rec_buff: ' + rec_buff.decode());
+	func.log('sim.py', 'check_for_msg', 'rec_buff: ' + rec_buff.decode());
 	return rec_buff.decode();
 
 def send_at(command,back,timeout):
@@ -33,11 +34,11 @@ def send_at(command,back,timeout):
 		time.sleep(0.01);
 		rec_buff = ser.read(ser.inWaiting());
 	if back not in rec_buff.decode():
-		print(command + ' ERROR');
-		print(command + ' back:\t' + rec_buff.decode());
+		func.log('sim.py', 'send_at', command + ' ERROR');
+		func.log('sim.py', 'send_at', command + ' back:\t' + rec_buff.decode());
 		return 'ERROR';
 	else:
-		print(rec_buff.decode());
+		func.log('sim.py', 'send_at', rec_buff.decode());
 		return rec_buff.decode();
 
 def power_on():
@@ -56,40 +57,39 @@ def power_off():
 	try:
 		send_at('AT+CPOF','OK',1);
 	except :
-		print('sim.power_off() ~ error: ', sys.exc_info()[0]);
+		func.log('sim.py', 'power_off', 'error: ' + str(sys.exc_info()[0]));
 
 def check_voltage():
 	try:
 		resp = send_at('AT+CBC','OK',0.5);
-		print('sim.check_voltage() ~ resp: ' + resp);
+		func.log('sim.py', 'check_voltage', 'resp: ' + resp);
 	except:
-		print('sim.check_voltage() ~ error: ', sys.exc_info()[0]);
+		func.log('sim.py', 'check_voltage', 'error: ' + str(sys.exc_info()[0]));
 
 def make_call(phone_number):
 	try:
 		send_at('ATD'+phone_number+';','OK',1);
 	except :
-		print('sim.make_call() ~ error: ', sys.exc_info()[0]);
+		func.log('sim.py', 'make_call', 'error: ' + sys.exc_info()[0]);
 
 def send_short_message(phone_number,text_message):
-	print("Setting SMS mode...");
+	func.log('sim.py', 'send_short_message', 'Setting SMS mode...');
 	send_at("AT+CMGF=1","OK",1);
-	print("Sending Short Message");
+	func.log('sim.py', 'send_short_message', 'Sending Short Message');
 	answer = send_at("AT+CMGS=\""+phone_number+"\"",">",2);
 	if 1 == answer:
 		ser.write(text_message.encode());
 		ser.write(b'\x1A');
 		answer = send_at('','OK',20);
 		if 1 == answer:
-			print('send successfully');
+			func.log('sim.py', 'send_short_message', 'send successfully');
 		else:
-			print('error');
+			func.log('sim.py', 'send_short_message', 'error');
 	else:
-		print('error%d'%answer);
+		func.log('sim.py', 'send_short_message', 'error%d'%answer);
 
 def receive_short_message(msgId):
 	rec_buff = '';
-	print('Setting SMS mode...');
 	send_at('AT+CMGF=1','OK',1);
 	send_at('AT+CPMS=\"SM\",\"SM\",\"SM\"', 'OK', 1);
 	answer = send_at('AT+CMGR='+msgId,'+CMGR:',2);
@@ -97,28 +97,28 @@ def receive_short_message(msgId):
 		answer = 0;
 		if 'OK' in rec_buff:
 			answer = 1;
-			print(rec_buff);
+			func.log('sim.py', 'receive_short_message', 'rec_buff: ' + rec_buff.decode());
 	else:
-		print('error%d'%answer);
+		func.log('sim.py', 'receive_short_message', 'error%d'%answer);
 		return False;
 	return True;
 
 def delete_message(msgId):
-	print('Deleting message');
+	func.log('sim.py', 'delete_message', 'Deleting message');
 	answer = send_at('AT+CMGD='+msgId,'OK',5);
 	if 1 == answer:
-		print('delete successfully');
+		func.log('sim.py', 'delete_message', 'delete successfully');
 	else:
-		print('error%d'%answer);
+		func.log('sim.py', 'delete_message', 'error%d'%answer);
 
 def hangup():
 	try:
 		ser.write('AT+CHUP\r\n'.encode());
 	except :
-		print('sim.hangup() ~ error: ', sys.exc_info()[0]);
+		func.log('sim.py', 'hangup', 'error: ' + str(sys.exc_info()[0]));
 
 def answer_call():
 	try:
 		send_at('ATA','OK',0.5);
 	except :
-		print('sim.answer_call() ~ error: ', sys.exc_info()[0]);
+		func.log('sim.py', 'answer_call', 'error: ' + str(sys.exc_info()[0]));
