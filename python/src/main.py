@@ -133,12 +133,11 @@ def myloop():
     #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
-        i = 0;
+        turn_on_sim();
         start_time = time.time();
         while doLoop:
             try:
                 #print('looping...' + str(i));
-                i = i + 1;
                 if (time.time() - start_time > 1):
                     start_time = time.time();
                     disp.update_disp(currentStats, currentLine1, currentLine2);
