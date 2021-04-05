@@ -23,7 +23,7 @@ def check_for_msg():
 		time.sleep(0.01 );
 		rec_buff = ser.read(ser.inWaiting());
 
-	func.log('sim.py', 'check_for_msg', 'rec_buff: ' + rec_buff.decode());
+	func.log('sim.py', 'check_for_msg', 'rec_buff: ' + str(rec_buff.decode()));
 	return rec_buff.decode();
 
 def send_at(command,back,timeout):

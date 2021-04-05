@@ -144,7 +144,6 @@ def myloop():
 
             except :
                 func.log('main.py', 'myloop', 'Exception (ID: {}) has been caught. Cleaning up...'.format(signal));
-                disp.cleanup();
 
 def start_flask():
     func.log('main.py', 'start_flask', 'Flask running');
