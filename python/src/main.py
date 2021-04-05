@@ -47,7 +47,7 @@ def check_for_input():
 def check_sim_notification():
     func.log('main.py', 'check_sim_notification', 'start');
     global currentLine1, currentLine2, simgood;
-    msg = sim.check_for_message();
+    msg = sim.check_for_msg();
     if (len(msg) > 0):
         if "PB DONE" in msg:
             simgood = True;
@@ -141,6 +141,10 @@ def myloop():
                 disp.cleanup();
                 exit(0);
                 #epd2in13_V2.epdconfig.module_exit()
+
+            except :
+                func.log('main.py', 'myloop', 'Exception (ID: {}) has been caught. Cleaning up...'.format(signal));
+                disp.cleanup();
 
 def start_flask():
     func.log('main.py', 'start_flask', 'Flask running');
