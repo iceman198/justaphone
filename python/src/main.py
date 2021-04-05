@@ -32,6 +32,7 @@ serInput.flushInput();
 app = Flask(__name__);
 
 def check_for_input():
+    print('check_for_input() ~ start');
     global currentLine1, currentLine2;
     rec_buff = '';
     time.sleep(0.25);
@@ -40,9 +41,11 @@ def check_for_input():
         rec_buff = serInput.read(serInput.inWaiting());
         print('check_for_input() ~ rec_buff: ' + rec_buff.decode());
         currentLine2 = currentLine2 + rec_buff.decode();
+    print('check_for_input() ~ end');
     return rec_buff.decode();
 
 def check_sim_notification():
+    print('check_sim_notification() ~ start');
     global currentLine1, currentLine2, simgood;
     msg = sim.check_for_message();
     if (len(msg) > 0):
@@ -58,6 +61,7 @@ def check_sim_notification():
         if "MISSED" in msg:
             currentLine1 = "MISSED CALL: ";
             currentLine2 = msg;
+    print('check_sim_notification() ~ end');
 
 def turn_on_sim():
     global currentLine1, currentLine2;
