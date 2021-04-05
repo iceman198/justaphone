@@ -119,22 +119,21 @@ def nametest(name):
 def myloop():
     global doLoop, isRunning, simgood;
     global currentStats, currentLine1, currentLine2
-    #print('isRunning = ' + str(isRunning)); #something isn't working right here but right now I don't care
     if isRunning == False:
         isRunning = True;
         turn_on_sim();
         start_time = time.time();
         while doLoop:
             try:
-                func.log('main.py', 'myloop', 'looping...');
+                #func.log('main.py', 'myloop', 'looping...');
                 if (time.time() - start_time > 1):
                     start_time = time.time();
                     disp.update_disp(currentStats, currentLine1, currentLine2);
                 
                 if (simgood):
                     sim.check_voltage();
-                    check_sim_notification();
 
+                check_sim_notification();
                 check_for_input();
 
             except KeyboardInterrupt:
