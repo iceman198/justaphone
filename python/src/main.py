@@ -151,7 +151,7 @@ def start_flask():
     app.run(debug=False, host='0.0.0.0');
 
 if __name__ == '__main__':
-    try
+    try:
         thread1 = Thread(target=myloop);
         thread2 = Thread(target=start_flask);
         thread1.start();
