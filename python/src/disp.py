@@ -20,7 +20,7 @@ def init_display():
     epd.init(epd.FULL_UPDATE);
     epd.Clear(0xFF);
 
-    font_stats = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 12);
+    font_stats = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15);
     font_line1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24);
     font_line2 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24);
     time_image = Image.new('1', (epd.height, epd.width), 255);
@@ -38,7 +38,7 @@ def update_disp(mystats, textLine1, textLine2):
         time_draw.text((0, 40), textLine1, font = font_line1, fill = 0);
         time_draw.text((0, 80), textLine2, font = font_line2, fill = 0);
 
-        time_draw.text((150, 0), datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), font = font_stats, fill = 0);
+        time_draw.text((140, 0), datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), font = font_stats, fill = 0);
         time_draw.text((0, 0), mystats[0], font = font_stats, fill = 0);
         time_draw.text((50, 0), mystats[1], font = font_stats, fill = 0);
         time_draw.text((100, 0), mystats[2], font = font_stats, fill = 0);
