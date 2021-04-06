@@ -93,9 +93,7 @@ def get_signal():
 
 	try:
 		resp = send_at('AT+CSQ','OK',0.5);
-		temp = re.findall(': ([^"]*)|', resp);
-		if len(temp) > 0:
-			signal = temp[0];
+		signal = resp[resp.find(': ')+1 : resp.find('|')];
 	except:
 		func.log('sim.py', 'get_signal', 'error: ' + str(sys.exc_info()[0]));
 	
@@ -108,9 +106,7 @@ def get_network():
 
 	try:
 		resp = send_at('AT+CPSI?','OK',0.5);
-		temp = re.findall(': ([^"]*),', resp);
-		if len(temp) > 0:
-			network = temp[0];
+		network = resp[resp.find(': ')+1 : resp.find(',')];
 	except:
 		func.log('sim.py', 'get_network', 'error: ' + str(sys.exc_info()[0]));
 	
