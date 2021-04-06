@@ -64,7 +64,7 @@ def check_voltage():
 		resp = send_at('AT+CBC','OK',0.5);
 		func.log('sim.py', 'check_voltage', 'resp: ' + resp);
 		if "V" in resp:
-			voltage = resp[16:22];
+			voltage = resp[13:19];
 	except:
 		func.log('sim.py', 'check_voltage', 'error: ' + str(sys.exc_info()[0]));
 	return voltage;
