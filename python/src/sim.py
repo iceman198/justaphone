@@ -60,11 +60,14 @@ def power_off():
 		func.log('sim.py', 'power_off', 'error: ' + str(sys.exc_info()[0]));
 
 def check_voltage():
+	voltage = '';
 	try:
 		resp = send_at('AT+CBC','OK',0.5);
 		func.log('sim.py', 'check_voltage', 'resp: ' + resp);
+		voltage = resp[14:19];
 	except:
 		func.log('sim.py', 'check_voltage', 'error: ' + str(sys.exc_info()[0]));
+	return voltage;
 
 def make_call(phone_number):
 	try:
