@@ -27,7 +27,7 @@ isRinging = False;
 
 #func.print_test();
 disp.init_display();
-serInput = serial.Serial('/dev/ttyUSB0',9600);
+serInput = serial.Serial('/dev/ttyUSB0',9600,timeout=0.1);
 serInput.flushInput();
 
 app = Flask(__name__);

@@ -8,7 +8,7 @@ import func;
 
 #ser = serial.Serial('/dev/cu.SLAB_USBtoUART',115200);
 #ser = serial.Serial('/dev/ttyS0',115200);
-ser = serial.Serial('/dev/serial0',9600);
+ser = serial.Serial('/dev/serial0',9600,timeout=0.1);
 ser.flushInput();
 
 power_key = 4;
