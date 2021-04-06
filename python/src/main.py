@@ -42,31 +42,30 @@ def check_for_input():
         if serInput.inWaiting():
             time.sleep(0.01);
             rec_buff = serInput.read(serInput.inWaiting());
-
-        if "S" in rec_buff.decode():
-            turn_off_sim();
-            turn_on_sim();
-        elif "H" in rec_buff.decode():
-            sim.hangup();
-            currentLine1 = 'Hangup';
-            currentLine2 = '';
-            isRinging = False;
-            inCall = False;
-        elif "C" in rec_buff.decode():
-            if isRinging:
-                sim.answer_call();
-            else:
-                sim.make_call(currentLine2);
-                currentLine1 = 'Calling';
-            isRinging = False;
-            inCall = True;
-        else:
-            currentLine2 = currentLine2 + rec_buff.decode();
-            if inCall:
-                sim.send_tone(rec_buff.decode());
-        
         resp = str(rec_buff.decode());
+
         if len(resp) > 0:
+            if "S" in rec_buff.decode():
+                turn_off_sim();
+                turn_on_sim();
+            elif "H" in rec_buff.decode():
+                sim.hangup();
+                currentLine1 = 'Hangup';
+                currentLine2 = '';
+                isRinging = False;
+                inCall = False;
+            elif "C" in rec_buff.decode():
+                if isRinging:
+                    sim.answer_call();
+                else:
+                    sim.make_call(currentLine2);
+                    currentLine1 = 'Calling';
+                isRinging = False;
+                inCall = True;
+            else:
+                currentLine2 = currentLine2 + rec_buff.decode();
+                if inCall:
+                    sim.send_tone(rec_buff.decode());
             func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
     except:
         func.log('main.py', 'check_for_input', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
