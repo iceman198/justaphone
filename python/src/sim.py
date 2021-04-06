@@ -93,7 +93,7 @@ def get_signal():
 
 	try:
 		resp = send_at('AT+CSQ','OK',0.5);
-		signal = resp[resp.find(': ')+1 : resp.find('|')];
+		signal = resp[resp.find(': ')+1 : resp.find('||')];
 	except:
 		func.log('sim.py', 'get_signal', 'error: ' + str(sys.exc_info()[0]));
 	
