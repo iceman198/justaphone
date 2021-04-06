@@ -21,7 +21,8 @@ def check_for_msg():
 		rec_buff = ser.read(ser.inWaiting());
 
 	resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
-	func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
+	if len(resp) > 0:
+		func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
 	return resp;
 
 def send_at(command,back,timeout):
@@ -37,7 +38,8 @@ def send_at(command,back,timeout):
 		return 'ERROR';
 	else:
 		resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
-		func.log('sim.py', 'send_at', resp);
+		if len(resp) > 0:
+			func.log('sim.py', 'send_at', resp);
 		return resp;
 
 def power_on():
@@ -62,7 +64,7 @@ def check_voltage():
 	voltage = '';
 	try:
 		resp = send_at('AT+CBC','OK',0.5);
-		func.log('sim.py', 'check_voltage', 'resp: ' + resp);
+		#func.log('sim.py', 'check_voltage', 'resp: ' + resp);
 		if "V" in resp:
 			voltage = resp[13:19];
 	except:

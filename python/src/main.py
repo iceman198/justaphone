@@ -44,10 +44,12 @@ def check_for_input():
         turn_off_sim();
     else:
         currentLine2 = currentLine2 + rec_buff.decode();
-
-    func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
+    
+    resp = str(rec_buff.decode());
+    if len(resp) > 0:
+        func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
     #func.log('main.py', 'check_for_input', 'end');
-    return rec_buff.decode();
+    return resp;
 
 def check_sim_notification():
     #func.log('main.py', 'check_sim_notification', 'start');
