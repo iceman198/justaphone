@@ -36,52 +36,59 @@ def check_for_input():
     #func.log('main.py', 'check_for_input', 'start');
     global isRinging, currentLine1, currentLine2;
     rec_buff = '';
-    time.sleep(0.25);
-    if serInput.inWaiting():
-        time.sleep(0.01);
-        rec_buff = serInput.read(serInput.inWaiting());
+    try:
+        time.sleep(0.25);
+        if serInput.inWaiting():
+            time.sleep(0.01);
+            rec_buff = serInput.read(serInput.inWaiting());
 
-    if "S" in rec_buff.decode():
-        turn_off_sim();
-        turn_on_sim();
-    elif "H" in rec_buff.decode():
-        sim.hangup();
-        currentLine1 = 'Hangup';
-        currentLine2 = '';
-    elif "C" in rec_buff.decode():
-        if isRinging:
-            sim.answer_call();
+        if "S" in rec_buff.decode():
+            turn_off_sim();
+            turn_on_sim();
+        elif "H" in rec_buff.decode():
+            sim.hangup();
+            currentLine1 = 'Hangup';
+            currentLine2 = '';
+        elif "C" in rec_buff.decode():
+            if isRinging:
+                sim.answer_call();
+            else:
+                sim.make_call(currentLine2);
+                currentLine1 = 'Calling';
         else:
-            sim.make_call(currentLine2);
-            currentLine1 = 'Calling';
-    else:
-        currentLine2 = currentLine2 + rec_buff.decode();
-    
-    resp = str(rec_buff.decode());
-    if len(resp) > 0:
-        func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
+            currentLine2 = currentLine2 + rec_buff.decode();
+        
+        resp = str(rec_buff.decode());
+        if len(resp) > 0:
+            func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
+    except:
+        func.log('main.py', 'check_for_input', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
+
     #func.log('main.py', 'check_for_input', 'end');
     return resp;
 
 def check_sim_notification():
-    #func.log('main.py', 'check_sim_notification', 'start');
-    global isRinging, currentLine1, currentLine2, simgood;
-    msg = sim.check_for_msg();
-    if (len(msg) > 0):
-        if "PB DONE" in msg:
-            simgood = True;
-            currentLine1 = "Ready";
-            currentLine2 = "";
-            
-        if "RING" in msg:
-            currentLine1 = "INCOMING CALL:";
-            currentLine2 = "";
-            isRinging = True;
+    try:
+        #func.log('main.py', 'check_sim_notification', 'start');
+        global isRinging, currentLine1, currentLine2, simgood;
+        msg = sim.check_for_msg();
+        if (len(msg) > 0):
+            if "PB DONE" in msg:
+                simgood = True;
+                currentLine1 = "Ready";
+                currentLine2 = "";
+                
+            if "RING" in msg:
+                currentLine1 = "INCOMING CALL:";
+                currentLine2 = "";
+                isRinging = True;
 
-        if "MISSED" in msg:
-            currentLine1 = "MISSED CALL: ";
-            currentLine2 = msg;
-            isRinging = False;
+            if "MISSED" in msg:
+                currentLine1 = "MISSED CALL: ";
+                currentLine2 = msg;
+                isRinging = False;
+    except:
+        func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
     #func.log('main.py', 'check_sim_notification', 'end');
 

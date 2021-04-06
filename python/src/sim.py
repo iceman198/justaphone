@@ -80,7 +80,7 @@ def get_signal():
 	except:
 		func.log('sim.py', 'get_signal', 'error: ' + str(sys.exc_info()[0]));
 	
-	func.log('sim.py', 'get_signal', 'resp: ' + resp);
+	#func.log('sim.py', 'get_signal', 'resp: ' + resp);
 	return resp;
 
 def get_network():
@@ -92,7 +92,7 @@ def get_network():
 	except:
 		func.log('sim.py', 'get_network', 'error: ' + str(sys.exc_info()[0]));
 	
-	func.log('sim.py', 'get_network', 'resp: ' + resp);
+	#func.log('sim.py', 'get_network', 'resp: ' + resp);
 	return resp;
 
 def make_call(phone_number):
