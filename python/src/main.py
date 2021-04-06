@@ -145,19 +145,20 @@ def myloop():
         isRunning = True;
         turn_off_sim();
         turn_on_sim();
-        start_time = time.time();
+        time_disp = time.time();
+        time_updates = time.time();
         while doLoop:
             try:
                 #func.log('main.py', 'myloop', 'looping...');
-
-                if (time.time() - start_time > 1):
+                if (time.time() - time_disp > 1):
+                    disp.update_disp(currentStats, currentLine1, currentLine2);
+                    time_disp = time.time();
+                if (time.time() - time_updates > 5):
                     if (simgood):
                         currentStats = sim.check_voltage();
                         sim.get_signal();
                         sim.get_network();
-                    disp.update_disp(currentStats, currentLine1, currentLine2);
-                    start_time = time.time();
-                
+                    time_updates = time.time();
                 check_sim_notification();
                 check_for_input();
 
