@@ -154,9 +154,9 @@ def display_loop():
     while True:
         try:
             #func.log('main.py', 'myloop', 'looping...');
-            if (time.time() - time_disp > 1):
-                disp.update_disp(currentStats, currentLine1, currentLine2);
-                time_disp = time.time();
+            #if (time.time() - time_disp > 1):
+            disp.update_disp(currentStats, currentLine1, currentLine2);
+            time_disp = time.time();
         except :
             func.log('main.py', 'display_loop', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
