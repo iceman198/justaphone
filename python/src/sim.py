@@ -38,8 +38,8 @@ def send_at(command,back,timeout):
 		return 'ERROR';
 	else:
 		resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
-		if len(resp) > 0:
-			func.log('sim.py', 'send_at', resp);
+		#if len(resp) > 0:
+			#func.log('sim.py', 'send_at', resp);
 		return resp;
 
 def power_on():
@@ -80,17 +80,19 @@ def get_signal():
 	except:
 		func.log('sim.py', 'get_signal', 'error: ' + str(sys.exc_info()[0]));
 	
+	func.log('sim.py', 'get_signal', 'resp: ' + resp);
 	return resp;
 
 def get_network():
 	resp = '';
 
 	try:
-		resp = send_at('AT+CREG?','OK',0.5);
+		resp = send_at('AT+CPSI?','OK',0.5);
 
 	except:
 		func.log('sim.py', 'get_network', 'error: ' + str(sys.exc_info()[0]));
 	
+	func.log('sim.py', 'get_network', 'resp: ' + resp);
 	return resp;
 
 def make_call(phone_number):
