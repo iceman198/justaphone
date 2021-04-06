@@ -84,7 +84,7 @@ def get_call_info():
 	temp = re.findall('"([^"]*)"', resp);
 	if len(temp) > 0:
 		call_info = temp[0];
-	func.log('sim.py', 'get_call_info', 'resp: ' + call_info);
+	#func.log('sim.py', 'get_call_info', 'resp: ' + call_info);
 	return call_info;
 
 def get_signal():

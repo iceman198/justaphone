@@ -83,7 +83,7 @@ def check_sim_notification():
             if "RING" in msg:
                 call_info = sim.get_call_info();
                 currentLine1 = "INCOMING CALL:";
-                currentLine2 = "";
+                currentLine2 = call_info;
                 isRinging = True;
 
             if "MISSED" in msg:
