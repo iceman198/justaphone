@@ -11,10 +11,7 @@ import func;
 ser = serial.Serial('/dev/serial0',9600);
 ser.flushInput();
 
-phone_number = '12076192651';
-text_message = 'this is a test';
 power_key = 4;
-rec_buff = '';
 
 def check_for_msg():
 	rec_buff = '';
@@ -23,8 +20,9 @@ def check_for_msg():
 		time.sleep(0.01 );
 		rec_buff = ser.read(ser.inWaiting());
 
-	func.log('sim.py', 'check_for_msg', 'rec_buff: ' + str(rec_buff.decode()));
-	return str(rec_buff.decode());
+	resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
+	func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
+	return resp;
 
 def send_at(command,back,timeout):
 	rec_buff = '';
