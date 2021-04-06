@@ -48,7 +48,7 @@ def check_for_input():
             if "S" in rec_buff.decode():
                 currentLine1 = "Shutting down...";
                 time.sleep(2);
-                os.system("systemctl poweroff")
+                os.system("sudo shutdown now");
             elif "H" in rec_buff.decode():
                 sim.hangup();
                 currentLine1 = 'Hangup';
