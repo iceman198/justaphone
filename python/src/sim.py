@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import sys;
+import re;
 import RPi.GPIO as GPIO;
 import serial;
 import time;
@@ -77,7 +78,13 @@ def get_call_info():
 		resp = send_at('AT+CLCC','CLCC',0.5);
 	except:
 		func.log('sim.py', 'get_call_info', 'error: ' + str(sys.exc_info()[0]));
-	call_info = resp;
+
+	#|+CLCC: 2,1,4,0,0,"+12076192651",145||OK|
+	call_info = '';
+	temp = re.findall('"([^"]*)"', resp);
+	if len(temp) > 0:
+		call_info = temp[0];
+	func.log('sim.py', 'get_call_info', 'resp: ' + call_info);
 	return call_info;
 
 def get_signal():
