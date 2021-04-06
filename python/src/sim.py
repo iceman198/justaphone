@@ -38,7 +38,7 @@ def send_at(command,back,timeout):
 		func.log('sim.py', 'send_at', command + ' back:\t' + rec_buff.decode());
 		return 'ERROR';
 	else:
-		resp = rec_buff.decode().strip('\r\n');
+		resp = str(rec_buff.decode().strip('\r\n'));
 		func.log('sim.py', 'send_at', resp);
 		return resp;
 
