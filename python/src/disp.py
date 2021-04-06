@@ -4,13 +4,13 @@ import sys;
 import os;
 import datetime;
 
-from waveshare_epd import epd2in13_V2;
-from PIL import Image,ImageDraw,ImageFont;
-
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir);
+
+from waveshare_epd import epd2in13_V2;
+from PIL import Image,ImageDraw,ImageFont;
 
 epd, font15, font24, time_image, time_draw = None, None, None, None, None;
 
