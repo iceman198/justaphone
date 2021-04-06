@@ -20,7 +20,7 @@ def init_display():
     epd.init(epd.FULL_UPDATE);
     epd.Clear(0xFF);
 
-    font15 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 10);
+    font15 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 12);
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24);
     time_image = Image.new('1', (epd.height, epd.width), 255);
     time_draw = ImageDraw.Draw(time_image);
@@ -37,10 +37,10 @@ def update_disp(mystats, textLine1, textLine2):
         time_draw.text((0, 40), textLine1, font = font24, fill = 0);
         time_draw.text((0, 80), textLine2, font = font24, fill = 0);
 
-        time_draw.text((170, 0), datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), font = font15, fill = 0);
+        time_draw.text((160, 0), datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), font = font15, fill = 0);
         time_draw.text((0, 0), mystats[0], font = font15, fill = 0);
-        time_draw.text((60, 0), mystats[1], font = font15, fill = 0);
-        time_draw.text((120, 0), mystats[2], font = font15, fill = 0);
+        time_draw.text((50, 0), mystats[1], font = font15, fill = 0);
+        time_draw.text((110, 0), mystats[2], font = font15, fill = 0);
 
         epd.displayPartial(epd.getbuffer(time_image));
     except IOError as e:
