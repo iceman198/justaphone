@@ -47,7 +47,7 @@ def check_for_input():
         if len(resp) > 0:
             if "S" in rec_buff.decode():
                 currentLine1 = "Shutting down...";
-                time.sleep(2);
+                time.sleep(5);
                 os.system("sudo shutdown now");
             elif "H" in rec_buff.decode():
                 sim.hangup();
