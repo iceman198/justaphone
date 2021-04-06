@@ -39,13 +39,14 @@ def check_for_input():
     if serInput.inWaiting():
         time.sleep(0.01);
         rec_buff = serInput.read(serInput.inWaiting());
-        func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
-        currentLine2 = currentLine2 + rec_buff.decode();
-    #func.log('main.py', 'check_for_input', 'end');
 
     if "S" in rec_buff.decode():
         turn_off_sim();
+    else:
+        currentLine2 = currentLine2 + rec_buff.decode();
 
+    func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
+    #func.log('main.py', 'check_for_input', 'end');
     return rec_buff.decode();
 
 def check_sim_notification():
