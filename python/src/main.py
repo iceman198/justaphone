@@ -45,7 +45,7 @@ def check_for_input():
     return rec_buff.decode();
 
 def check_sim_notification():
-    func.log('main.py', 'check_sim_notification', 'start');
+    #func.log('main.py', 'check_sim_notification', 'start');
     global currentLine1, currentLine2, simgood;
     msg = sim.check_for_msg();
     if (len(msg) > 0):
@@ -61,7 +61,7 @@ def check_sim_notification():
         if "MISSED" in msg:
             currentLine1 = "MISSED CALL: ";
             currentLine2 = msg;
-    func.log('main.py', 'check_sim_notification', 'end');
+    #func.log('main.py', 'check_sim_notification', 'end');
 
 def turn_on_sim():
     global currentLine1, currentLine2;
