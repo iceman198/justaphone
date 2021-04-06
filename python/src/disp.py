@@ -12,16 +12,17 @@ if os.path.exists(libdir):
 from waveshare_epd import epd2in13_V2;
 from PIL import Image,ImageDraw,ImageFont;
 
-epd, font15, font24, time_image, time_draw = None, None, None, None, None;
+epd, font_stats, font_line1, font_line2, time_image, time_draw = None, None, None, None, None;
 
 def init_display():
-    global epd, font15, font24, time_image, time_draw;
+    global epd, font_stats, font_line1, font_line2, time_image, time_draw;
     epd = epd2in13_V2.EPD();
     epd.init(epd.FULL_UPDATE);
     epd.Clear(0xFF);
 
-    font15 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 12);
-    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24);
+    font_stats = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 12);
+    font_line1 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24);
+    font_line2 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24);
     time_image = Image.new('1', (epd.height, epd.width), 255);
     time_draw = ImageDraw.Draw(time_image);
     
@@ -30,17 +31,17 @@ def init_display():
 
 def update_disp(mystats, textLine1, textLine2):
     try:
-        global epd, font15, font24, time_image, time_draw;
+        global epd, font_stats, font_line1, font_line2, time_image, time_draw;
         #time_draw.rectangle((0, 0, 220, 105), fill = 255);
         time_draw.rectangle((0, 0, epd.height, epd.width), fill = 255);
 
-        time_draw.text((0, 40), textLine1, font = font24, fill = 0);
-        time_draw.text((0, 80), textLine2, font = font24, fill = 0);
+        time_draw.text((0, 40), textLine1, font = font_line1, fill = 0);
+        time_draw.text((0, 80), textLine2, font = font_line2, fill = 0);
 
-        time_draw.text((160, 0), datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), font = font15, fill = 0);
-        time_draw.text((0, 0), mystats[0], font = font15, fill = 0);
-        time_draw.text((50, 0), mystats[1], font = font15, fill = 0);
-        time_draw.text((110, 0), mystats[2], font = font15, fill = 0);
+        time_draw.text((160, 0), datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), font = font_stats, fill = 0);
+        time_draw.text((0, 0), mystats[0], font = font_stats, fill = 0);
+        time_draw.text((50, 0), mystats[1], font = font_stats, fill = 0);
+        time_draw.text((110, 0), mystats[2], font = font_stats, fill = 0);
 
         epd.displayPartial(epd.getbuffer(time_image));
     except IOError as e:
