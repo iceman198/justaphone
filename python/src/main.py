@@ -145,32 +145,39 @@ def nametest(name):
     currentLine2 = name;
     return render_template('name.html', name=name);
 
-def myloop():
+def display_loop():
+    global currentStats, currentLine1, currentLine2
+    time_disp = time.time();
+    while True:
+        try:
+            #func.log('main.py', 'myloop', 'looping...');
+            if (time.time() - time_disp > 1):
+                disp.update_disp(currentStats, currentLine1, currentLine2);
+                time_disp = time.time();
+        except :
+            func.log('main.py', 'display_loop', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
+
+
+
+def main_loop():
     global doLoop, isRunning, simgood;
     global currentStats, currentLine1, currentLine2
-    if isRunning == False:
-        isRunning = True;
-        turn_off_sim();
-        turn_on_sim();
-        time_disp = time.time();
-        time_updates = time.time();
-        while doLoop:
-            try:
-                #func.log('main.py', 'myloop', 'looping...');
-                if (time.time() - time_disp > 1):
-                    disp.update_disp(currentStats, currentLine1, currentLine2);
-                    time_disp = time.time();
-                if (time.time() - time_updates > 5):
-                    if (simgood):
-                        currentStats = sim.check_voltage();
-                        sim.get_signal();
-                        sim.get_network();
-                    time_updates = time.time();
-                check_sim_notification();
-                check_for_input();
-
-            except :
-                func.log('main.py', 'myloop', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
+    turn_off_sim();
+    turn_on_sim();
+    time_updates = time.time();
+    while doLoop:
+        try:
+            #func.log('main.py', 'myloop', 'looping...');s
+            if (time.time() - time_updates > 5):
+                if (simgood):
+                    currentStats = sim.check_voltage();
+                    sim.get_signal();
+                    sim.get_network();
+                time_updates = time.time();
+            check_sim_notification();
+            check_for_input();
+        except :
+            func.log('main.py', 'main_loop', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
 def start_flask():
     func.log('main.py', 'start_flask', 'Flask running');
@@ -178,12 +185,15 @@ def start_flask():
 
 if __name__ == '__main__':
     try:
-        thread1 = Thread(target=myloop);
-        thread2 = Thread(target=start_flask);
+        thread1 = Thread(target=display_loop);
+        thread2 = Thread(target=main_loop);
+        thread3 = Thread(target=start_flask);
         thread1.start();
         thread2.start();
+        thread3.start();
         thread1.join();
         thread2.join();
+        thread3.join();
     except :
         func.log('main.py', '__main__', 'Exception (ID: {}) has been caught. Cleaning up...'.format(signal));
         disp.cleanup();
