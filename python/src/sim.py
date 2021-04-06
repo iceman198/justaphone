@@ -38,8 +38,9 @@ def send_at(command,back,timeout):
 		func.log('sim.py', 'send_at', command + ' back:\t' + rec_buff.decode());
 		return 'ERROR';
 	else:
-		func.log('sim.py', 'send_at', rec_buff.decode());
-		return rec_buff.decode().strip('\r\n');
+		resp = rec_buff.decode().strip('\r\n');
+		func.log('sim.py', 'send_at', resp);
+		return resp;
 
 def power_on():
 	GPIO.setmode(GPIO.BCM);
@@ -64,7 +65,7 @@ def check_voltage():
 	try:
 		resp = send_at('AT+CBC','OK',0.5);
 		func.log('sim.py', 'check_voltage', 'resp: ' + resp);
-		if "V" in voltage:
+		if "V" in resp:
 			voltage = resp[16:22];
 	except:
 		func.log('sim.py', 'check_voltage', 'error: ' + str(sys.exc_info()[0]));
