@@ -39,8 +39,8 @@ def update_disp(mystats, textLine1, textLine2):
         time_draw.text((0, 80), textLine2, font = font_line2, fill = 0);
 
         now = datetime.datetime.now();
-        time_draw.text((165, 0), now.strftime('%Y-%m-%d'), font = font_stats, fill = 0);
-        time_draw.text((180, 12), now.strftime('%H:%M:%S'), font = font_stats, fill = 0);
+        time_draw.text((167, 0), now.strftime('%Y-%m-%d'), font = font_stats, fill = 0);
+        time_draw.text((183, 14), now.strftime('%H:%M:%S'), font = font_stats, fill = 0);
         time_draw.text((0, 0), mystats[0], font = font_stats, fill = 0);
         time_draw.text((60, 0), mystats[1], font = font_stats, fill = 0);
         time_draw.text((120, 0), mystats[2], font = font_stats, fill = 0);
