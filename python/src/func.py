@@ -12,8 +12,8 @@ def log(file, service, text):
     if "send_at" in str(service):
         # don't print
         f.write(mystring + '\r\n');
-    else:
-        print(mystring);
+
+    print(mystring);
 
 
 def init_logfile():
