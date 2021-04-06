@@ -71,6 +71,15 @@ def check_voltage():
 		func.log('sim.py', 'check_voltage', 'error: ' + str(sys.exc_info()[0]));
 	return voltage;
 
+def get_call_info():
+	resp = '';
+	try:
+		resp = send_at('AT+CLCC','CLCC',0.5);
+	except:
+		func.log('sim.py', 'get_call_info', 'error: ' + str(sys.exc_info()[0]));
+	call_info = resp;
+	return call_info;
+
 def get_signal():
 	resp = '';
 

@@ -81,6 +81,7 @@ def check_sim_notification():
                 currentLine2 = "";
                 
             if "RING" in msg:
+                call_info = sim.get_call_info();
                 currentLine1 = "INCOMING CALL:";
                 currentLine2 = "";
                 isRinging = True;
@@ -90,6 +91,11 @@ def check_sim_notification():
                 currentLine1 = "MISSED CALL: ";
                 currentLine2 = msg[14:33];
                 isRinging = False;
+
+            if "NO CARRIER" in msg:
+                currentLine1 = "NO CARRIER";
+                currentLine2 = "";
+                
     except:
         func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
