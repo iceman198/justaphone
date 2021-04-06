@@ -12,7 +12,7 @@ if os.path.exists(libdir):
 from waveshare_epd import epd2in13_V2;
 from PIL import Image,ImageDraw,ImageFont;
 
-epd, font_stats, font_line1, font_line2, time_image, time_draw = None, None, None, None, None;
+epd, font_stats, font_line1, font_line2, time_image, time_draw = None, None, None, None, None, None;
 
 def init_display():
     global epd, font_stats, font_line1, font_line2, time_image, time_draw;
