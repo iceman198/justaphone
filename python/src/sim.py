@@ -113,6 +113,12 @@ def get_network():
 	#func.log('sim.py', 'get_network', 'network: ' + network);
 	return network;
 
+def send_tone(tone):
+	try:
+		send_at('AT+VTS="'+tone+'"','OK',1);
+	except :
+		func.log('sim.py', 'send_tone', 'error: ' + sys.exc_info()[0]);
+
 def make_call(phone_number):
 	try:
 		send_at('ATD'+phone_number+';','OK',1);

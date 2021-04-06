@@ -24,6 +24,7 @@ currentLine1 = "";
 currentLine2 = "";
 simgood = False;
 isRinging = False;
+inCall = False;
 
 #func.print_test();
 disp.init_display();
@@ -34,7 +35,7 @@ app = Flask(__name__);
 
 def check_for_input():
     #func.log('main.py', 'check_for_input', 'start');
-    global isRinging, currentLine1, currentLine2;
+    global inCall, isRinging, currentLine1, currentLine2;
     rec_buff = '';
     try:
         time.sleep(0.25);
@@ -50,6 +51,7 @@ def check_for_input():
             currentLine1 = 'Hangup';
             currentLine2 = '';
             isRinging = False;
+            inCall = False;
         elif "C" in rec_buff.decode():
             if isRinging:
                 sim.answer_call();
@@ -57,8 +59,11 @@ def check_for_input():
                 sim.make_call(currentLine2);
                 currentLine1 = 'Calling';
             isRinging = False;
+            inCall = True;
         else:
             currentLine2 = currentLine2 + rec_buff.decode();
+            if inCall:
+                sim.send_tone(rec_buff.decode());
         
         resp = str(rec_buff.decode());
         if len(resp) > 0:
@@ -72,7 +77,7 @@ def check_for_input():
 def check_sim_notification():
     try:
         #func.log('main.py', 'check_sim_notification', 'start');
-        global isRinging, currentLine1, currentLine2, simgood;
+        global inCall, isRinging, currentLine1, currentLine2, simgood;
         msg = sim.check_for_msg();
         if (len(msg) > 0):
             if "PB DONE" in msg:
@@ -95,6 +100,7 @@ def check_sim_notification():
             if "NO CARRIER" in msg:
                 currentLine1 = "NO CARRIER";
                 currentLine2 = "";
+                inCall = False;
                 
     except:
         func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
