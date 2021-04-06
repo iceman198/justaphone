@@ -141,7 +141,7 @@ def myloop():
                 check_for_input();
 
             except :
-                func.log('main.py', 'myloop', 'Exception (ID: ' + str(format(signal)) + ') has been caught.');
+                func.log('main.py', 'myloop', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
 def start_flask():
     func.log('main.py', 'start_flask', 'Flask running');
