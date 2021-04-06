@@ -71,6 +71,28 @@ def check_voltage():
 		func.log('sim.py', 'check_voltage', 'error: ' + str(sys.exc_info()[0]));
 	return voltage;
 
+def get_signal():
+	resp = '';
+
+	try:
+		resp = send_at('AT+CSQ','OK',0.5);
+
+	except:
+		func.log('sim.py', 'get_signal', 'error: ' + str(sys.exc_info()[0]));
+	
+	return resp;
+
+def get_network():
+	resp = '';
+
+	try:
+		resp = send_at('AT+CREG?','OK',0.5);
+
+	except:
+		func.log('sim.py', 'get_network', 'error: ' + str(sys.exc_info()[0]));
+	
+	return resp;
+
 def make_call(phone_number):
 	try:
 		send_at('ATD'+phone_number+';','OK',1);

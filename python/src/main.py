@@ -23,6 +23,7 @@ currentStats = "";
 currentLine1 = "";
 currentLine2 = "";
 simgood = False;
+isRinging = False;
 
 #func.print_test();
 disp.init_display();
@@ -33,7 +34,7 @@ app = Flask(__name__);
 
 def check_for_input():
     #func.log('main.py', 'check_for_input', 'start');
-    global currentLine1, currentLine2;
+    global isRinging, currentLine1, currentLine2;
     rec_buff = '';
     time.sleep(0.25);
     if serInput.inWaiting():
@@ -42,6 +43,17 @@ def check_for_input():
 
     if "S" in rec_buff.decode():
         turn_off_sim();
+        turn_on_sim();
+    elif "H" in rec_buff.decode():
+        sim.hangup();
+        currentLine1 = 'Hangup';
+        currentLine2 = '';
+    elif "C" in rec_buff.decode():
+        if isRinging:
+            sim.answer_call();
+        else:
+            sim.make_call(currentLine2);
+            currentLine1 = 'Calling';
     else:
         currentLine2 = currentLine2 + rec_buff.decode();
     
@@ -53,7 +65,7 @@ def check_for_input():
 
 def check_sim_notification():
     #func.log('main.py', 'check_sim_notification', 'start');
-    global currentLine1, currentLine2, simgood;
+    global isRinging, currentLine1, currentLine2, simgood;
     msg = sim.check_for_msg();
     if (len(msg) > 0):
         if "PB DONE" in msg:
@@ -64,10 +76,13 @@ def check_sim_notification():
         if "RING" in msg:
             currentLine1 = "INCOMING CALL:";
             currentLine2 = "";
+            isRinging = True;
 
         if "MISSED" in msg:
             currentLine1 = "MISSED CALL: ";
             currentLine2 = msg;
+            isRinging = False;
+
     #func.log('main.py', 'check_sim_notification', 'end');
 
 def turn_on_sim():
@@ -128,6 +143,7 @@ def myloop():
     global currentStats, currentLine1, currentLine2
     if isRunning == False:
         isRunning = True;
+        turn_off_sim();
         turn_on_sim();
         start_time = time.time();
         while doLoop:
@@ -135,6 +151,8 @@ def myloop():
                 #func.log('main.py', 'myloop', 'looping...');
                 if (simgood):
                     currentStats = sim.check_voltage();
+                    sim.get_signal();
+                    sim.get_network();
 
                 if (time.time() - start_time > 1):
                     start_time = time.time();
