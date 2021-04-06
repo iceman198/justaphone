@@ -20,7 +20,7 @@ def check_for_msg():
 		time.sleep(0.01 );
 		rec_buff = ser.read(ser.inWaiting());
 
-	resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
+	resp = str(rec_buff.decode().replace('\n', '|').replace('\r', '').encode('utf-8'));
 	if len(resp) > 0:
 		func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
 	return resp;
