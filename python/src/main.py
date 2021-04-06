@@ -170,6 +170,7 @@ def start_flask():
 
 if __name__ == '__main__':
     try:
+        func.init_logfile();
         thread1 = Thread(target=myloop);
         thread2 = Thread(target=start_flask);
         thread1.start();
