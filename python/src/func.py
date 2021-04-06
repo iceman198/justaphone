@@ -9,7 +9,7 @@ def log(file, service, text):
     global f;
     mystring = str(time.strftime('%a, %d %b %Y %H:%M:%S GMT', time.localtime())) + ' *** ' + str(service) + '() ~ ' + str(text);
     
-    if "send_at" in service:
+    if "send_at" in str(service):
         # don't print
         f.write(mystring + '\r\n');
     else:
