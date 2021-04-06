@@ -32,7 +32,7 @@ serInput.flushInput();
 app = Flask(__name__);
 
 def check_for_input():
-    func.log('main.py', 'check_for_input', 'start');
+    #func.log('main.py', 'check_for_input', 'start');
     global currentLine1, currentLine2;
     rec_buff = '';
     time.sleep(0.25);
@@ -41,7 +41,11 @@ def check_for_input():
         rec_buff = serInput.read(serInput.inWaiting());
         func.log('main.py', 'check_for_input', 'rec_buff: ' + rec_buff.decode());
         currentLine2 = currentLine2 + rec_buff.decode();
-    func.log('main.py', 'check_for_input', 'end');
+    #func.log('main.py', 'check_for_input', 'end');
+
+    if "S" in rec_buff.decode():
+        turn_off_sim();
+
     return rec_buff.decode();
 
 def check_sim_notification():
@@ -136,14 +140,8 @@ def myloop():
                 check_sim_notification();
                 check_for_input();
 
-            except KeyboardInterrupt:
-                func.log('main.py', 'myloop', 'KeyboardInterrupt (ID: {}) has been caught. Cleaning up...'.format(signal));
-                disp.cleanup();
-                exit(0);
-                #epd2in13_V2.epdconfig.module_exit()
-
             except :
-                func.log('main.py', 'myloop', 'Exception (ID: {}) has been caught. Cleaning up...'.format(signal));
+                func.log('main.py', 'myloop', 'Exception (ID: ' + str(format(signal)) + ') has been caught.');
 
 def start_flask():
     func.log('main.py', 'start_flask', 'Flask running');
