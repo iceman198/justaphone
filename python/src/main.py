@@ -100,6 +100,12 @@ def check_sim_notification():
                 currentLine1 = "NO CARRIER";
                 currentLine2 = "";
                 inCall = False;
+            
+            if "VOICE CALL" in msg:
+                temp = msg.split('|');
+                temp = temp.split(' ');
+                currentLine1 = temp[1];
+                currentLine2 = temp[2];
                 
     except:
         func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
