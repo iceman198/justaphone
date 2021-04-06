@@ -1,12 +1,10 @@
 import time;
 
-f = None;
-
 def print_test():
     print('This is a test');
 
 def log(file, service, text):
-    global f;
+    f = open("/home/pi/justaphone/python/phone.log", "a");
     mystring = str(time.strftime('%a, %d %b %Y %H:%M:%S GMT', time.localtime())) + ' *** ' + str(service) + '() ~ ' + str(text);
     
     if "send_at" in str(service):
@@ -15,8 +13,4 @@ def log(file, service, text):
 
     print(mystring);
 
-
-def init_logfile():
-    global f;
-    f = open("/home/pi/justaphone/python/phone.log", "a");
 
