@@ -96,8 +96,10 @@ def get_signal():
 	except:
 		func.log('sim.py', 'get_signal', 'error: ' + str(sys.exc_info()[0]));
 	
-	#func.log('sim.py', 'get_signal', 'resp: ' + resp);
-	return resp;
+	signal = '';
+	signal = re.findall(': ([^"]*)|', resp);
+	func.log('sim.py', 'get_signal', 'signal: ' + signal);
+	return signal;
 
 def get_network():
 	resp = '';
@@ -108,7 +110,9 @@ def get_network():
 	except:
 		func.log('sim.py', 'get_network', 'error: ' + str(sys.exc_info()[0]));
 	
-	#func.log('sim.py', 'get_network', 'resp: ' + resp);
+	network = '';
+	network = re.findall(': ([^"]*),', resp);
+	func.log('sim.py', 'get_network', 'network: ' + network);
 	return resp;
 
 def make_call(phone_number):
