@@ -56,7 +56,7 @@ def check_sim_notification():
     if (len(msg) > 0):
         if "PB DONE" in msg:
             simgood = True;
-            currentLine1 = "turning on sim";
+            currentLine1 = "Ready";
             currentLine2 = "";
             
         if "RING" in msg:
