@@ -38,8 +38,8 @@ def send_at(command,back,timeout):
 		return 'ERROR';
 	else:
 		resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
-		#if len(resp) > 0:
-			#func.log('sim.py', 'send_at', resp);
+		if len(resp) > 0:
+			func.log('sim.py', 'send_at', resp);
 		return resp;
 
 def power_on():
