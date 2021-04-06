@@ -19,7 +19,7 @@ if os.path.exists(libdir):
 
 doLoop = True;
 isRunning = False;
-currentStats = "";
+currentStats = ['', '', ''];
 currentLine1 = "";
 currentLine2 = "";
 simgood = False;
@@ -179,9 +179,9 @@ def main_loop():
             #func.log('main.py', 'myloop', 'looping...');s
         if (time.time() - time_updates > 5):
             if (simgood):
-                currentStats = sim.check_voltage();
-                sim.get_signal();
-                sim.get_network();
+                currentStats[0] = sim.check_voltage();
+                currentStats[1] = sim.get_signal();
+                currentStats[2] = sim.get_network();
             time_updates = time.time();
         check_sim_notification();
         check_for_input();
