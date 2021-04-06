@@ -175,18 +175,18 @@ def main_loop():
     turn_on_sim();
     time_updates = time.time();
     while doLoop:
-        try:
+        #try:
             #func.log('main.py', 'myloop', 'looping...');s
-            if (time.time() - time_updates > 5):
-                if (simgood):
-                    currentStats = sim.check_voltage();
-                    sim.get_signal();
-                    sim.get_network();
-                time_updates = time.time();
-            check_sim_notification();
-            check_for_input();
-        except :
-            func.log('main.py', 'main_loop', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
+        if (time.time() - time_updates > 5):
+            if (simgood):
+                currentStats = sim.check_voltage();
+                sim.get_signal();
+                sim.get_network();
+            time_updates = time.time();
+        check_sim_notification();
+        check_for_input();
+        #except :
+            #func.log('main.py', 'main_loop', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
 def start_flask():
     func.log('main.py', 'start_flask', 'Flask running');
