@@ -38,10 +38,12 @@ def update_disp(mystats, textLine1, textLine2):
         time_draw.text((0, 40), textLine1, font = font_line1, fill = 0);
         time_draw.text((0, 80), textLine2, font = font_line2, fill = 0);
 
-        time_draw.text((140, 0), datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), font = font_stats, fill = 0);
+        now = datetime.datetime.now();
+        time_draw.text((160, 0), now.strftime('%Y-%m-%d'), font = font_stats, fill = 0);
+        time_draw.text((170, 10), now.strftime('%H:%M:%S'), font = font_stats, fill = 0);
         time_draw.text((0, 0), mystats[0], font = font_stats, fill = 0);
-        time_draw.text((50, 0), mystats[1], font = font_stats, fill = 0);
-        time_draw.text((100, 0), mystats[2], font = font_stats, fill = 0);
+        time_draw.text((60, 0), mystats[1], font = font_stats, fill = 0);
+        time_draw.text((110, 0), mystats[2], font = font_stats, fill = 0);
 
         epd.displayPartial(epd.getbuffer(time_image));
     except IOError as e:
