@@ -149,14 +149,14 @@ def myloop():
         while doLoop:
             try:
                 #func.log('main.py', 'myloop', 'looping...');
-                if (simgood):
-                    currentStats = sim.check_voltage();
-                    sim.get_signal();
-                    sim.get_network();
 
                 if (time.time() - start_time > 1):
-                    start_time = time.time();
+                    if (simgood):
+                        currentStats = sim.check_voltage();
+                        sim.get_signal();
+                        sim.get_network();
                     disp.update_disp(currentStats, currentLine1, currentLine2);
+                    start_time = time.time();
                 
                 check_sim_notification();
                 check_for_input();
