@@ -9,7 +9,7 @@ import func;
 
 #ser = serial.Serial('/dev/cu.SLAB_USBtoUART',115200);
 #ser = serial.Serial('/dev/ttyS0',115200);
-ser = serial.Serial('/dev/serial0',9600,timeout=0.1);
+ser = serial.Serial('/dev/serial0',9600,timeout=0.25);
 ser.flushInput();
 
 power_key = 4;
@@ -18,7 +18,7 @@ def check_for_msg():
 	rec_buff = '';
 	time.sleep(0.25);
 	if ser.inWaiting():
-		time.sleep(0.01);
+		time.sleep(0.25);
 		rec_buff = ser.read(ser.inWaiting());
 
 	resp = str(rec_buff.decode().replace('\n', '|').replace('\r', '').encode('utf-8'));
@@ -31,7 +31,7 @@ def send_at(command,back,timeout):
 	ser.write((command+'\r\n').encode());
 	time.sleep(timeout);
 	if ser.inWaiting():
-		time.sleep(0.01);
+		time.sleep(0.25);
 		rec_buff = ser.read(ser.inWaiting());
 	if back not in rec_buff.decode():
 		func.log('sim.py', 'send_at', command + ' ERROR');
@@ -47,7 +47,7 @@ def power_on():
 	GPIO.setmode(GPIO.BCM);
 	GPIO.setwarnings(False);
 	GPIO.setup(power_key,GPIO.OUT);
-	time.sleep(0.1);
+	time.sleep(0.25);
 	GPIO.output(power_key,GPIO.HIGH);
 	time.sleep(2);
 	GPIO.output(power_key,GPIO.LOW);
