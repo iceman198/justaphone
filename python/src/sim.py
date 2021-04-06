@@ -15,6 +15,7 @@ ser.flushInput();
 power_key = 4;
 
 def check_for_msg():
+	ser.flushInput();
 	rec_buff = '';
 	time.sleep(0.25);
 	if ser.inWaiting():
@@ -27,6 +28,7 @@ def check_for_msg():
 	return resp;
 
 def send_at(command,back,timeout):
+	ser.flushInput();
 	rec_buff = '';
 	ser.write((command+'\r\n').encode());
 	time.sleep(timeout);

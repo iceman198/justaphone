@@ -106,6 +106,7 @@ def check_sim_notification():
                 temp = temp.split(' ');
                 currentLine1 = temp[1];
                 currentLine2 = temp[2];
+                inCall = False
                 
     except:
         func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
