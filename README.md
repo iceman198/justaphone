@@ -17,3 +17,5 @@ docs say to protect it with an "ESD". Will need to figure out how to wire that i
 ## Python
 Waveshare 2.13v2 dipslay: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT_(B)
 Install python flask
+
+To be able to shutdown as pi users via python: https://peppe8o.com/shutdown-button-with-raspberry-pi-and-python/

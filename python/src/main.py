@@ -46,8 +46,9 @@ def check_for_input():
 
         if len(resp) > 0:
             if "S" in rec_buff.decode():
-                turn_off_sim();
-                turn_on_sim();
+                currentLine1 = "Shutting down...";
+                time.sleep(2);
+                os.system("systemctl poweroff")
             elif "H" in rec_buff.decode():
                 sim.hangup();
                 currentLine1 = 'Hangup';
