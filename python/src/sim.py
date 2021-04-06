@@ -18,7 +18,7 @@ def check_for_msg():
 	rec_buff = '';
 	time.sleep(0.25);
 	if ser.inWaiting():
-		time.sleep(0.01 );
+		time.sleep(0.01);
 		rec_buff = ser.read(ser.inWaiting());
 
 	resp = str(rec_buff.decode().replace('\n', '|').replace('\r', '').encode('utf-8'));
