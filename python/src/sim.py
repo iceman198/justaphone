@@ -89,31 +89,30 @@ def get_call_info():
 
 def get_signal():
 	resp = '';
+	signal = '';
 
 	try:
 		resp = send_at('AT+CSQ','OK',0.5);
+		signal = re.findall(': ([^"]*)|', resp);
 
 	except:
 		func.log('sim.py', 'get_signal', 'error: ' + str(sys.exc_info()[0]));
 	
-	signal = '';
-	signal = re.findall(': ([^"]*)|', resp);
 	func.log('sim.py', 'get_signal', 'signal: ' + signal);
 	return signal;
 
 def get_network():
 	resp = '';
+	network = '';
 
 	try:
 		resp = send_at('AT+CPSI?','OK',0.5);
-
+		network = re.findall(': ([^"]*),', resp);
 	except:
 		func.log('sim.py', 'get_network', 'error: ' + str(sys.exc_info()[0]));
 	
-	network = '';
-	network = re.findall(': ([^"]*),', resp);
 	func.log('sim.py', 'get_network', 'network: ' + network);
-	return resp;
+	return network;
 
 def make_call(phone_number):
 	try:
