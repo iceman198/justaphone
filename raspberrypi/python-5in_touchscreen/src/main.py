@@ -90,6 +90,16 @@ def index():
     #disp.display_text("Index hit");
     return render_template('index.html');
 
+@app.route('/shutdown')
+def flask_shutdown():
+    shutdown();
+    mybody = "Shutdown initiated";
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    return jsonify(resp_obj);
+
 @app.route('/service/jsontest/')
 def json_test():
     mybody = "This is my json test";
