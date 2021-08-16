@@ -51,5 +51,6 @@ def update_disp(mystats, textLine1, textLine2):
 
 
 def cleanup():
-    epd.Clear(0xFF);
+    #epd.Clear(0xFF);
     epd.sleep();
+    epd.epdconfig.module_exit();

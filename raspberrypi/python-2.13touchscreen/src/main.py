@@ -46,9 +46,7 @@ def check_for_input():
 
         if len(resp) > 0:
             if "S" in rec_buff.decode():
-                currentLine1 = "Shutting down...";
-                time.sleep(5);
-                os.system("sudo shutdown now");
+                shutdown();
             elif "H" in rec_buff.decode():
                 sim.hangup();
                 currentLine1 = 'Hangup';
@@ -113,6 +111,14 @@ def check_sim_notification():
         func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
     #func.log('main.py', 'check_sim_notification', 'end');
+
+def shutdown():
+    global currentLine1;
+    currentLine1 = "Shutting down...";
+    disp.cleanup();
+    time.sleep(5);
+    os.system("sudo shutdown now");
+
 
 def turn_on_sim():
     global currentLine1, currentLine2;
