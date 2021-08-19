@@ -7,13 +7,26 @@ import serial;
 import time;
 import func;
 
+mydevice = '/dev/serial0';
+mybaud = 9600;
+mytimeout = 0.25;
+
 #ser = serial.Serial('/dev/cu.SLAB_USBtoUART',115200);
 #ser = serial.Serial('/dev/ttyS0',115200);
-ser = serial.Serial('/dev/serial0',9600,timeout=0.25);
+#ser = serial.Serial('/dev/serial0',9600,timeout=0.25);
 #ser = serial.Serial('/dev/ttyUSB0',9600,timeout=0.25);
+
+ser = serial.Serial(mydevice, mybaud, mytimeout);
 ser.flushInput();
 
 power_key = 4;
+
+def clear_serial():
+	try:
+		ser = serial.Serial(mydevice, mybaud, mytimeout);
+		ser.flushInput();
+	except:
+		func.log('sim.py', 'clear_serial', 'error: ' + str(sys.exc_info()));
 
 def check_for_msg():
 	resp = "";
@@ -29,6 +42,7 @@ def check_for_msg():
 			func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
 	except:
 		func.log('sim.py', 'check_for_msg', 'error: ' + str(sys.exc_info()));
+		clear_serial();
 	return resp;
 
 def send_at(command,back,timeout):
