@@ -24,6 +24,7 @@ power_key = 4;
 def clear_serial():
 	global ser, mydevice, mybaud, mytimeout;
 	try:
+		func.log('sim.py', 'clear_serial', 'attempting to reset serial with device: ' + mydevice + ' baud: ' + mybaud + ' timeout: ' + mytimeout);
 		ser = serial.Serial(mydevice, mybaud, timeout=mytimeout);
 		ser.flushInput();
 	except:
