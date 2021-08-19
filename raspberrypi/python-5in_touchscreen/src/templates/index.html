@@ -1,11 +1,10 @@
 <html>
 <head>
-    <link rel="stylesheet" href='/static/style.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>PiPhone</title>
     <script type = "text/javascript">
-        function pushHangup() {  
-            const response = await fetch('http://localhost:5000/');
+        async function pushHangup() {  
+            const response = await fetch('http://localhost:5000/service/jsontest/');
             const myJson = await response.json();
         }
     </script>
