@@ -60,8 +60,8 @@ def check_sim_notification():
                 currentLine2 = temp[2];
                 inCall = False
 
-            if "ERROR" in msg:
-                simgood = False;
+            #if "ERROR" in msg:
+                #simgood = False;
                 
     except:
         func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
