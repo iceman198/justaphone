@@ -22,6 +22,7 @@ ser.flushInput();
 power_key = 4;
 
 def clear_serial():
+	global ser;
 	try:
 		ser = serial.Serial(mydevice, mybaud, timeout=mytimeout);
 		ser.flushInput();
@@ -29,6 +30,7 @@ def clear_serial():
 		func.log('sim.py', 'clear_serial', 'error: ' + str(sys.exc_info()));
 
 def check_for_msg():
+	global ser;
 	resp = "";
 	try:
 		rec_buff = '';
@@ -41,11 +43,13 @@ def check_for_msg():
 		if len(resp) > 0:
 			func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
 	except:
+		resp = "ERROR";
 		func.log('sim.py', 'check_for_msg', 'error: ' + str(sys.exc_info()));
 		clear_serial();
 	return resp;
 
 def send_at(command,back,timeout):
+	global ser;
 	rec_buff = '';
 	ser.write((command+'\r\n').encode());
 	time.sleep(timeout);
@@ -63,6 +67,7 @@ def send_at(command,back,timeout):
 		return resp;
 
 def power_on():
+	global ser;
 	GPIO.setmode(GPIO.BCM);
 	GPIO.setwarnings(False);
 	GPIO.setup(power_key,GPIO.OUT);
@@ -146,6 +151,7 @@ def make_call(phone_number):
 		func.log('sim.py', 'make_call', 'error: ' + sys.exc_info()[0]);
 
 def send_short_message(phone_number,text_message):
+	global ser;
 	func.log('sim.py', 'send_short_message', 'Setting SMS mode...');
 	send_at("AT+CMGF=1","OK",1);
 	func.log('sim.py', 'send_short_message', 'Sending Short Message');
@@ -185,6 +191,7 @@ def delete_message(msgId):
 		func.log('sim.py', 'delete_message', 'error%d'%answer);
 
 def hangup():
+	global ser;
 	try:
 		ser.write('AT+CHUP\r\n'.encode());
 	except :
