@@ -1,11 +1,25 @@
 <html>
-
 <head>
     <link rel="stylesheet" href='/static/style.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>PiPhone</title>
+    <script type = "text/javascript">
+        function pushHangup() {  
+            const response = await fetch('http://localhost:5000/');
+            const myJson = await response.json();
+        }
+    </script>
 </head>
-
 <body>
-    <h1>Hello world!</h1>
+    <table border=1>
+        <tr><td><button style="width:100%;" onclick="pushOne()">1</button></td><td><button style="width:100%;" onclick="pushTwo()">2</button></td><td><button style="width:100%;" onclick="pushThree()">3</button></td></tr>
+        <tr><td><button style="width:100%;" onclick="pushFour()">4</button></td><td><button style="width:100%;" onclick="pushFive()">5</button></td><td><button style="width:100%;" onclick="pushSix()">6</button></td></tr>
+        <tr><td><button style="width:100%;" onclick="pushSeven()">7</button></td><td><button style="width:100%;" onclick="pushEight()">8</button></td><td><button style="width:100%;" onclick="pushNine()">9</button></td></tr>
+        <tr><td><button style="width:100%;" onclick="pushStar()">*</button></td><td><button style="width:100%;" onclick="pushZero()">0</button></td><td><button style="width:100%;" onclick="pushPound()">#</button></td></tr>
+        <tr><td><button style="width:100%;" onclick="pushHangup()">H</button></td><td>&nbsp;</td><td><button style="width:100%;" onclick="pushAnswer()">A</button></td></tr>
+    </table>
+    <hr>
+    <div id="voltage"></div>
 </body>
 
 </html>
