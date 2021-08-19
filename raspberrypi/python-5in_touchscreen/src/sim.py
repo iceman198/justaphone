@@ -16,15 +16,19 @@ ser.flushInput();
 power_key = 4;
 
 def check_for_msg():
-	rec_buff = '';
-	time.sleep(0.25);
-	if ser.inWaiting():
+	resp = "";
+	try:
+		rec_buff = '';
 		time.sleep(0.25);
-		rec_buff = ser.read(ser.inWaiting());
+		if ser.inWaiting():
+			time.sleep(0.25);
+			rec_buff = ser.read(ser.inWaiting());
 
-	resp = str(rec_buff.decode().replace('\n', '|').replace('\r', '').encode('utf-8'));
-	if len(resp) > 0:
-		func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
+		resp = str(rec_buff.decode().replace('\n', '|').replace('\r', '').encode('utf-8'));
+		if len(resp) > 0:
+			func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
+	except:
+		func.log('sim.py', 'check_for_msg', 'error: ' + str(sys.exc_info()[0]));
 	return resp;
 
 def send_at(command,back,timeout):
@@ -77,15 +81,16 @@ def get_call_info():
 	resp = '';
 	try:
 		resp = send_at('AT+CLCC','CLCC',0.5);
+
+		#|+CLCC: 2,1,4,0,0,"+12076192651",145||OK|
+		call_info = '';
+		temp = re.findall('"([^"]*)"', resp);
+		if len(temp) > 0:
+			call_info = temp[0];
+		#func.log('sim.py', 'get_call_info', 'resp: ' + call_info);
 	except:
 		func.log('sim.py', 'get_call_info', 'error: ' + str(sys.exc_info()[0]));
 
-	#|+CLCC: 2,1,4,0,0,"+12076192651",145||OK|
-	call_info = '';
-	temp = re.findall('"([^"]*)"', resp);
-	if len(temp) > 0:
-		call_info = temp[0];
-	#func.log('sim.py', 'get_call_info', 'resp: ' + call_info);
 	return call_info;
 
 def get_signal():
