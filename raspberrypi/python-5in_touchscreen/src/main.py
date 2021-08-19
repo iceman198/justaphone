@@ -30,6 +30,7 @@ def check_sim_notification():
         global inCall, isRinging, currentLine1, currentLine2, simgood;
         msg = sim.check_for_msg();
         if (len(msg) > 0):
+            func.log('main.py', 'check_sim_notification', 'receive msg:' + msg);
             if "PB DONE" in msg:
                 simgood = True;
                 currentLine1 = "Ready";

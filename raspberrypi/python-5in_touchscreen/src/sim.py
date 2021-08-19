@@ -22,7 +22,7 @@ ser.flushInput();
 power_key = 4;
 
 def clear_serial():
-	global ser;
+	global ser, mydevice, mybaud, mytimeout;
 	try:
 		ser = serial.Serial(mydevice, mybaud, timeout=mytimeout);
 		ser.flushInput();
@@ -67,7 +67,7 @@ def send_at(command,back,timeout):
 		return resp;
 
 def power_on():
-	global ser;
+	global ser, power_key;
 	GPIO.setmode(GPIO.BCM);
 	GPIO.setwarnings(False);
 	GPIO.setup(power_key,GPIO.OUT);
