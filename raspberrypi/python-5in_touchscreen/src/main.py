@@ -100,6 +100,16 @@ def flask_shutdown():
         }
     return jsonify(resp_obj);
 
+@app.route('/shutdownsim')
+def flask_shutdown():
+    turn_off_sim();
+    mybody = "Shutdown SIM initiated";
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    return jsonify(resp_obj);
+
 @app.route('/service/jsontest/')
 def json_test():
     mybody = "This is my json test";
