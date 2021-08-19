@@ -101,7 +101,7 @@ def flask_shutdown():
     return jsonify(resp_obj);
 
 @app.route('/shutdownsim')
-def flask_shutdown():
+def flask_shutdownsim():
     turn_off_sim();
     mybody = "Shutdown SIM initiated";
     resp_obj = {
