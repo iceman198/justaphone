@@ -16,14 +16,14 @@ mytimeout = 0.25;
 #ser = serial.Serial('/dev/serial0',9600,timeout=0.25);
 #ser = serial.Serial('/dev/ttyUSB0',9600,timeout=0.25);
 
-ser = serial.Serial(mydevice, mybaud, mytimeout);
+ser = serial.Serial(mydevice, mybaud, timeout=mytimeout);
 ser.flushInput();
 
 power_key = 4;
 
 def clear_serial():
 	try:
-		ser = serial.Serial(mydevice, mybaud, mytimeout);
+		ser = serial.Serial(mydevice, mybaud, timeout=mytimeout);
 		ser.flushInput();
 	except:
 		func.log('sim.py', 'clear_serial', 'error: ' + str(sys.exc_info()));
