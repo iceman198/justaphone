@@ -43,7 +43,7 @@ def check_for_msg():
 		if len(resp) > 0:
 			func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
 	except:
-		resp = "ERROR";
+		resp = "*ERROR*";
 		func.log('sim.py', 'check_for_msg', 'error: ' + str(sys.exc_info()));
 		clear_serial();
 	return resp;
