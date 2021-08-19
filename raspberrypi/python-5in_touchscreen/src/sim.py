@@ -28,7 +28,7 @@ def check_for_msg():
 		if len(resp) > 0:
 			func.log('sim.py', 'check_for_msg', 'resp: ' + resp);
 	except:
-		func.log('sim.py', 'check_for_msg', 'error: ' + str(sys.exc_info()[0]));
+		func.log('sim.py', 'check_for_msg', 'error: ' + str(sys.exc_info()));
 	return resp;
 
 def send_at(command,back,timeout):
