@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--<meta name="viewport" content="width=300, initial-scale=5, maximum-scale=8.0, minimum-scale=3, user-scalable=0">-->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
     <title>PiPhone</title>
     <script type = "text/javascript">
         let inCall = false;
@@ -61,21 +62,29 @@
     </script>
 </head>
 <body>
-    <div id="stats">
-        <div id="voltage"></div>
-        <div id="signal"></div>
-        <div id="network"></div>
+    <div class="wrap">
+        <header>
+            <div id="stats">
+                <div id="voltage"></div>
+                <div id="signal"></div>
+                <div id="network"></div>
+            </div>
+        </header>
+        <div class="content">
+            <div id="dialer">
+                <table border=1>
+                    <tr><td><button style="width:100%;" onclick="pushNumber('1')">1</button></td><td><button style="width:100%;" onclick="pushNumber('2')">2</button></td><td><button style="width:100%;" onclick="pushNumber('3')">3</button></td></tr>
+                    <tr><td><button style="width:100%;" onclick="pushNumber('4')">4</button></td><td><button style="width:100%;" onclick="pushNumber('5')">5</button></td><td><button style="width:100%;" onclick="pushNumber('6')">6</button></td></tr>
+                    <tr><td><button style="width:100%;" onclick="pushNumber('7')">7</button></td><td><button style="width:100%;" onclick="pushNumber('8')">8</button></td><td><button style="width:100%;" onclick="pushNumber('9')">9</button></td></tr>
+                    <tr><td><button style="width:100%;" onclick="pushNumber('*')">*</button></td><td><button style="width:100%;" onclick="pushNumber('0')">0</button></td><td><button style="width:100%;" onclick="pushNumber('#')">#</button></td></tr>
+                    <tr><td><button style="width:100%;" onclick="pushNumber('H')">H</button></td><td>&nbsp;</td><td><button style="width:100%;" onclick="pushNumber('A')">A</button></td></tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <hr>
-    <div id="dialer">
-        <table border=1>
-            <tr><td><button style="width:100%;" onclick="pushNumber('1')">1</button></td><td><button style="width:100%;" onclick="pushNumber('2')">2</button></td><td><button style="width:100%;" onclick="pushNumber('3')">3</button></td></tr>
-            <tr><td><button style="width:100%;" onclick="pushNumber('4')">4</button></td><td><button style="width:100%;" onclick="pushNumber('5')">5</button></td><td><button style="width:100%;" onclick="pushNumber('6')">6</button></td></tr>
-            <tr><td><button style="width:100%;" onclick="pushNumber('7')">7</button></td><td><button style="width:100%;" onclick="pushNumber('8')">8</button></td><td><button style="width:100%;" onclick="pushNumber('9')">9</button></td></tr>
-            <tr><td><button style="width:100%;" onclick="pushNumber('*')">*</button></td><td><button style="width:100%;" onclick="pushNumber('0')">0</button></td><td><button style="width:100%;" onclick="pushNumber('#')">#</button></td></tr>
-            <tr><td><button style="width:100%;" onclick="pushNumber('H')">H</button></td><td>&nbsp;</td><td><button style="width:100%;" onclick="pushNumber('A')">A</button></td></tr>
-        </table>
-    </div>
+    <footer>
+    	<p>&copy; <a href="http://www.duttonbiz.com" target="_blank">Dutton Designs</a> 2021</p>
+    </footer>
 </body>
 
 </html>
