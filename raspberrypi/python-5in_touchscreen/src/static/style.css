@@ -49,7 +49,6 @@ blockquote:before, blockquote:after, q:before, q:after {
 table { 
     border-collapse: collapse;
     border-spacing: 0;
-    width: 300px;
     }
 td.border_left { 
     padding-left: 6px;
@@ -65,7 +64,8 @@ td.border_left {
     width: 100%;
 }
 .dialer button {
-    height: 40px;
+    height: 80px;
+    width: 100%;
     }
 
 a {
