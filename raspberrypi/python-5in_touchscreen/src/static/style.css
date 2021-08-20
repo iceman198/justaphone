@@ -63,7 +63,7 @@ td.border_left {
 .dialer table {
     width: 100%;
 }
-.dialer button {
+.dialer table tr td button {
     height: 80px;
     width: 100%;
     }
