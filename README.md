@@ -20,6 +20,33 @@ Install python flask
 
 To be able to shutdown as pi users via python: https://peppe8o.com/shutdown-button-with-raspberry-pi-and-python/
 
+### setting the scripts to run at startup
+Whever you desire, create an SH script like so:
+```
+cd /home/pi/justaphone/
+#git pull > /home/pi/justaphone/gitupdate.log
+git pull
+
+cd /home/pi/justaphone/python/src
+rm *.pyc
+#python main.py > /home/pi/justaphone/python/phone.log
+python main.py
+```
+
+Obviously, make sure to update directory paths.
+
+Now let's setup crontab to run at boot.  Run
+```
+crontab -e
+```
+
+Add the following to the bottom of the file (update the path as needed!)
+```
+@reboot sh /home/pi/justaphone/python/runme.sh > /home/pi/justaphone/python/runme.log &
+```
+
+The `runme.log` part is just in case you need to see what is going on in case of issues.
+
 ## Using Raspberry Pi Wavershare 5inch touchscreen
 Link to the 5inch screen I'm using...you may need to do a calibration and such: https://www.waveshare.com/wiki/5inch_HDMI_LCD
 
@@ -50,6 +77,26 @@ EndSection
 ```
 
 You will need to do a reboot after this.
+
+### Set URL to launch at start
+```
+sudo nano /home/pi/.config/lxsession/LXDE-pi/autostart
+```
+
+Add the following line to the file:
+```
+@chromium-browser --start-fullscreen --start-maximized http://localhost:5000/
+```
+
+The whole file should look something like this:
+```
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+#@xscreensaver -no-splash
+@chromium-browser --start-fullscreen --start-maximized https://teams.microsoft.com/
+```
+
+Notice the hash before the xscreensaver line...this may or may not be needed.
 
 # Troubleshooting
 Issues installing flask?  Checkout: https://stackoverflow.com/questions/46989508/install-flask-ask-on-raspberry-pi
