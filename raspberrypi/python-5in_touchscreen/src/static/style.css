@@ -121,7 +121,15 @@
  body {
      font-family:Arial, Helvetica, sans-serif;
      }
-     
+
+ .forth {
+     width: 25%;
+ }
+
+ .third {
+     width: 33%;
+ }
+
  .wrap {
      width:100%;
      }
