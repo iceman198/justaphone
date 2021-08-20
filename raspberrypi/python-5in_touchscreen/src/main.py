@@ -176,7 +176,7 @@ def flask_makecall(number):
     mybody = 'Making phone call to ' + str(number);
 
     #disp.display_text("Calling " + number);
-    #sim.make_call(number);
+    sim.make_call(number);
     resp_obj = {
         'status': "SUCCESS",
         'body': mybody
