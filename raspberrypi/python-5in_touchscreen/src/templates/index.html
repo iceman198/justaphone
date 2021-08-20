@@ -33,8 +33,14 @@
                 document.getElementById("dialerText").innerHTML = '';
             } else if (number.indexOf('A') > -1) {
                 inCall = true;
-                const response = await makeWebCall('http://localhost:5000/answer/');
-                console.log(`pushNumber() ~ number: ${number} | response: ${JSON.stringify(response)}`);
+                let currentNumbers = document.getElementById("dialerText").innerHTML;
+                if (currentNumbers == '') {                    
+                    const response = await makeWebCall('http://localhost:5000/answer/');
+                    console.log(`pushNumber() ~ answering call - response: ${JSON.stringify(response)}`);
+                } else {
+                    const response = await makeWebCall('http://localhost:5000/makecall/' + currentNumbers);
+                    console.log(`pushNumber() ~ calling ${currentNumbers} - response: ${JSON.stringify(response)}`);
+                }
             } else {
                 if (inCall) {
                     // send tone with number
@@ -43,11 +49,6 @@
                 } else {
                     // just add the number to the list in preperation for a call
                     let currentNumbers = document.getElementById("dialerText").innerHTML;
-                    if (currentNumbers != null) {
-                        //currentNumbers = '';
-                    } else {
-                        currentNumbers = '';
-                    }
                     currentNumbers = `${currentNumbers}${number}`;
                     document.getElementById("dialerText").innerHTML = currentNumbers;
                 }

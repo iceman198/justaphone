@@ -168,7 +168,7 @@ def flask_hangup():
         }
     return jsonify(resp_obj);
 
-@app.route('/service/makecall/<number>')
+@app.route('/makecall/<number>')
 def flask_makecall(number):
     global currentLine1, currentLine2;
     currentLine1 = "Making call: ";
