@@ -125,7 +125,7 @@ def flask_getstats():
         'voltage': voltage,
         'signal': signal,
         'network': network,
-        'callStatus': callstatus
+        'callstatus': callstatus
         }
     return jsonify(resp_obj);
 
