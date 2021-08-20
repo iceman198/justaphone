@@ -13,7 +13,7 @@ import func;
 
 doLoop = True;
 isRunning = False;
-currentStats = ['', '', ''];
+currentStats = ['0', '0', '0'];
 currentLine1 = "";
 currentLine2 = "";
 simgood = False;
@@ -114,8 +114,23 @@ def flask_shutdownsim():
         }
     return jsonify(resp_obj);
 
+@app.route('/getStats')
+def flask_getstats():
+    global currentStats;
+    voltage = currentStats[0];
+    signal = currentStats[1];
+    network = currentStats[2];
+
+    resp_obj = {
+        'status': "SUCCESS",
+        'voltage': voltage,
+        'signal': signal,
+        'network': network
+        }
+    return jsonify(resp_obj);
+
 @app.route('/service/jsontest/')
-def json_test():
+def flask_jsontest():
     mybody = "This is my json test";
     resp_obj = {
         'status': "SUCCESS",
@@ -123,8 +138,38 @@ def json_test():
         }
     return jsonify(resp_obj);
 
+@app.route('/answer/')
+def flask_answer():
+    sim.answer_call();
+    mybody = "Answer signaled";
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    return jsonify(resp_obj);
+
+@app.route('/sendtone/<number>')
+def flask_sendtone(number):
+    sim.send_tone(str(number));
+    mybody = 'Sending tone for ' + str(number);
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    return jsonify(resp_obj);
+
+@app.route('/hangup/')
+def flask_hangup():
+    sim.hangup();
+    mybody = "Hangup signaled";
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    return jsonify(resp_obj);
+
 @app.route('/service/makecall/<number>')
-def make_call(number):
+def flask_makecall(number):
     global currentLine1, currentLine2;
     currentLine1 = "Making call: ";
     currentLine2 = number;
@@ -140,7 +185,7 @@ def make_call(number):
     return jsonify(resp_obj);
 
 @app.route('/nametest/<name>')
-def nametest(name):
+def flask_nametest(name):
     global currentLine1, currentLine2;
     currentLine1 = "";
     currentLine2 = name;
@@ -148,7 +193,7 @@ def nametest(name):
 
 def main_loop():
     global doLoop, isRunning, simgood;
-    global currentStats, currentLine1, currentLine2
+    global currentStats, currentLine1, currentLine2;
     turn_off_sim();
     turn_on_sim();
     time_updates = time.time();

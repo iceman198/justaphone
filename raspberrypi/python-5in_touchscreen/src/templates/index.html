@@ -1,25 +1,80 @@
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="viewport" content="width=300, initial-scale=5, maximum-scale=8.0, minimum-scale=3, user-scalable=0">
+    <link rel="stylesheet" href="styles.css">
     <title>PiPhone</title>
     <script type = "text/javascript">
-        async function pushHangup() {  
-            const response = await fetch('http://localhost:5000/service/jsontest/');
-            const myJson = await response.json();
-            console.log(myJson);
+        let inCall = false;
+
+        async function makeWebCall(address, data) {
+            return new Promise(async (resolve, reject) => {
+                if (data != null) {
+                    resolve(null);
+                } else {
+                    const response = await fetch(address).then(async (response) => {
+                        const myJson = await response.json();
+                        //console.log(`makeWebCall() ~ response: ${JSON.stringify(myJson)}`);
+                        resolve(myJson);
+                    }).catch((err) => {
+                        //console.log(`makeWebCall() ~ Error making webcall: ${JSON.stringify(err)}`);
+                        resolve(null);
+                    });
+                }
+            });
         }
+
+        async function pushNumber(number) {
+            if (number.indexOf('H') > -1) {
+                inCall = false;
+                const response = await makeWebCall('http://localhost:5000/hangup/');
+                console.log(`pushNumber() ~ number: ${number} | response: ${JSON.stringify(response)}`);
+            } else if (number.indexOf('A') > -1) {
+                inCall = true;
+                const response = await makeWebCall('http://localhost:5000/answer/');
+                console.log(`pushNumber() ~ number: ${number} | response: ${JSON.stringify(response)}`);
+            } else {
+                if (inCall) {
+                    // send tone with number
+                    const response = await makeWebCall('http://localhost:5000/sendtone/'+number);
+                    console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
+                } else {
+                    // just add the number to the list in preperation for a call
+                }
+            }
+
+
+        }
+
+        async function getStats() {
+            const response = await makeWebCall('http://localhost:5000/getStats/');
+            console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
+            if (response != null && response.length > 0) {
+                document.getElementById("voltage").innerHTML = response.voltage;
+                document.getElementById("signal").innerHTML = response.signal;
+                document.getElementById("network").innerHTML = response.network;
+            }
+        }
+
+        setInterval(getStats, 2000);
+
     </script>
 </head>
 <body>
-    <table border=1>
-        <tr><td><button style="width:100%;" onclick="pushOne()">1</button></td><td><button style="width:100%;" onclick="pushTwo()">2</button></td><td><button style="width:100%;" onclick="pushThree()">3</button></td></tr>
-        <tr><td><button style="width:100%;" onclick="pushFour()">4</button></td><td><button style="width:100%;" onclick="pushFive()">5</button></td><td><button style="width:100%;" onclick="pushSix()">6</button></td></tr>
-        <tr><td><button style="width:100%;" onclick="pushSeven()">7</button></td><td><button style="width:100%;" onclick="pushEight()">8</button></td><td><button style="width:100%;" onclick="pushNine()">9</button></td></tr>
-        <tr><td><button style="width:100%;" onclick="pushStar()">*</button></td><td><button style="width:100%;" onclick="pushZero()">0</button></td><td><button style="width:100%;" onclick="pushPound()">#</button></td></tr>
-        <tr><td><button style="width:100%;" onclick="pushHangup()">H</button></td><td>&nbsp;</td><td><button style="width:100%;" onclick="pushAnswer()">A</button></td></tr>
-    </table>
+    <div id="stats">
+        <div id="voltage"></div>
+        <div id="signal"></div>
+        <div id="signal"></div>
+    </div>
     <hr>
-    <div id="voltage"></div>
+    <div id="dialer">
+        <table border=1>
+            <tr><td><button style="width:100%;" onclick="pushNumber('1')">1</button></td><td><button style="width:100%;" onclick="pushNumber('2')">2</button></td><td><button style="width:100%;" onclick="pushNumber('3')">3</button></td></tr>
+            <tr><td><button style="width:100%;" onclick="pushNumber('4')">4</button></td><td><button style="width:100%;" onclick="pushNumber('5')">5</button></td><td><button style="width:100%;" onclick="pushNumber('6')">6</button></td></tr>
+            <tr><td><button style="width:100%;" onclick="pushNumber('7')">7</button></td><td><button style="width:100%;" onclick="pushNumber('8')">8</button></td><td><button style="width:100%;" onclick="pushNumber('9')">9</button></td></tr>
+            <tr><td><button style="width:100%;" onclick="pushNumber('*')">*</button></td><td><button style="width:100%;" onclick="pushNumber('0')">0</button></td><td><button style="width:100%;" onclick="pushNumber('#')">#</button></td></tr>
+            <tr><td><button style="width:100%;" onclick="pushNumber('H')">H</button></td><td>&nbsp;</td><td><button style="width:100%;" onclick="pushNumber('A')">A</button></td></tr>
+        </table>
+    </div>
 </body>
 
 </html>
