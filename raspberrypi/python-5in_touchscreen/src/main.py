@@ -114,7 +114,7 @@ def flask_shutdownsim():
         }
     return jsonify(resp_obj);
 
-@app.route('/getStats')
+@app.route('/getStats/')
 def flask_getstats():
     global currentStats;
     voltage = currentStats[0];
