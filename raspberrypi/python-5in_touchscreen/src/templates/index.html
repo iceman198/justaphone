@@ -63,6 +63,7 @@
                 if (response.voltage != null) { document.getElementById("voltage").innerHTML = response.voltage; }
                 if (response.signal != null) { document.getElementById("signal").innerHTML = response.signal; }
                 if (response.network != null) { document.getElementById("network").innerHTML = response.network; }
+                if (response.callstatus != null) { document.getElementById("callstatus").innerHTML = response.callstatus; }
             }
         }
 
@@ -73,6 +74,7 @@
 <body>
     <div class="wrap">
         <header>
+            <div id="callstatus"></div>
             <div id="stats">
                 <div id="voltage"></div>
                 <div id="signal"></div>

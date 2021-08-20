@@ -89,8 +89,6 @@ def turn_off_sim():
 
 @app.route('/')
 def index():
-    global currentLine1;
-    currentLine1 = "Index Triggered";
     #disp.display_text("Index hit");
     return render_template('index.html');
 
@@ -116,16 +114,18 @@ def flask_shutdownsim():
 
 @app.route('/getStats/')
 def flask_getstats():
-    global currentStats;
+    global currentStats, currentLine1, currentLine2;
     voltage = currentStats[0];
     signal = currentStats[1];
     network = currentStats[2];
+    callstatus = currentLine1 + ' | ' + currentLine2;
 
     resp_obj = {
         'status': "SUCCESS",
         'voltage': voltage,
         'signal': signal,
-        'network': network
+        'network': network,
+        'callStatus': callstatus
         }
     return jsonify(resp_obj);
 
