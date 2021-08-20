@@ -42,7 +42,7 @@ crontab -e
 
 Add the following to the bottom of the file (update the path as needed!)
 ```
-@reboot sh /home/pi/justaphone/python/runme.sh > /home/pi/justaphone/python/runme.log &
+@reboot sudo sh /home/pi/justaphone/python/runme.sh > /home/pi/justaphone/python/runme.log &
 ```
 
 The `runme.log` part is just in case you need to see what is going on in case of issues.

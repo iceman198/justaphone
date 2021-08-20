@@ -25,6 +25,11 @@
             });
         }
 
+        async function shutdown() {
+            const response = await makeWebCall('http://localhost:5000/shutdown/');
+            console.log(`shutdown() ~ response: ${JSON.stringify(response)}`);
+        }
+
         async function pushNumber(number) {
             if (number.indexOf('H') > -1) {
                 inCall = false;
@@ -96,7 +101,7 @@
         </div>
     </div>
     <footer>
-    	<p>&copy; <a href="http://www.duttonbiz.com" target="_blank">Dutton Designs</a> 2021</p>
+		<button onclick="shutdown()">shutdown</button>
     </footer>
 </body>
 
