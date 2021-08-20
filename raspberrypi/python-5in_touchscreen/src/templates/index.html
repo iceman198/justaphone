@@ -48,7 +48,7 @@
         async function getStats() {
             const response = await makeWebCall('http://localhost:5000/getStats/');
             console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
-            if (response != null && response.length > 0) {
+            if (response != null && response.status != null && response.status == "SUCCESS") {
                 let myvoltage = response.voltage;
                 let mysignal = response.signal;
                 let mynetwork = response.network;
