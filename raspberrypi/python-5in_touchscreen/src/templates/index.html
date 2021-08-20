@@ -49,6 +49,10 @@
             const response = await makeWebCall('http://localhost:5000/getStats/');
             console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
             if (response != null && response.length > 0) {
+                let myvoltage = response.voltage;
+                let mysignal = response.signal;
+                let mynetwork = resposne.network;
+                
                 document.getElementById("voltage").innerHTML = response.voltage;
                 document.getElementById("signal").innerHTML = response.signal;
                 document.getElementById("network").innerHTML = response.network;
