@@ -4,5 +4,5 @@ git pull
 
 cd /home/pi/justaphone/raspberrypi/python-5in_touchscreen/src/
 rm *.pyc
-python main.py > /home/pi/justaphone/phone_python.log
-#python main.py
+#python main.py > /home/pi/justaphone/phone_python.log
+python main.py
