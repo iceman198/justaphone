@@ -30,6 +30,7 @@
                 inCall = false;
                 const response = await makeWebCall('http://localhost:5000/hangup/');
                 console.log(`pushNumber() ~ number: ${number} | response: ${JSON.stringify(response)}`);
+                document.getElementById("dialerText").innerHTML = '';
             } else if (number.indexOf('A') > -1) {
                 inCall = true;
                 const response = await makeWebCall('http://localhost:5000/answer/');
@@ -41,6 +42,12 @@
                     console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
                 } else {
                     // just add the number to the list in preperation for a call
+                    let currentNumbers = document.getElementById("dialerText").innerHTML;
+                    if (currentNumbers != null) {
+                        currentNumbers = '';
+                    }
+                    currentNumber = str(currentNumbers) + str(number);
+                    document.getElementById("dialerText").innerHTML = currentNumbers;
                 }
             }
 
@@ -69,6 +76,7 @@
                 <div id="signal"></div>
                 <div id="network"></div>
             </div>
+            <div id="dialerText"></div>
         </header>
         <div class="content">
             <div id="dialer">
