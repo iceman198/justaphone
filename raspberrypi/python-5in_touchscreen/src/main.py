@@ -92,7 +92,7 @@ def index():
     #disp.display_text("Index hit");
     return render_template('index.html');
 
-@app.route('/shutdown')
+@app.route('/shutdown/')
 def flask_shutdown():
     shutdown();
     mybody = "Shutdown initiated";
@@ -102,7 +102,7 @@ def flask_shutdown():
         }
     return jsonify(resp_obj);
 
-@app.route('/shutdownsim')
+@app.route('/shutdownsim/')
 def flask_shutdownsim():
     turn_off_sim();
     mybody = "Shutdown SIM initiated";
