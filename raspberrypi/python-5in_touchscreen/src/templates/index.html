@@ -49,13 +49,9 @@
             const response = await makeWebCall('http://localhost:5000/getStats/');
             console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
             if (response != null && response.status != null && response.status == "SUCCESS") {
-                let myvoltage = response.voltage;
-                let mysignal = response.signal;
-                let mynetwork = response.network;
-
-                document.getElementById("voltage").innerHTML = response.voltage;
-                document.getElementById("signal").innerHTML = response.signal;
-                document.getElementById("network").innerHTML = response.network;
+                if (response.voltage != null) { document.getElementById("voltage").innerHTML = response.voltage; }
+                if (response.signal != null) { document.getElementById("signal").innerHTML = response.signal; }
+                if (response.network != null) { document.getElementById("network").innerHTML = response.network; }
             }
         }
 
