@@ -119,7 +119,7 @@ def get_voltage():
         #result = subprocess.getoutput("echo get battery | nc -q 0 127.0.0.1 8423");
         result = subprocess.check_output(['bash','-c', "echo get battery | nc -q 0 127.0.0.1 8423"]);
         if "battery: " in result:
-            v = result[9:];
+            v = "B: " + result[9:10] + "%";
     except:
         func.log('main.py', 'get_voltage', 'Exception (' + str(sys.exc_info()) + ') has been caught.');
     return v;
