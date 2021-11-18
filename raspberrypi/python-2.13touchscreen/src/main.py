@@ -20,6 +20,8 @@ if os.path.exists(libdir):
 
 doLoop = True;
 isRunning = False;
+displayUpdateTime = 10;
+displayUpdateTimeDefault = 10;
 currentStats = ['', '', ''];
 currentLine1 = "";
 currentLine2 = "";
@@ -36,7 +38,7 @@ app = Flask(__name__);
 
 def check_for_input():
     #func.log('main.py', 'check_for_input', 'start');
-    global inCall, isRinging, currentLine1, currentLine2;
+    global inCall, isRinging, currentLine1, currentLine2, displayUpdateTime;
     rec_buff = '';
     try:
         time.sleep(0.25);
@@ -46,6 +48,7 @@ def check_for_input():
         resp = str(rec_buff.decode());
 
         if len(resp) > 0:
+            displayUpdateTime = 1;
             if "S" in rec_buff.decode():
                 shutdown();
             elif "H" in rec_buff.decode():
@@ -200,20 +203,22 @@ def display_loop():
 
 
 def main_loop():
-    global doLoop, isRunning, simgood;
+    global doLoop, isRunning, simgood, displayUpdateTime, displayUpdateTimeDefault;
     global currentStats, currentLine1, currentLine2
     turn_off_sim();
+    time.sleep(5.00);
     turn_on_sim();
     time_updates = time.time();
     while doLoop:
         try:
             #func.log('main.py', 'myloop', 'looping...');s
-            if (time.time() - time_updates > 5):
+            if (time.time() - time_updates > displayUpdateTime):
                 currentStats[0] = get_voltage();
                 if (simgood):
                     currentStats[1] = sim.get_signal();
                     currentStats[2] = sim.get_network();
                 time_updates = time.time();
+                displayUpdateTime = displayUpdateTimeDefault;
             check_sim_notification();
             check_for_input();
         except:
