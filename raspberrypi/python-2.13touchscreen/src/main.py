@@ -114,11 +114,13 @@ def check_sim_notification():
     #func.log('main.py', 'check_sim_notification', 'end');
 
 def get_voltage():
-    result = subprocess.run("echo \"get battery\" | nc -q 0 127.0.0.1 8423", stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True);
-    v = "";
-    if "battery: " in result.stdout:
-        v = result.stdout[9:];
-
+    v = "NA";
+    try:
+        result = subprocess.run("echo \"get battery\" | nc -q 0 127.0.0.1 8423", stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True);
+        if "battery: " in result.stdout:
+            v = result.stdout[9:];
+    except:
+        func.log('main.py', 'get_voltage()', 'Exception (' + str(sys.exec_info()[0]) + ') has been caught.');
     return v;
 
 def shutdown():
