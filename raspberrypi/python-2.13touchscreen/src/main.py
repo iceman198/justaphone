@@ -205,13 +205,15 @@ def display_loop():
 def main_loop():
     global doLoop, isRunning, simgood, displayUpdateTime, displayUpdateTimeDefault;
     global currentStats, currentLine1, currentLine2
+    func.log('main.py', 'myloop', 'turning off sim just in case');
     turn_off_sim();
+    func.log('main.py', 'myloop', 'turning sim back on');
     time.sleep(5.00);
     turn_on_sim();
     time_updates = time.time();
     while doLoop:
         try:
-            #func.log('main.py', 'myloop', 'looping...');s
+            #func.log('main.py', 'myloop', 'looping...');
             if (time.time() - time_updates > displayUpdateTime):
                 currentStats[0] = get_voltage();
                 if (simgood):
