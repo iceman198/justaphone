@@ -116,9 +116,9 @@ def check_sim_notification():
 def get_voltage():
     v = "NA";
     try:
-        result = subprocess.run(["echo", "get battery", "|", "nc -q 0 127.0.0.1 8423"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True);
-        if "battery: " in result.stdout:
-            v = result.stdout[9:];
+        result = subprocess.getoutput("echo \"get battery\" | nc -q 0 127.0.0.1 8423");
+        if "battery: " in result:
+            v = result[9:];
     except:
         func.log('main.py', 'get_voltage()', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
     return v;
