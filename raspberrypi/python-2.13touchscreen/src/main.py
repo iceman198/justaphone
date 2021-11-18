@@ -3,6 +3,7 @@ import sys;
 import os;
 import time;
 import signal;
+import subprocess;
 import serial;
 
 from flask import Flask, jsonify, render_template;
@@ -112,6 +113,14 @@ def check_sim_notification():
 
     #func.log('main.py', 'check_sim_notification', 'end');
 
+def get_voltage():
+    result = subprocess.run(["echo \"get battery\" | nc -q 0 127.0.0.1 8423"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True);
+    v = "";
+    if "battery: " in result.stdout:
+        v = result.stdout[9:];
+
+    return v;
+
 def shutdown():
     global currentLine1;
     currentLine1 = "Shutting down...";
@@ -197,8 +206,8 @@ def main_loop():
         try:
             #func.log('main.py', 'myloop', 'looping...');s
             if (time.time() - time_updates > 5):
+                currentStats[0] = get_voltage();
                 if (simgood):
-                    currentStats[0] = sim.check_voltage();
                     currentStats[1] = sim.get_signal();
                     currentStats[2] = sim.get_network();
                 time_updates = time.time();
