@@ -78,7 +78,7 @@ def check_for_input():
 
 def check_sim_notification():
     try:
-        #func.log('main.py', 'check_sim_notification', 'start');
+        func.log('main.py', 'check_sim_notification', 'start');
         global inCall, isRinging, currentLine1, currentLine2, simgood;
         msg = sim.check_for_msg();
         if (len(msg) > 0):
@@ -114,7 +114,7 @@ def check_sim_notification():
     except:
         func.log('main.py', 'check_sim_notification', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
 
-    #func.log('main.py', 'check_sim_notification', 'end');
+    func.log('main.py', 'check_sim_notification', 'end');
 
 def get_voltage():
     v = "NA";
