@@ -120,7 +120,7 @@ def get_voltage():
         if "battery: " in result:
             v = result[9:];
     except:
-        func.log('main.py', 'get_voltage', 'Exception (' + str(sys.exc_info()[0]) + ') has been caught.');
+        func.log('main.py', 'get_voltage', 'Exception (' + str(sys.exc_info()) + ') has been caught.');
     return v;
 
 def shutdown():
