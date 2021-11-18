@@ -116,7 +116,7 @@ def check_sim_notification():
 def get_voltage():
     v = "NA";
     try:
-        result = subprocess.run("echo \"get battery\" | nc -q 0 127.0.0.1 8423", stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True);
+        result = subprocess.run(["echo", "get battery", "|", "nc -q 0 127.0.0.1 8423"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True);
         if "battery: " in result.stdout:
             v = result.stdout[9:];
     except:
