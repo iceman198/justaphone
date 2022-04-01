@@ -37,7 +37,7 @@ Sim7x00::~Sim7x00() {
 
 
 /**************************Power on Sim7x00**************************/
-void Sim7x00::PowerOn() {
+void Sim7x00::PowerOn(unsigned int powerpin) {
 //  uint8_t answer = 0;
 
   Sim7600Serial.begin(9600);
@@ -49,11 +49,11 @@ void Sim7x00::PowerOn() {
 //  {
     //Serial.print("Starting up...\n");
 
-//    pinMode(PowerKey, OUTPUT);
+    pinMode(powerpin, OUTPUT);
     // power on pulse
-//    digitalWrite(PowerKey, HIGH);
-//    delay(500);
-//    digitalWrite(PowerKey, LOW);
+    digitalWrite(powerpin, HIGH);
+    delay(500);
+    digitalWrite(powerpin, LOW);
 
     // waits for an answer from the module
 //    while (answer == 0) {     // Send AT every two seconds and wait for the answer
@@ -83,6 +83,24 @@ char Sim7x00::PowerOff() {
   answer = sendATcommand("AT+CPOF", "OK", 500);
   return answer;
 }
+
+char* Sim7x00::GetSignal() {
+  char* answer = sendATcommandResponse("AT+CSQ", "OK", 500);
+  return answer;
+}
+
+char* Sim7x00::GetNetwork() {
+  char* answer = sendATcommandResponse("AT+CPSI?", "OK", 500);
+  return answer;
+}
+
+void Sim7x00::SendTone(const char* Tone) {
+  char aux_str[30];
+  sprintf(aux_str, "AT+VTS=\"%s\"", Tone);
+  sendATcommand(aux_str, "OK", 1000);
+}
+
+
 
 /**************************Phone Calls**************************/
 void Sim7x00::PhoneCall(const char* PhoneNumber) {

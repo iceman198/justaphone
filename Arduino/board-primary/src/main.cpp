@@ -16,6 +16,10 @@
 
 Adafruit_PCD8544 display = Adafruit_PCD8544(D4, D3, D2, D1, D0); // Nokia 5110 display
 
+const static int powerpin = 14;
+
+int loopCount = 0;
+
 bool simReady = false;
 bool isRinging = false;
 
@@ -163,6 +167,7 @@ void answer() {
 }
 
 void turnOffSim() {
+  Serial.print("turnOffSim() ~ turning off SIM");
   sim7600.PowerOff();
   currentStats = "SIM OFF";
   clearDisplay();
@@ -170,9 +175,29 @@ void turnOffSim() {
 
 void turnOnSim() {
   Serial.print("turnOnSim() ~ Starting SIM");
-  sim7600.PowerOn();
+  sim7600.PowerOn(powerpin);
   currentStats = "SIM INIT";
   clearDisplay();
+}
+
+void getSimSignal() {
+  char* mysignal = cleanChar(sim7600.GetSignal());
+  char* newsignal = "";
+  for (int i = 0; mysignal[i] != '\0'; i++) {
+    if (mysignal[i] == ':') {
+      mysignal[0] = mysignal[i+2];
+      newvoltage[1] = mysignal[i+3];
+      newvoltage[2] = mysignal[i+4];
+      newvoltage[3] = mysignal[i+5];
+      newvoltage[4] = mysignal[i+6];
+      newvoltage[5] = mysignal[i+7];
+    }
+  }
+
+  Serial.print("getSimSignal() ~ mysignal: ");
+  Serial.println(mysignal);
+  currentStats = currentStats + " S:" + mysignal;
+  //clearDisplay();
 }
 
 void getSimVoltage() {
@@ -191,7 +216,7 @@ void getSimVoltage() {
   Serial.print("getSimVoltage() ~ newvoltage: ");
   Serial.println(newvoltage);
   currentStats = newvoltage;
-  clearDisplay();
+  //clearDisplay();
 }
 
 void setup()
@@ -203,13 +228,18 @@ void setup()
 
   delay(500);
   prepDisplay();
-  delay(500);
-
+  delay(5000);
+  turnOffSim();
+  delay(5000);
   turnOnSim();
 }
 
 void loop()
 {
+  loopCount++;
+  //Serial.print("loopCount: ");
+  //Serial.println(loopCount);
+
   //Serial.println("loop() ~ START");
   String keypad; // for incoming serial data
 
@@ -243,7 +273,7 @@ void loop()
     
     if (mystring.indexOf("PB DONE") != -1) {
       simReady = true;
-      currentStats = "Ready";
+      currentText = "Ready";
       clearDisplay();
     }
     
@@ -285,8 +315,12 @@ void loop()
   //}
 
   if (simReady) {
-    getSimVoltage();
+    if (loopCount > 10) {
+      getSimVoltage();
+      getSimSignal();
+      clearDisplay();
+      loopCount = 0;
+    }
   }
-
   //Serial.println("loop() ~ STOP");
 }

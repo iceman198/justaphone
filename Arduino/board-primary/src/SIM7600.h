@@ -42,14 +42,12 @@ class Sim7x00 {
 
 public:
   // Pin definition
-  const static int powerkey = 2;
-  int userkey;
 
   Sim7x00();
   ~Sim7x00();
 
   // SIM query
-  void PowerOn();
+  void PowerOn(unsigned int powerpin);
   char PowerOff();
   void HangUp();
   void Answer();
@@ -57,6 +55,9 @@ public:
   String checkBufferString(unsigned int timeout);
 
   char* GetVoltage();
+  char* GetSignal();
+  char* GetNetwork();
+  void SendTone(const char* Tone);
 
   // Phone calls
   void PhoneCall(const char* PhoneNumber);
