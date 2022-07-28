@@ -93,7 +93,7 @@ The whole file should look something like this:
 @lxpanel --profile LXDE-pi
 @pcmanfm --desktop --profile LXDE-pi
 #@xscreensaver -no-splash
-@chromium-browser --start-fullscreen --start-maximized https://teams.microsoft.com/
+@chromium-browser --start-fullscreen --start-maximized http://localhost:5000/
 ```
 
 Notice the hash before the xscreensaver line...this may or may not be needed.
