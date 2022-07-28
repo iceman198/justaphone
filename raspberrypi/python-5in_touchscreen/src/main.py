@@ -3,6 +3,7 @@ import sys;
 import os;
 import time;
 import signal;
+import subprocess;
 import serial;
 
 from flask import Flask, jsonify, render_template;
