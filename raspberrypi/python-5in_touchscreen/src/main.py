@@ -74,6 +74,7 @@ def get_voltage():
     try:
         #result = subprocess.getoutput("echo get battery | nc -q 0 127.0.0.1 8423");
         result = subprocess.check_output(['bash','-c', "echo get battery | nc -q 0 127.0.0.1 8423"]);
+        func.log('main.py', 'get_voltage', 'Voltage received: ' + str(result) + '');
         if "battery: " in result:
             v = "B: " + result[9:11] + "%";
     except:
@@ -112,6 +113,17 @@ def flask_shutdown():
         'status': "SUCCESS",
         'body': mybody
         }
+    return jsonify(resp_obj);
+
+@app.route('/ATCMD/<cmd>')
+def flask_customcommand(cmd):
+    sim.send_at(cmd, "OK", 0.5);
+    mybody = "Custom command sent";
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': mybody
+        }
+    #return resp_obj;
     return jsonify(resp_obj);
 
 @app.route('/shutdownsim/')
