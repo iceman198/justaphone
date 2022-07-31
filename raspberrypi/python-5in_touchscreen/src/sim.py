@@ -59,9 +59,10 @@ def send_at(command,back,timeout):
 		time.sleep(0.25);
 		rec_buff = ser.read(ser.inWaiting());
 	if back not in rec_buff.decode():
+		resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
 		func.log('sim.py', 'send_at', command + ' ERROR');
 		func.log('sim.py', 'send_at', command + ' back:\t' + rec_buff.decode());
-		return 'ERROR';
+		return resp;
 	else:
 		resp = str(rec_buff.decode().replace('\n', '|').replace('\r', ''));
 		if len(resp) > 0:
@@ -148,7 +149,7 @@ def send_tone(tone):
 
 def make_call(phone_number):
 	try:
-		send_at('ATD'+str(phone_number)+';','OK',1);
+		send_at('ATD'+str(phone_number)+';','OK',4);
 	except :
 		func.log('sim.py', 'make_call', 'error: ' + sys.exc_info()[0]);
 

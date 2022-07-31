@@ -137,7 +137,7 @@ def flask_customcommand(cmd):
         time.sleep(at_cmd_wait_time);
 
     at_cmd_in_progress = True;
-    respstr = sim.send_at(cmd, 'OK', 2);
+    respstr = sim.send_at(cmd, 'OK', 4);
     at_cmd_in_progress = False;
 
     resp_obj = {
