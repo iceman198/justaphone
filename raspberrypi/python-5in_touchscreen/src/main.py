@@ -14,6 +14,8 @@ import func;
 
 at_cmd_in_progress = False;
 at_cmd_wait_time = 0.1;
+stats_check_sleep = 5;
+notifications_check_sleep = 0.5;
 doLoop = True;
 isRunning = False;
 currentStats = ['0', '0', '0'];
@@ -264,15 +266,16 @@ def flask_nametest(name):
     return render_template('name.html', name=name);
 
 def main_loop():
-    global doLoop, isRunning, simgood, at_cmd_in_progress, at_cmd_wait_time;
+    global doLoop, isRunning, simgood, at_cmd_in_progress, at_cmd_wait_time, stats_check_sleep, notifications_check_sleep;
     global currentStats, currentLine1, currentLine2;
     turn_off_sim();
     turn_on_sim();
-    time_updates = time.time();
+    time_stats = time.time();
+    time_notifications = time.time();
     while doLoop:
         try:
             #func.log('main.py', 'myloop', 'looping...');s
-            if (time.time() - time_updates > 5):
+            if (time.time() - time_stats > stats_check_sleep):
                 currentStats[0] = get_voltage();
                 if (simgood):
                     while (at_cmd_in_progress):
@@ -282,8 +285,11 @@ def main_loop():
                     currentStats[1] = sim.get_signal();
                     currentStats[2] = sim.get_network();
                     at_cmd_in_progress = False;
-                time_updates = time.time();
-            check_sim_notification();
+                time_stats = time.time();
+            if (time.time() - time_notifications > notifications_check_sleep):
+                check_sim_notification();
+                time_notifications = time.time();
+
         except:
             func.log('main.py', 'main_loop', 'Exception: ' + str(sys.exc_info()));
 
