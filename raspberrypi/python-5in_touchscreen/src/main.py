@@ -117,13 +117,11 @@ def flask_shutdown():
 
 @app.route('/ATCMD/<cmd>')
 def flask_customcommand(cmd):
-    sim.send_at(cmd, "OK", 0.5);
-    mybody = "Custom command sent";
+    respstr = sim.send_at(cmd, 'OK', 2);
     resp_obj = {
         'status': "SUCCESS",
-        'body': mybody
+        'body': respstr
         }
-    #return resp_obj;
     return jsonify(resp_obj);
 
 @app.route('/shutdownsim/')
