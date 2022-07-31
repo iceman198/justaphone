@@ -12,6 +12,7 @@ from threading import Thread;
 import sim;
 import func;
 
+at_cmd_in_progress = False;
 doLoop = True;
 isRunning = False;
 currentStats = ['0', '0', '0'];
@@ -26,10 +27,17 @@ inCall = False;
 app = Flask(__name__);
 
 def check_sim_notification():
+    global at_cmd_in_progress;
     try:
         #func.log('main.py', 'check_sim_notification', 'start');
         global inCall, isRinging, currentLine1, currentLine2, simgood;
+        while (at_cmd_in_progress):
+            time.sleep(0.25);
+
+        at_cmd_in_progress = True;
         msg = sim.check_for_msg();
+        at_cmd_in_progress = False;
+
         if (len(msg) > 0):
             func.log('main.py', 'check_sim_notification', 'receive msg:' + msg);
             if "PB DONE" in msg:
@@ -38,7 +46,10 @@ def check_sim_notification():
                 currentLine2 = "";
                 
             if "RING" in msg:
+                at_cmd_in_progress = True;
                 call_info = sim.get_call_info();
+                at_cmd_in_progress = False;
+
                 currentLine1 = "INCOMING CALL:";
                 currentLine2 = call_info;
                 isRinging = True;
@@ -117,7 +128,15 @@ def flask_shutdown():
 
 @app.route('/ATCMD/<cmd>')
 def flask_customcommand(cmd):
+    global at_cmd_in_progress;
+
+    while (at_cmd_in_progress):
+        time.sleep(0.25);
+
+    at_cmd_in_progress = True;
     respstr = sim.send_at(cmd, 'OK', 2);
+    at_cmd_in_progress = False;
+
     resp_obj = {
         'status': "SUCCESS",
         'body': respstr
@@ -162,7 +181,15 @@ def flask_jsontest():
 
 @app.route('/answer/')
 def flask_answer():
+    global at_cmd_in_progress;
+
+    while (at_cmd_in_progress):
+        time.sleep(0.25);
+    
+    at_cmd_in_progress = True;
     sim.answer_call();
+    at_cmd_in_progress = False;
+
     mybody = "Answer signaled";
     resp_obj = {
         'status': "SUCCESS",
@@ -172,7 +199,15 @@ def flask_answer():
 
 @app.route('/sendtone/<number>')
 def flask_sendtone(number):
+    global at_cmd_in_progress;
+
+    while (at_cmd_in_progress):
+        time.sleep(0.25);
+    
+    at_cmd_in_progress = True;
     sim.send_tone(str(number));
+    at_cmd_in_progress = False;
+
     mybody = 'Sending tone for ' + str(number);
     resp_obj = {
         'status': "SUCCESS",
@@ -182,7 +217,15 @@ def flask_sendtone(number):
 
 @app.route('/hangup/')
 def flask_hangup():
+    global at_cmd_in_progress;
+
+    while (at_cmd_in_progress):
+        time.sleep(0.25);
+    
+    at_cmd_in_progress = True;
     sim.hangup();
+    at_cmd_in_progress = False;
+
     mybody = "Hangup signaled";
     resp_obj = {
         'status': "SUCCESS",
@@ -192,13 +235,16 @@ def flask_hangup():
 
 @app.route('/makecall/<number>')
 def flask_makecall(number):
-    global currentLine1, currentLine2;
+    global currentLine1, currentLine2, at_cmd_in_progress;
     currentLine1 = "Making call: ";
     currentLine2 = number;
     mybody = 'Making phone call to ' + str(number);
 
     #disp.display_text("Calling " + number);
+    at_cmd_in_progress = True;
     sim.make_call(number);
+    at_cmd_in_progress = False;
+
     resp_obj = {
         'status': "SUCCESS",
         'body': mybody
@@ -214,7 +260,7 @@ def flask_nametest(name):
     return render_template('name.html', name=name);
 
 def main_loop():
-    global doLoop, isRunning, simgood;
+    global doLoop, isRunning, simgood, at_cmd_in_progress;
     global currentStats, currentLine1, currentLine2;
     turn_off_sim();
     turn_on_sim();
@@ -225,8 +271,13 @@ def main_loop():
             if (time.time() - time_updates > 5):
                 currentStats[0] = get_voltage();
                 if (simgood):
+                    while (at_cmd_in_progress):
+                        time.sleep(0.25);
+                    
+                    at_cmd_in_progress = True;
                     currentStats[1] = sim.get_signal();
                     currentStats[2] = sim.get_network();
+                    at_cmd_in_progress = False;
                 time_updates = time.time();
             check_sim_notification();
         except:
