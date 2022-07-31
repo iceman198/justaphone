@@ -13,6 +13,7 @@ import sim;
 import func;
 
 at_cmd_in_progress = False;
+at_cmd_wait_time = 0.1;
 doLoop = True;
 isRunning = False;
 currentStats = ['0', '0', '0'];
@@ -27,12 +28,12 @@ inCall = False;
 app = Flask(__name__);
 
 def check_sim_notification():
-    global at_cmd_in_progress;
+    global at_cmd_in_progress, at_cmd_wait_time;
     try:
         #func.log('main.py', 'check_sim_notification', 'start');
         global inCall, isRinging, currentLine1, currentLine2, simgood;
         while (at_cmd_in_progress):
-            time.sleep(0.25);
+            time.sleep(at_cmd_wait_time);
 
         at_cmd_in_progress = True;
         msg = sim.check_for_msg();
@@ -128,10 +129,10 @@ def flask_shutdown():
 
 @app.route('/ATCMD/<cmd>')
 def flask_customcommand(cmd):
-    global at_cmd_in_progress;
+    global at_cmd_in_progress, at_cmd_wait_time;
 
     while (at_cmd_in_progress):
-        time.sleep(0.25);
+        time.sleep(at_cmd_wait_time);
 
     at_cmd_in_progress = True;
     respstr = sim.send_at(cmd, 'OK', 2);
@@ -181,10 +182,10 @@ def flask_jsontest():
 
 @app.route('/answer/')
 def flask_answer():
-    global at_cmd_in_progress;
+    global at_cmd_in_progress, at_cmd_wait_time;
 
     while (at_cmd_in_progress):
-        time.sleep(0.25);
+        time.sleep(at_cmd_wait_time);
     
     at_cmd_in_progress = True;
     sim.answer_call();
@@ -199,10 +200,10 @@ def flask_answer():
 
 @app.route('/sendtone/<number>')
 def flask_sendtone(number):
-    global at_cmd_in_progress;
+    global at_cmd_in_progress, at_cmd_wait_time;
 
     while (at_cmd_in_progress):
-        time.sleep(0.25);
+        time.sleep(at_cmd_wait_time);
     
     at_cmd_in_progress = True;
     sim.send_tone(str(number));
@@ -217,10 +218,10 @@ def flask_sendtone(number):
 
 @app.route('/hangup/')
 def flask_hangup():
-    global at_cmd_in_progress;
+    global at_cmd_in_progress, at_cmd_wait_time;
 
     while (at_cmd_in_progress):
-        time.sleep(0.25);
+        time.sleep(at_cmd_wait_time);
     
     at_cmd_in_progress = True;
     sim.hangup();
@@ -235,11 +236,14 @@ def flask_hangup():
 
 @app.route('/makecall/<number>')
 def flask_makecall(number):
-    global currentLine1, currentLine2, at_cmd_in_progress;
+    global currentLine1, currentLine2, at_cmd_in_progress, at_cmd_wait_time;
     currentLine1 = "Making call: ";
     currentLine2 = number;
     mybody = 'Making phone call to ' + str(number);
 
+    while (at_cmd_in_progress):
+        time.sleep(at_cmd_wait_time);
+    
     #disp.display_text("Calling " + number);
     at_cmd_in_progress = True;
     sim.make_call(number);
@@ -260,7 +264,7 @@ def flask_nametest(name):
     return render_template('name.html', name=name);
 
 def main_loop():
-    global doLoop, isRunning, simgood, at_cmd_in_progress;
+    global doLoop, isRunning, simgood, at_cmd_in_progress, at_cmd_wait_time;
     global currentStats, currentLine1, currentLine2;
     turn_off_sim();
     turn_on_sim();
@@ -272,7 +276,7 @@ def main_loop():
                 currentStats[0] = get_voltage();
                 if (simgood):
                     while (at_cmd_in_progress):
-                        time.sleep(0.25);
+                        time.sleep(at_cmd_wait_time);
                     
                     at_cmd_in_progress = True;
                     currentStats[1] = sim.get_signal();
