@@ -149,7 +149,7 @@ def send_tone(tone):
 
 def make_call(phone_number):
 	try:
-		send_at('ATD'+str(phone_number)+';','OK',4);
+		send_at(b'ATD' + phone_number.encode() +b';\r','OK',4);
 	except :
 		func.log('sim.py', 'make_call', 'error: ' + sys.exc_info()[0]);
 

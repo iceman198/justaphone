@@ -248,7 +248,7 @@ def flask_makecall(number):
     
     #disp.display_text("Calling " + number);
     at_cmd_in_progress = True;
-    sim.make_call(number+"\r");
+    sim.make_call(number);
     at_cmd_in_progress = False;
 
     resp_obj = {
