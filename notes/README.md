@@ -18,10 +18,17 @@ ATI Get chip info
 AT+CPMUTEMP Read the temperature of the module
 AT+CBC Read the voltage value of the power supply
 AT+CPOF Power down the device
+AT+CEER Get an error repors - page 403 of the AT command manual
 
 ### AT Commands - SIM
 Get Sim card #
 ~ AT+CICCID
+
+### AT Commands - APN
+Get APN info - may have to set it?
+~ AT+CGDCONT?
+To set APN password if needed
+~ AT+CGAUTH?
 
 ### AT Commands - Call
 ~ ATD1207#######; - call that number (semi-colon is needed at end)
@@ -30,7 +37,7 @@ Get Sim card #
 
 ### AT Commands - Network
 Get Network registration
-~ AT+CSQ - get signal strength
+~ AT+CSQ - get signal strength (https://m2msupport.net/m2msupport/atcsq-signal-quality/)
 | Code | Strength |
 | ---- | -------- |
 | 0 | -113dBm or less |
@@ -61,7 +68,7 @@ Get GPS satelite info
 ## APN info
 ### SpeeTalk
 APN Setting:
-• APN: Mobilenet
+• APN: mobilenet
 • APN username: (none)
 • APN password: (none)
 • IP Address: Dynamic
