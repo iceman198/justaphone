@@ -3,14 +3,14 @@
 const byte KP_ROWS = 4; //four rows
 const byte KP_COLS = 4; //three columns
 char keys[KP_ROWS][KP_COLS] = {
-  {'H', '3', '2', '1'},
-  {'S', '6', '5', '4'},
-  {'O', '9', '8', '7'},
-  {'C', '#', '0', '*'}
+  {'1', '2', '3', 'A'},
+  {'4', '5', '6', 'B'},
+  {'7', '8', '9', 'C'},
+  {'*', '0', '#', 'D'}
 };
 
-byte kpRowPins[KP_ROWS] = {2, 11, 10, 9}; //rows top to bottom
-byte kpColPins[KP_COLS] = {7, 6, 5, 4}; //columns right to left (when looking at it from the back)
+byte kpRowPins[KP_ROWS] = {12, 11, 10, 9}; //rows top to bottom
+byte kpColPins[KP_COLS] = {8, 7, 6, 5}; //columns right to left (when looking at it from the back)
 
 Keypad keypad = Keypad(makeKeymap(keys), kpRowPins, kpColPins, KP_ROWS, KP_COLS);
 

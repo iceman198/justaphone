@@ -30,6 +30,15 @@ Get APN info - may have to set it?
 To set APN password if needed
 ~ AT+CGAUTH?
 
+#### SpeeTalk
+APN Setting:
+• APN: mobilenet
+• APN username: (none)
+• APN password: (none)
+• IP Address: Dynamic
+• Data Roaming: Enabled
+Enable data roaming.
+
 ### AT Commands - Call
 ~ ATD1207#######; - call that number (semi-colon is needed at end)
 ~ AT+CHUP - hangup
@@ -64,13 +73,3 @@ Get GPS location info (may take some time to aquire a signal)
 ~ AT+CGPSINFO
 Get GPS satelite info
 ~ AT+CGNSSINFO
-
-## APN info
-### SpeeTalk
-APN Setting:
-• APN: mobilenet
-• APN username: (none)
-• APN password: (none)
-• IP Address: Dynamic
-• Data Roaming: Enabled
-Enable data roaming.

@@ -51,13 +51,13 @@ def check_for_input():
             displayUpdateTime = 1;
             if "S" in rec_buff.decode():
                 shutdown();
-            elif "H" in rec_buff.decode():
+            elif "D" in rec_buff.decode():
                 sim.hangup();
                 currentLine1 = 'Hangup';
                 currentLine2 = '';
                 isRinging = False;
                 inCall = False;
-            elif "C" in rec_buff.decode():
+            elif "A" in rec_buff.decode():
                 if isRinging:
                     sim.answer_call();
                 else:
