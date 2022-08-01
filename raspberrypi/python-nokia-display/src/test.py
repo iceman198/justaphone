@@ -11,7 +11,7 @@ print os.sys.path;
 
 import sim;
 
-sim.SendShortMessage("12076192651","this is a test");
+sim.send_short_message("12076192651","this is a test");
 #sim.ReceiveShortMessage("1");
 #sim.DeleteMessage("2");
 
