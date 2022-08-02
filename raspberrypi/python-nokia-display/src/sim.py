@@ -121,7 +121,8 @@ def send_tone(tone):
 
 def make_call(phone_number):
 	try:
-		send_at('ATD'+phone_number+';','OK',8);
+		send_at('ATD'+phone_number+';','',5);
+		send_at('','',1);
 	except :
 		func.log('sim.py', 'make_call', 'error: ' + sys.exc_info()[0]);
 
