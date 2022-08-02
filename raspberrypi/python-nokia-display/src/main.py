@@ -30,6 +30,7 @@ isRinging = False;
 inCall = False;
 
 #func.print_test();
+func.log('main.py', '', 'initializing display');
 disp.init_display();
 serInput = serial.Serial('/dev/ttyUSB0',9600,timeout=0.1);
 serInput.flushInput();
@@ -193,7 +194,7 @@ def display_loop():
     time_disp = time.time();
     while True:
         try:
-            #func.log('main.py', 'myloop', 'looping...');
+            func.log('main.py', 'display_loop', 'looping...');
             #if (time.time() - time_disp > 1):
             disp.update_disp(currentStats, currentLine1, currentLine2);
             time_disp = time.time();
