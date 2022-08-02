@@ -194,7 +194,7 @@ def display_loop():
     time_disp = time.time();
     while True:
         try:
-            func.log('main.py', 'display_loop', 'looping...');
+            #func.log('main.py', 'display_loop', 'looping...');
             #if (time.time() - time_disp > 1):
             disp.update_disp(currentStats, currentLine1, currentLine2);
             time_disp = time.time();
