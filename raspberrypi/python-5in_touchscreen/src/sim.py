@@ -169,6 +169,7 @@ def send_short_message(phone_number,text_message):
 			func.log('sim.py', 'send_short_message', 'error');
 	else:
 		func.log('sim.py', 'send_short_message', 'error%d'%answer);
+	return answer;
 
 def receive_short_message(msgId):
 	rec_buff = '';

@@ -129,6 +129,15 @@ def flask_shutdown():
         }
     return jsonify(resp_obj);
 
+@app.route('/sendtestmessage/<number>')
+def flask_testmsg(number):
+    respstr = sim.send_short_message(number,"this is a test");
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': respstr
+        }
+    return jsonify(resp_obj);
+
 @app.route('/ATCMD/<cmd>')
 def flask_customcommand(cmd):
     global at_cmd_in_progress, at_cmd_wait_time;
