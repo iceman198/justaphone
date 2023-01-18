@@ -7,8 +7,8 @@ import serial;
 import time;
 import func;
 
-#mydevice = '/dev/serial0';
-mydevice = '/dev/ttyUSB0';
+mydevice = '/dev/serial0';
+#mydevice = '/dev/ttyUSB0';
 mybaud = 9600;
 mytimeout = 0.25;
 
