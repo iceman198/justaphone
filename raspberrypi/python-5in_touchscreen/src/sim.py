@@ -84,6 +84,15 @@ def power_on():
 
 def power_off():
 	try:
+		global ser, power_key;
+		GPIO.setmode(GPIO.BCM);
+		GPIO.setwarnings(False);
+		GPIO.setup(power_key,GPIO.OUT);
+		time.sleep(0.25);
+		GPIO.output(power_key,GPIO.LOW);
+		#time.sleep(20);
+		time.sleep(2);
+		ser.flushInput();
 		send_at('AT+CPOF','OK',1);
 	except :
 		func.log('sim.py', 'power_off', 'error: ' + str(sys.exc_info()[0]));

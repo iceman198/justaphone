@@ -98,6 +98,7 @@ def get_voltage():
 def shutdown():
     global currentLine1;
     currentLine1 = "Shutting down...";
+    sim.power_off();
     time.sleep(5);
     os.system("sleep 5; sudo shutdown now");
 
