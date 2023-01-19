@@ -167,7 +167,7 @@ def send_short_message(phone_number,text_message):
 	func.log('sim.py', 'send_short_message', 'Setting SMS mode...');
 	send_at("AT+CMGF=1","OK",1);
 	func.log('sim.py', 'send_short_message', 'Sending Short Message');
-	answer = send_at("AT+CMGS=\""+phone_number+"\"",">",2);
+	answer = send_at("AT+CMGS=\""+phone_number+"\"\r",">",2);
 	if 1 == answer:
 		ser.write(text_message.encode());
 		ser.write(b'\x1A');
