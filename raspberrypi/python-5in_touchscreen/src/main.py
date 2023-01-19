@@ -148,7 +148,7 @@ def flask_getmsg(msg_id):
     return jsonify(resp_obj);
 
 @app.route('/deletemessage/<msg_id>')
-def flask_getmsg(msg_id):
+def flask_delmsg(msg_id):
     global at_cmd_in_progress, at_cmd_wait_time;
 
     while (at_cmd_in_progress):
