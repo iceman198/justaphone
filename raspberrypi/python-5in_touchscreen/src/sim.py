@@ -169,18 +169,7 @@ def send_short_message(phone_number,text_message):
 	func.log('sim.py', 'send_short_message', 'Sending Short Message');
 	answer = send_at("AT+CMGS=\""+phone_number.encode()+"\"",">",1);
 	ser.write(text_message.encode());
-
-	if 1 == answer:
-		ser.write(text_message.encode());
-		ser.write(b'\x1A');
-		answer = send_at('','OK',2);
-		if 1 == answer:
-			func.log('sim.py', 'send_short_message', 'send successfully');
-		else:
-			func.log('sim.py', 'send_short_message', 'error 1: ' + str(answer));
-	else:
-		ser.write(b'\x1A');
-		func.log('sim.py', 'send_short_message',  'error 2: ' + str(answer));
+	ser.write(b'\x1A');
 	return answer;
 
 def receive_short_message(msgId):
