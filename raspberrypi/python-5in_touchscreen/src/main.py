@@ -62,6 +62,10 @@ def check_sim_notification():
                 currentLine1 = "MISSED CALL: ";
                 currentLine2 = msg[14:33];
                 isRinging = False;
+            
+            if "CMTI" in msg:
+                currentLine1 = "NEW MSG";
+                currentLine2 = msg;
 
             if "NO CARRIER" in msg:
                 currentLine1 = "NO CARRIER";
