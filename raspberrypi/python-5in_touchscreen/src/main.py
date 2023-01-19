@@ -140,12 +140,11 @@ def flask_testmsg(number):
     at_cmd_in_progress = True;
     respstr = sim.send_short_message(number,"this is a test");
     at_cmd_in_progress = False;
-    
+
     resp_obj = {
         'status': "SUCCESS",
         'body': respstr
         }
-    holdchecks = False;
     return jsonify(resp_obj);
 
 @app.route('/ATCMD/<cmd>')
