@@ -165,9 +165,9 @@ def make_call(phone_number):
 def send_short_message(phone_number,text_message):
 	global ser;
 	func.log('sim.py', 'send_short_message', 'Setting SMS mode...');
-	send_at("AT+CMGF=1","OK",1);
+	send_at("AT+CMGF=1","OK",0.5);
 	func.log('sim.py', 'send_short_message', 'Sending Short Message');
-	answer = send_at("AT+CMGS=\""+phone_number+"\"\r",">",1);
+	answer = send_at("AT+CMGS=\""+phone_number.endode()+"\"",">",1);
 	if 1 == answer:
 		ser.write(text_message.encode());
 		ser.write(b'\x1A');
@@ -182,7 +182,7 @@ def send_short_message(phone_number,text_message):
 
 def receive_short_message(msgId):
 	rec_buff = '';
-	send_at('AT+CMGF=1','OK',1);
+	send_at('AT+CMGF=1','OK',0.5);
 	send_at('AT+CPMS=\"SM\",\"SM\",\"SM\"', 'OK', 1);
 	answer = send_at('AT+CMGR='+msgId,'+CMGR:',2);
 	if 1 == answer:
