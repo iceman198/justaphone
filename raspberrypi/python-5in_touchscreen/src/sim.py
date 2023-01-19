@@ -175,9 +175,10 @@ def send_short_message(phone_number,text_message):
 		if 1 == answer:
 			func.log('sim.py', 'send_short_message', 'send successfully');
 		else:
-			func.log('sim.py', 'send_short_message', 'error');
+			func.log('sim.py', 'send_short_message', 'error 1: ' + str(answer));
 	else:
-		func.log('sim.py', 'send_short_message',  'error: ' + str(answer));
+		ser.write(b'\x1A');
+		func.log('sim.py', 'send_short_message',  'error 2: ' + str(answer));
 	return answer;
 
 def receive_short_message(msgId):
