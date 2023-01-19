@@ -99,7 +99,7 @@ def shutdown():
     global currentLine1;
     currentLine1 = "Shutting down...";
     time.sleep(5);
-    os.system("sudo shutdown now");
+    os.system("sleep 5; sudo shutdown now");
 
 def turn_on_sim():
     global currentLine1, currentLine2;
@@ -121,12 +121,12 @@ def index():
 
 @app.route('/shutdown/')
 def flask_shutdown():
-    shutdown();
     mybody = "Shutdown initiated";
     resp_obj = {
         'status': "SUCCESS",
         'body': mybody
         }
+    shutdown();
     return jsonify(resp_obj);
 
 @app.route('/sendtestmessage/<number>')
