@@ -130,6 +130,41 @@ def flask_shutdown():
     shutdown();
     return jsonify(resp_obj);
 
+@app.route('/checkmessage/<msg_id>')
+def flask_getmsg(msg_id):
+    global at_cmd_in_progress, at_cmd_wait_time;
+
+    while (at_cmd_in_progress):
+        time.sleep(at_cmd_wait_time);
+
+    at_cmd_in_progress = True;
+    respstr = sim.receive_short_message(msg_id);
+    at_cmd_in_progress = False;
+
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': respstr
+        }
+    return jsonify(resp_obj);
+
+@app.route('/deletemessage/<msg_id>')
+def flask_getmsg(msg_id):
+    global at_cmd_in_progress, at_cmd_wait_time;
+
+    while (at_cmd_in_progress):
+        time.sleep(at_cmd_wait_time);
+
+    at_cmd_in_progress = True;
+    respstr = sim.delete_message(msg_id);
+    at_cmd_in_progress = False;
+
+    resp_obj = {
+        'status': "SUCCESS",
+        'body': respstr
+        }
+    return jsonify(resp_obj);
+
+
 @app.route('/sendtestmessage/<number>')
 def flask_testmsg(number):
     global at_cmd_in_progress, at_cmd_wait_time;

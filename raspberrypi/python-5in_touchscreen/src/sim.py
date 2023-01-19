@@ -172,28 +172,16 @@ def send_short_message(phone_number,text_message):
 	ser.write(b'\x1A');
 	return answer;
 
-def receive_short_message(msgId):
-	rec_buff = '';
+def receive_short_message(msg_id):
 	send_at('AT+CMGF=1','OK',0.5);
 	send_at('AT+CPMS=\"SM\",\"SM\",\"SM\"', 'OK', 1);
-	answer = send_at('AT+CMGR='+msgId,'+CMGR:',2);
-	if 1 == answer:
-		answer = 0;
-		if 'OK' in rec_buff:
-			answer = 1;
-			func.log('sim.py', 'receive_short_message', 'rec_buff: ' + rec_buff.decode());
-	else:
-		func.log('sim.py', 'receive_short_message', 'error%d'%answer);
-		return False;
-	return True;
+	answer = send_at('AT+CMGR='+msg_id,'+CMGR:',2);
+	return answer;
 
-def delete_message(msgId):
+def delete_message(msg_id):
 	func.log('sim.py', 'delete_message', 'Deleting message');
-	answer = send_at('AT+CMGD='+msgId,'OK',5);
-	if 1 == answer:
-		func.log('sim.py', 'delete_message', 'delete successfully');
-	else:
-		func.log('sim.py', 'delete_message', 'error%d'%answer);
+	answer = send_at('AT+CMGD='+msg_id,'OK',2);
+	return answer;
 
 def hangup():
 	global ser;
