@@ -11,6 +11,7 @@
     <title>PiPhone</title>
     <script type = "text/javascript">
         let inCall = false;
+        let myUrl = 'http://localhost:9393';
 
         async function makeWebCall(address, data) {
             return new Promise(async (resolve, reject) => {
@@ -30,30 +31,30 @@
         }
 
         async function shutdown() {
-            const response = await makeWebCall('http://localhost:5000/shutdown/');
+            const response = await makeWebCall(myUrl + '/shutdown/');
             console.log(`shutdown() ~ response: ${JSON.stringify(response)}`);
         }
 
         async function pushNumber(number) {
             if (number.indexOf('H') > -1) {
                 inCall = false;
-                const response = await makeWebCall('http://localhost:5000/hangup/');
+                const response = await makeWebCall(myUrl + '/hangup/');
                 console.log(`pushNumber() ~ number: ${number} | response: ${JSON.stringify(response)}`);
                 document.getElementById("dialerText").innerHTML = '';
             } else if (number.indexOf('A') > -1) {
                 inCall = true;
                 let currentNumbers = document.getElementById("dialerText").innerHTML;
                 if (currentNumbers == '') {                    
-                    const response = await makeWebCall('http://localhost:5000/answer/');
+                    const response = await makeWebCall(myUrl + '/answer/');
                     console.log(`pushNumber() ~ answering call - response: ${JSON.stringify(response)}`);
                 } else {
-                    const response = await makeWebCall('http://localhost:5000/makecall/' + currentNumbers);
+                    const response = await makeWebCall(myUrl + '/makecall/' + currentNumbers);
                     console.log(`pushNumber() ~ calling ${currentNumbers} - response: ${JSON.stringify(response)}`);
                 }
             } else {
                 if (inCall) {
                     // send tone with number
-                    const response = await makeWebCall('http://localhost:5000/sendtone/'+number);
+                    const response = await makeWebCall(myUrl + '/sendtone/'+number);
                     console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
                 } else {
                     // just add the number to the list in preperation for a call
@@ -67,7 +68,7 @@
         }
 
         async function getStats() {
-            const response = await makeWebCall('http://localhost:5000/getStats/');
+            const response = await makeWebCall(myUrl + '/getStats/');
             console.log(`getStats() ~ response: ${JSON.stringify(response)}`);
             if (response != null && response.status != null && response.status == "SUCCESS") {
                 if (response.voltage != null) { document.getElementById("voltage").innerHTML = response.voltage; }
@@ -99,7 +100,7 @@
                     <tr><td><button style="width:100%;" onclick="pushNumber('4')">4</button></td><td><button style="width:100%;" onclick="pushNumber('5')">5</button></td><td><button style="width:100%;" onclick="pushNumber('6')">6</button></td></tr>
                     <tr><td><button style="width:100%;" onclick="pushNumber('7')">7</button></td><td><button style="width:100%;" onclick="pushNumber('8')">8</button></td><td><button style="width:100%;" onclick="pushNumber('9')">9</button></td></tr>
                     <tr><td><button style="width:100%;" onclick="pushNumber('*')">*</button></td><td><button style="width:100%;" onclick="pushNumber('0')">0</button></td><td><button style="width:100%;" onclick="pushNumber('#')">#</button></td></tr>
-                    <tr><td><button style="width:100%;" onclick="pushNumber('H')">H</button></td><td>&nbsp;</td><td><button style="width:100%;" onclick="pushNumber('A')">A</button></td></tr>
+                    <tr><td><button style="width:100%;" onclick="pushNumber('H')">🔚</button></td><td>&nbsp;</td><td><button style="width:100%;content:'\260e';" onclick="pushNumber('A')">📞</button></td></tr>
                 </table>
             </div>
         </div>

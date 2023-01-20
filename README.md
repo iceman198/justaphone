@@ -100,3 +100,6 @@ Notice the hash before the xscreensaver line...this may or may not be needed.
 
 # Troubleshooting
 Issues installing flask?  Checkout: https://stackoverflow.com/questions/46989508/install-flask-ask-on-raspberry-pi
+
+# Icon link
+https://www.copyandpastesymbols.net/telephone-symbol.html
