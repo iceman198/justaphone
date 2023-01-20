@@ -35,6 +35,17 @@
             console.log(`shutdown() ~ response: ${JSON.stringify(response)}`);
         }
 
+        async function showDialer() {
+            document.getElementById("home-menu").style.display = "none";
+            document.getElementById("dialer").style.display = "block";
+        }
+
+        async function showMenu() {
+            document.getElementById("dialer").style.display = "none";
+            document.getElementById("home-menu").style.display = "block";
+        }
+
+
         async function pushNumber(number) {
             if (number.indexOf('H') > -1) {
                 inCall = false;
@@ -94,7 +105,14 @@
             <div id="dialerText"></div>
         </header>
         <div class="content">
+            <div class="home-menu">
+                <table>
+                    <tr><td><button style="width:100%;" onclick="showDialer()">Phone</button></td></tr>
+                    <tr><td><button style="width:100%;" onclick="showMessages()">Messages</button></td></tr>
+                </table>
+            </div>
             <div class="dialer">
+                <button onclick="showMenu()">X</button>
                 <table>
                     <tr><td><button style="width:100%;" onclick="pushNumber('1')">1</button></td><td><button style="width:100%;" onclick="pushNumber('2')">2</button></td><td><button style="width:100%;" onclick="pushNumber('3')">3</button></td></tr>
                     <tr><td><button style="width:100%;" onclick="pushNumber('4')">4</button></td><td><button style="width:100%;" onclick="pushNumber('5')">5</button></td><td><button style="width:100%;" onclick="pushNumber('6')">6</button></td></tr>

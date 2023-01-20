@@ -56,9 +56,25 @@ td.border_left {
     border-left: solid 1px #ccc;
     }
 
+
+.home-menu {
+    width: 100%;
+    text-align: center;
+    display:block;
+    }
+.home-menu table {
+    width: 100%;
+}
+.home-menu table tr td button {
+    height: 100px;
+    width: 100%;
+    font-size: 42px;
+}
+
 .dialer {
     width: 100%;
     text-align: center;
+    display:none;
     }
 .dialer table {
     width: 100%;
