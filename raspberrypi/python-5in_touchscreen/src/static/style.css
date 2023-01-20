@@ -57,29 +57,29 @@ td.border_left {
     }
 
 
-.home-menu {
+home-menu {
     width: 100%;
     text-align: center;
     display:block;
     }
-.home-menu table {
+home-menu table {
     width: 100%;
 }
-.home-menu table tr td button {
+home-menu table tr td button {
     height: 100px;
     width: 100%;
     font-size: 42px;
 }
 
-.dialer {
+dialer {
     width: 100%;
     text-align: center;
     display:none;
     }
-.dialer table {
+dialer table {
     width: 100%;
 }
-.dialer table tr td button {
+dialer table tr td button {
     height: 100px;
     width: 100%;
     font-size: 42px;
