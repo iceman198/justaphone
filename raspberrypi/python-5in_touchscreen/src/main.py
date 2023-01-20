@@ -360,10 +360,10 @@ def start_flask():
 if __name__ == '__main__':
     try:
         thread1 = Thread(target=main_loop);
-        thread1.start();
-        thread1.join();
         thread2 = Thread(target=start_flask);
+        thread1.start();
         thread2.start();
+        thread1.join();
         thread2.join();
     except :
         func.log('main.py', '__main__', 'Exception (ID: {}) has been caught. Cleaning up...'.format(signal));
