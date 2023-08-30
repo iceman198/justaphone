@@ -254,3 +254,5 @@ if __name__ == '__main__':
         func.log('main.py', '__main__', 'Exception (ID: {}) has been caught. Cleaning up...'.format(signal));
         disp.cleanup();
         exit(0);
+
+
