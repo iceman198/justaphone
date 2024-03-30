@@ -73,3 +73,6 @@ Get GPS location info (may take some time to aquire a signal)
 ~ AT+CGPSINFO
 Get GPS satelite info
 ~ AT+CGNSSINFO
+
+
+
